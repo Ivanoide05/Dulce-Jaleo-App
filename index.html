@@ -33,10 +33,10 @@
         /* --- DARK MODE (default) --- */
         :root {
             --bg:          #0A0A0F;
-            --surface:     #141419;
-            --surface-2:   #1C1C24;
-            --border:      #1E1E28;
-            --divider:     #252530;
+            --surface:     rgba(20, 20, 25, 0.65);
+            --surface-2:   rgba(28, 28, 36, 0.5);
+            --border:      rgba(255, 255, 255, 0.05);
+            --divider:     rgba(255, 255, 255, 0.03);
             --text:        #F1F1F4;
             --text-2:      #A0A0B0;
             --text-muted:  #6B7280;
@@ -46,20 +46,21 @@
             --success:     #10B981;
             --danger:      #EF4444;
             --info:        #3B82F6;
-            --shadow:      0 1px 4px rgba(0,0,0,0.4);
-            --shadow-md:   0 4px 16px rgba(0,0,0,0.5);
-            --radius:      14px;
-            --radius-sm:   10px;
-            --radius-xs:   6px;
+            --shadow:      0 8px 32px rgba(0,0,0,0.25);
+            --shadow-md:   0 16px 48px rgba(0,0,0,0.4);
+            --radius:      16px;
+            --radius-sm:   12px;
+            --radius-xs:   8px;
+            --glass:       rgba(10, 10, 15, 0.60);
         }
 
         /* --- LIGHT MODE --- */
         [data-theme="light"] {
             --bg:          #F5F5F7;
-            --surface:     #FFFFFF;
-            --surface-2:   #F0F0F2;
-            --border:      #D1D5DB;
-            --divider:     #E5E7EB;
+            --surface:     rgba(255, 255, 255, 0.65);
+            --surface-2:   rgba(255, 255, 255, 0.4);
+            --border:      rgba(255, 255, 255, 0.5);
+            --divider:     rgba(0, 0, 0, 0.03);
             --text:        #111111;
             --text-2:      #374151;
             --text-muted:  #6B7280;
@@ -69,8 +70,9 @@
             --success:     #059669;
             --danger:      #DC2626;
             --info:        #2563EB;
-            --shadow:      0 1px 3px rgba(0,0,0,0.12);
-            --shadow-md:   0 4px 14px rgba(0,0,0,0.12);
+            --shadow:      0 4px 24px rgba(0,0,0,0.04);
+            --shadow-md:   0 8px 32px rgba(0,0,0,0.06);
+            --glass:       rgba(245, 245, 247, 0.60);
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -89,7 +91,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
+            background-color: var(--bg);
             color: var(--text);
             position: fixed;
             overflow: hidden;
@@ -98,7 +100,49 @@
             height: 100dvh;
             -webkit-font-smoothing: antialiased;
             overscroll-behavior: none;
-            transition: background 0.25s ease, color 0.25s ease;
+            transition: background 0.4s ease, color 0.4s ease;
+        }
+
+        /* ===== ANIMATED IOS MESH BACKGROUND ===== */
+        .bg-mesh {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: var(--bg);
+            transition: background 0.4s ease;
+        }
+        .bg-mesh::before, .bg-mesh::after {
+            content: '';
+            position: absolute;
+            width: 70vw;
+            height: 70vw;
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.5;
+            animation: drift 20s infinite alternate ease-in-out;
+        }
+        .bg-mesh::before {
+            top: -10vw;
+            left: -10vw;
+            background: rgba(245, 158, 11, 0.25); /* Amber Accent */
+        }
+        .bg-mesh::after {
+            bottom: -10vw;
+            right: -20vw;
+            background: rgba(59, 130, 246, 0.2); /* Blue Accent */
+            animation-delay: -10s;
+        }
+        [data-theme="light"] .bg-mesh::before { 
+            background: rgba(245, 158, 11, 0.15); 
+        }
+        [data-theme="light"] .bg-mesh::after { 
+            background: rgba(59, 130, 246, 0.1); 
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(15vw, 15vh) scale(1.1); }
         }
 
         /* ===== SPLASH SCREEN ===== */
@@ -126,13 +170,17 @@
 
         /* ===== HEADER ===== */
         .header {
-            background: var(--bg);
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
             padding: calc(16px + env(safe-area-inset-top)) 20px 14px;
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
             z-index: 100;
         }
 
@@ -245,8 +293,9 @@
             position: fixed;
             top: 70px;
             top: calc(70px + env(safe-area-inset-top));
-            left: 0;
-            right: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
             bottom: calc(65px + env(safe-area-inset-bottom));
             overflow-y: auto;
             overflow-x: hidden;
@@ -1143,9 +1192,13 @@
         .bottom-nav {
             position: fixed;
             bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 480px;
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid var(--border);
             padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
             z-index: 200;
@@ -1240,11 +1293,109 @@
             .stat-value { font-size:20px; }
             .nav-btn    { min-width:46px; padding:4px 6px; }
         }
+
+        /* ===== ELEVATED FAB SCANNER ===== */
+        .nav-fab-wrapper {
+            position: relative;
+            top: -24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .nav-fab {
+            width: 56px;
+            height: 56px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .nav-fab:active {
+            transform: scale(0.92);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        /* ===== DASHBOARD CARD STYLES ===== */
+        .dash-welcome { margin-bottom: 24px; }
+        .dash-welcome h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+        .dash-welcome p { color: var(--text-muted); font-size: 14px; text-transform: capitalize; }
+        
+        .dash-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+        .dash-card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 16px;
+        }
+        .dash-card-title {
+            font-size: 13px;
+            color: var(--text-2);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dash-card-value {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+        }
+        .dash-trend {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(16,185,129,0.1);
+            color: var(--success);
+        }
+        .dash-trend.negative {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+        }
+        
+        .alert-card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 12px;
+        }
+        .alert-icon { font-size: 20px; }
+        .alert-content p { font-size: 14px; font-weight: 500; margin-bottom: 4px; line-height: 1.4; color: var(--text); }
+        .alert-content span { font-size: 12px; color: var(--text-muted); }
     </style>
     
 </head>
 
 <body>
+    <!-- BACKGROUND MESH -->
+    <div class="bg-mesh"></div>
 
     <!-- SPLASH SCREEN PWA -->
     <div class="splash-screen" id="splashScreen">
@@ -1275,8 +1426,49 @@
     <!-- MAIN CONTENT -->
     <main class="main">
 
+        <!-- ===== TAB: DASHBOARD ===== -->
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="dash-welcome">
+                <h2 id="greeting">Hola, Ezequiel</h2>
+                <p id="current-date">Cargando fecha...</p>
+            </div>
+
+            <div class="dash-grid">
+                <div class="dash-card">
+                    <div class="dash-card-title">Margen Mes <span class="dash-trend">+5%</span></div>
+                    <div class="dash-card-value" id="dashMargen">68.5%</div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-title">Gastos Fijos</div>
+                    <div class="dash-card-value" id="dashGastos">4,120 €</div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-title">
+                        Pendientes
+                        <div style="width:8px;height:8px;background:var(--danger);border-radius:50%;"></div>
+                    </div>
+                    <div class="dash-card-value" id="dashPendientes">3</div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-title">Tickets Hoy</div>
+                    <div class="dash-card-value" id="dashTickets">-</div>
+                </div>
+            </div>
+
+            <h3 class="section-title" style="font-size:20px;margin-bottom:16px;">Alertas Recientes</h3>
+            <div class="alert-card">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-content">
+                    <p>Subida de precio en "Harina de Trigo Especial"</p>
+                    <span>Detectado hace 2 horas en factura de Harinas Gómez</span>
+                </div>
+            </div>
+            
+            <div style="height: 24px;"></div>
+        </div>
+
         <!-- ===== TAB: ESCÁNER ===== -->
-        <div id="tab-scanner" class="tab-content active">
+        <div id="tab-scanner" class="tab-content">
             <div class="section-title">Nuevo Documento</div>
             <div class="section-subtitle">Fotografía una factura, albarán o gasto</div>
 
@@ -1349,7 +1541,10 @@
 
             <div class="refresh-bar">
                 <div style="font-size:14px;font-weight:700;color:var(--text-2);">Documentos</div>
-                <button class="refresh-btn" id="refreshBtn">🔄 Actualizar</button>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-secondary" id="btnManualEntry" style="padding: 6px 14px; font-size: 13px; border-radius: 8px;">✚ Nuevo Manual</button>
+                    <button class="refresh-btn" id="refreshBtn">🔄 Actualizar</button>
+                </div>
             </div>
 
             <div id="errorBanner" class="error-banner"></div>
@@ -1532,6 +1727,33 @@
         </div>
     </div>
 
+    <!-- Modal Entrada Manual -->
+    <div class="modal-overlay" id="manualEntryModal">
+        <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <div class="modal-title">📝 Nuevo Documento Manual</div>
+            <div class="modal-type-tabs" id="manualTypeTabs" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px;">
+                <button class="modal-type-btn active" data-ctype="FACTURA" style="font-size:12px; padding:8px 4px;">📄 Factura</button>
+                <button class="modal-type-btn" data-ctype="ALBARAN" style="font-size:12px; padding:8px 4px;">📦 Albarán</button>
+                <button class="modal-type-btn" data-ctype="GASTOS_VARIOS" style="font-size:12px; padding:8px 4px;">💰 Gasto</button>
+            </div>
+            
+            <input class="modal-input" id="mProveedor" type="text" placeholder="Entidad / Proveedor *">
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <input class="modal-input" id="mTotal" type="number" step="0.01" placeholder="Total (€) *">
+                <input class="modal-input" id="mFecha" type="date">
+            </div>
+            
+            <input class="modal-input" id="mDetalles" type="text" placeholder="Concepto (ej: Bizum materiales)">
+
+            <div style="display:flex;gap:10px;margin-top:6px;">
+                <button class="btn btn-secondary" id="closeManualModal" style="width:auto;padding:12px 24px;border-radius:10px;">Cancelar</button>
+                <button class="btn btn-primary" id="saveManualBtn" style="border-radius:10px;">💾 Guardar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- PROCESSING OVERLAY -->
     <div class="processing-overlay hidden" id="processingOverlay">
         <div class="processing-bread">🍞</div>
@@ -1543,33 +1765,37 @@
     <!-- BOTTOM NAVIGATION -->
     <nav class="bottom-nav">
         <div class="bottom-nav-inner">
+            <!-- Hidden Dashboard Button (for routing) -->
+            <button class="nav-btn" data-tab="dashboard" style="display:none;"></button>
+
             <!-- Agenda -->
             <button class="nav-btn" data-tab="agenda">
-                <span class="nav-icon">📒</span>
+                <span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
                 <span class="nav-label">Agenda</span>
             </button>
 
             <!-- Márgenes -->
             <button class="nav-btn" data-tab="margenes">
-                <span class="nav-icon">📊</span>
+                <span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
                 <span class="nav-label">Márgenes</span>
             </button>
 
-            <!-- FAB: Cámara / Escáner (centro) -->
-            <button class="nav-btn-fab" data-tab="scanner" id="fabBtn">
-                <div class="nav-fab-circle">📷</div>
-                <span class="nav-fab-label">Escanear</span>
-            </button>
+            <!-- FAB: Cámara / Escáner (centro elevado) -->
+            <div class="nav-fab-wrapper">
+                <button class="nav-fab" data-tab="scanner" id="fabBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                </button>
+            </div>
 
             <!-- Facturas -->
             <button class="nav-btn" data-tab="facturas">
-                <span class="nav-icon">📋</span>
+                <span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
                 <span class="nav-label">Facturas</span>
             </button>
 
             <!-- Alertas -->
             <button class="nav-btn" data-tab="alertas">
-                <span class="nav-icon">🔔</span>
+                <span class="nav-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
                 <span class="nav-label">Alertas</span>
             </button>
         </div>
@@ -1634,14 +1860,9 @@
         }
 
         function initTheme() {
-            const saved = localStorage.getItem(THEME_KEY);
-            if (saved) {
-                applyTheme(saved);
-            } else {
-                // Detectar preferencia del sistema
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                applyTheme(prefersDark ? 'dark' : 'light');
-            }
+            // Se fuerza el tema oscuro por defecto para garantizar que el usuario vea el nuevo diseño Premium/iOS
+            // que fue generado en los mockups de Google Stitch.
+            applyTheme('dark');
         }
 
         function toggleTheme() {
@@ -1860,7 +2081,7 @@
 
 
         // Activar tab inicial
-        activateTab('scanner');
+        activateTab('dashboard');
 
         // ===== SCANNER =====
         let selectedFile = null;   // Archivo File verdadero a enviar
@@ -2393,10 +2614,20 @@
                 const ingresosMes = ventaSemanal * semanasEnMes;
                 const margen = ingresosMes > 0 ? ((ingresosMes - totalGastos) / ingresosMes * 100) : null;
 
-                // Actualizar UI — MISMOS NÚMEROS que en Dashboard
+                // Actualizar UI — MÁRGENES
                 document.getElementById('mGastos').textContent = totalGastos.toFixed(2) + '€';
                 document.getElementById('mIngresos').textContent = ingresosMes > 0 ? ingresosMes.toFixed(0) + '€' : '—';
                 document.getElementById('mFacturas').textContent = totalDocs;
+
+                // Actualizar UI — DASHBOARD
+                const elDashMargen = document.getElementById('dashMargen');
+                const elDashGastos = document.getElementById('dashGastos');
+                const elDashPendientes = document.getElementById('dashPendientes');
+                const elDashTickets = document.getElementById('dashTickets');
+                
+                if(elDashGastos) elDashGastos.textContent = totalGastos.toFixed(0) + ' €';
+                if(elDashPendientes) elDashPendientes.textContent = alData.records.length; // Ejemplo: usando albaranes como pendientes
+                if(elDashTickets) elDashTickets.textContent = facturasRes.ok ? fData.records.length : '-';
 
                 const valEl = document.getElementById('margenValor');
                 const subEl = document.getElementById('margenSub');
@@ -2407,12 +2638,15 @@
                     valEl.className = 'margin-value neutral';
                     subEl.textContent = 'Configura tu venta semanal para ver el margen estimado';
                     barEl.style.width = '0%';
+                    if(elDashMargen) elDashMargen.textContent = '—';
                 } else {
                     valEl.textContent = (margen >= 0 ? '+' : '') + margen.toFixed(1) + '%';
                     valEl.className = 'margin-value ' + (margen >= 20 ? 'positive' : margen >= 0 ? 'neutral' : 'negative');
                     subEl.textContent = `Gastos: ${totalGastos.toFixed(2)}€ | Ingresos est.: ${ingresosMes.toFixed(0)}€ | ${now.toLocaleString('es-ES', {month:'long'})}`;
                     barEl.style.width = Math.min(Math.abs(totalGastos / ingresosMes * 100), 100) + '%';
                     barEl.style.background = margen >= 20 ? 'linear-gradient(90deg,#059669,#10b981)' : margen >= 0 ? 'linear-gradient(90deg,#d97706,#f59e0b)' : 'linear-gradient(90deg,#dc2626,#ef4444)';
+                    
+                    if(elDashMargen) elDashMargen.textContent = margen.toFixed(1) + '%';
                 }
 
             } catch(err) {
@@ -2428,8 +2662,117 @@
             }
         });
 
-        // Initialize Splash Screen
+        // ===== MANUAL ENTRY MODAL =====
+        let manualDocType = 'FACTURA'; // Default
+
+        document.getElementById('btnManualEntry').addEventListener('click', () => {
+            document.getElementById('manualEntryModal').classList.add('open');
+            document.getElementById('mFecha').value = new Date().toISOString().slice(0, 10);
+            document.getElementById('mProveedor').focus();
+        });
+
+        document.getElementById('closeManualModal').addEventListener('click', () => {
+            document.getElementById('manualEntryModal').classList.remove('open');
+        });
+
+        document.getElementById('manualEntryModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('manualEntryModal'))
+                document.getElementById('manualEntryModal').classList.remove('open');
+        });
+
+        document.querySelectorAll('#manualTypeTabs .modal-type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#manualTypeTabs .modal-type-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                manualDocType = btn.dataset.ctype;
+            });
+        });
+
+        document.getElementById('saveManualBtn').addEventListener('click', async () => {
+            const proveedor = document.getElementById('mProveedor').value.trim();
+            const total = parseFloat(document.getElementById('mTotal').value.trim());
+            const fecha = document.getElementById('mFecha').value.trim();
+            const detalles = document.getElementById('mDetalles').value.trim();
+
+            if (!proveedor || isNaN(total)) {
+                alert('Por favor, rellena el Proveedor y el Total correctamente.');
+                return;
+            }
+
+            if (!config.airtableToken) {
+                alert('Configura tu token de Airtable en Ajustes primero.');
+                return;
+            }
+
+            const btn = document.getElementById('saveManualBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Guardando...';
+            btn.disabled = true;
+
+            // Determinar la tabla de destino real en Airtable
+            let tableId = '';
+            if (manualDocType === 'FACTURA') tableId = AIRTABLE_TABLES.FACTURAS;
+            else if (manualDocType === 'ALBARAN') tableId = AIRTABLE_TABLES.ALBARANES;
+            else if (manualDocType === 'GASTOS_VARIOS') tableId = AIRTABLE_TABLES.GASTOS_VARIOS;
+
+            const payload = {
+                records: [{
+                    fields: {
+                        "PROVEDOR/ TITULO": proveedor,
+                        "TOTAL": total,
+                        "Fecha": fecha,
+                        "DETALLES DOC": detalles || "Ingresado manualmente"
+                    }
+                }]
+            };
+
+            try {
+                const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${tableId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + config.airtableToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Error Airtable ${response.status}: ${errorText}`);
+                }
+
+                btn.innerHTML = '✅ ¡Guardado!';
+                setTimeout(() => {
+                    document.getElementById('manualEntryModal').classList.remove('open');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                    // Limpiar campos
+                    document.getElementById('mProveedor').value = '';
+                    document.getElementById('mTotal').value = '';
+                    document.getElementById('mDetalles').value = '';
+                    // Recargar datos globalmente para que aparezcan en la vista
+                    loadFacturas();
+                }, 1000);
+
+            } catch (err) {
+                alert('Error al guardar el documento manual: ' + err.message);
+                btn.innerHTML = '❌ Error';
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 2000);
+            }
+        });
+
+        // Initialize Splash Screen and Date
         window.addEventListener('load', () => {
+            // Set current date in dashboard
+            const dateOptions = { weekday: 'long', month: 'long', day: 'numeric' };
+            const dateEl = document.getElementById('current-date');
+            if (dateEl) dateEl.textContent = new Date().toLocaleDateString('es-ES', dateOptions);
+
+            loadMargenes(); // Fetch initial data for dashboard
+
             setTimeout(() => {
                 const splash = document.getElementById('splashScreen');
                 if (splash) splash.classList.add('hide');
