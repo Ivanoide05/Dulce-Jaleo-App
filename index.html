@@ -1584,8 +1584,8 @@
 
         <!-- ===== TAB: MÁRGENES ===== -->
         <div id="tab-margenes" class="tab-content">
-            <div class="section-title">Márgenes</div>
-            <div class="section-subtitle">Rentabilidad estimada del mes</div>
+            <div class="section-title">Márgenes y Analítica</div>
+            <div class="section-subtitle">Rentabilidad y control de gastos</div>
 
             <!-- Hero margen -->
             <div class="margin-hero">
@@ -1616,18 +1616,43 @@
                 </div>
             </div>
 
+            <!-- Analytics: Comparativa Mensual & Desglose -->
+            <div style="margin-top: 24px; display: grid; grid-template-columns: 1fr; gap: 16px;">
+                
+                <!-- Comparativa Mensual -->
+                <div class="glass-card" style="padding: 16px;">
+                    <div class="config-section-title" style="margin-bottom: 8px;">📈 Comparativa Mes a Mes</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <div style="font-size: 13px; color: var(--text-2);">Gasto Mes Anterior</div>
+                            <div id="mGastosPrev" style="font-size: 18px; font-weight: 700;">—</div>
+                        </div>
+                        <div id="mComparativaBadge" class="alert-badge badge-neutral" style="font-size: 13px;">—</div>
+                    </div>
+                </div>
+
+                <!-- Desglose Categorías -->
+                <div class="glass-card" style="padding: 16px;">
+                    <div class="config-section-title" style="margin-bottom: 12px;">📊 Gasto por Tipo de Documento</div>
+                    <div id="catBreakdownList">
+                        <div style="text-align:center; font-size:13px; color:var(--text-muted);">Cargando desglose...</div>
+                    </div>
+                </div>
+
+            </div>
+
             <!-- Config ingresos -->
-            <div class="config-section">
+            <div class="config-section" style="margin-top: 24px;">
                 <div class="config-section-title">📊 Configurar venta semanal</div>
                 <div class="config-field">
                     <label class="config-label">Venta media semanal (€)</label>
                     <input class="config-input" id="ventaSemanalInput" type="number" placeholder="Ej: 4500" min="0" step="100">
-                    <div class="config-help">Introduce tu venta media semanal aproximada. Usaremos este dato para estimar tu margen hasta integrar los tickets Z de caja.</div>
+                    <div class="config-help">Introduce tu venta media semanal aproximada. Usaremos este dato para estimar tu margen hasta integrar las VENTAS REALES mediante el Agente IA de WhatsApp.</div>
                 </div>
                 <button class="btn btn-primary" id="saveVentaBtn" style="margin-top:4px">💾 Guardar y recalcular</button>
             </div>
 
-            <p class="margin-config-hint">⚠️ Estimación basada en gastos reales de Airtable + venta media configurada. Los márgenes reales dependen también de la merma diaria.</p>
+            <p class="margin-config-hint" style="margin-bottom: 40px;">⚠️ Estimación basada en gastos reales de Airtable. La Inteligencia Artificial calculará los ingresos exactos en la Fase 7.</p>
         </div>
 
         <!-- ===== TAB: ALERTAS ===== -->
@@ -2003,6 +2028,14 @@
             const all = globalStats.allRecords;
             const mes = globalStats.mesActual;
 
+            // Calcular string del mes anterior 'YYYY-MM'
+            const parts = mes.split('-');
+            let y = parseInt(parts[0], 10);
+            let m = parseInt(parts[1], 10) - 1;
+            if (m === 0) { m = 12; y = y - 1; }
+            const prevMesStr = y + '-' + String(m).padStart(2, '0');
+            globalStats.mesAnterior = prevMesStr;
+
             // --- TOTALES GLOBALES (sin filtro de mes, TODOS los registros) ---
             const facturas = all.filter(f => f.categoria === 'FACTURA');
             const albaranes = all.filter(f => f.categoria === 'ALBARAN');
@@ -2019,8 +2052,6 @@
             globalStats.sumGastos = gastos.reduce((s, f) => s + (f.total || 0), 0);
 
             // --- TOTALES MENSUALES (solo mes actual, para Márgenes) ---
-            // IMPORTANTE: Usar createdAt (fecha de SUBIDA a Airtable) en vez de fecha del documento
-            // Porque las facturas pueden tener fechas antiguas (2019, 2024...) pero se subieron este mes
             const delMes = all.filter(f => {
                 const fechaRef = f.createdAt || f.fecha || '';
                 return fechaRef && fechaRef.startsWith(mes);
@@ -2029,8 +2060,26 @@
             globalStats.countTotalMes = delMes.length;
             globalStats.totalGastosMes = delMes.reduce((s, f) => s + (f.total || 0), 0);
 
+            // --- DESGLOSE POR CATEGORÍA O TIPO (Mes Actual) ---
+            globalStats.breakdownMes = {};
+            delMes.forEach(f => {
+                // Prioriza TIPO o CATEGORÍA extraído de Airtable, sino usa la categoría base (FACTURA, ALBARAN)
+                const tipo = f.tipo_gasto || f.categoria || 'OTROS';
+                if (!globalStats.breakdownMes[tipo]) globalStats.breakdownMes[tipo] = 0;
+                globalStats.breakdownMes[tipo] += (f.total || 0);
+            });
+
+            // --- TOTALES MES ANTERIOR ---
+            const delMesAnterior = all.filter(f => {
+                const fechaRef = f.createdAt || f.fecha || '';
+                return fechaRef && fechaRef.startsWith(prevMesStr);
+            });
+            globalStats.recordsMesAnterior = delMesAnterior;
+            globalStats.totalGastosMesAnterior = delMesAnterior.reduce((s, f) => s + (f.total || 0), 0);
+
             console.log('[Dulce Jaleo] Stats globales:', globalStats.countTotal, 'docs |', globalStats.sumTotal.toFixed(2), '€');
             console.log('[Dulce Jaleo] Stats mes', mes + ':', globalStats.countTotalMes, 'docs |', globalStats.totalGastosMes.toFixed(2), '€');
+            console.log('[Dulce Jaleo] Stats prev', prevMesStr + ':', globalStats.totalGastosMesAnterior.toFixed(2), '€');
         }
 
         // Modal Config desde ⚙️ del header
@@ -2362,7 +2411,8 @@
                 total: total,
                 detalles: f['DETALLES DOC'] || f.detalles || '',
                 moneda: f.MONEDA || f.moneda || 'EUR',
-                categoria: catLimpia
+                categoria: catLimpia,
+                tipo_gasto: f['TIPO'] || f['CATEGORÍA'] || f['CATEGORIA'] || f['Categoria'] || catLimpia
             };
         }
 
@@ -2595,6 +2645,7 @@
 
             if (!config.airtableToken) {
                 document.getElementById('margenSub').textContent = '⚠️ Configura tu token de Airtable (⚙️)';
+                document.getElementById('catBreakdownList').innerHTML = '<div style="text-align:center;color:var(--text-muted);font-size:13px;">Sin acceso a Airtable</div>';
                 return;
             }
 
@@ -2607,6 +2658,7 @@
                 const now = new Date();
                 const totalGastos = globalStats.totalGastosMes;
                 const totalDocs = globalStats.countTotalMes;
+                const totalPrev = globalStats.totalGastosMesAnterior || 0;
 
                 // Calcular ingresos estimados del mes
                 const ventaSemanal = parseFloat(localStorage.getItem(VENTA_KEY) || 0);
@@ -2619,6 +2671,50 @@
                 document.getElementById('mIngresos').textContent = ingresosMes > 0 ? ingresosMes.toFixed(0) + '€' : '—';
                 document.getElementById('mFacturas').textContent = totalDocs;
 
+                // UI — Comparativa Mes Anterior
+                document.getElementById('mGastosPrev').textContent = totalPrev.toFixed(2) + '€';
+                const elCompBadge = document.getElementById('mComparativaBadge');
+                if (totalPrev > 0) {
+                    const diff = totalGastos - totalPrev;
+                    const diffPct = (diff / totalPrev) * 100;
+                    if (diff > 0) {
+                        elCompBadge.className = 'alert-badge badge-warning';
+                        elCompBadge.textContent = `↑ Gasto subió ${diffPct.toFixed(1)}% (+${diff.toFixed(2)}€)`;
+                    } else if (diff < 0) {
+                        elCompBadge.className = 'alert-badge badge-success';
+                        elCompBadge.textContent = `↓ Gasto bajó ${Math.abs(diffPct).toFixed(1)}% (${diff.toFixed(2)}€)`;
+                    } else {
+                        elCompBadge.className = 'alert-badge badge-neutral';
+                        elCompBadge.textContent = 'Igual que mes anterior';
+                    }
+                } else {
+                    elCompBadge.className = 'alert-badge badge-neutral';
+                    elCompBadge.textContent = 'Sin datos previos';
+                }
+
+                // UI — Desglose Categorías
+                const sortableBreakdown = Object.entries(globalStats.breakdownMes).sort((a,b) => b[1] - a[1]);
+                let breakdownHTML = '';
+                if(sortableBreakdown.length > 0) {
+                    breakdownHTML = sortableBreakdown.map(([cat, val]) => {
+                        const pct = totalGastos > 0 ? (val / totalGastos * 100).toFixed(1) : 0;
+                        return `
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size:14px;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <div style="width:12px; height:12px; border-radius:3px; background:var(--primary);"></div>
+                                <span style="color:var(--text-1); text-transform:uppercase; font-size:12px; letter-spacing:0.5px;">${cat}</span>
+                            </div>
+                            <div style="text-align:right;">
+                                <span style="font-weight:600; font-family:var(--font-mono);">${val.toFixed(2)}€</span>
+                                <span style="color:var(--text-muted); font-size:12px; margin-left:6px;">(${pct}%)</span>
+                            </div>
+                        </div>`;
+                    }).join('');
+                } else {
+                    breakdownHTML = '<div style="text-align:center;color:var(--text-muted);font-size:13px;padding:16px;">No hay gastos registrados este mes.</div>';
+                }
+                document.getElementById('catBreakdownList').innerHTML = breakdownHTML;
+
                 // Actualizar UI — DASHBOARD
                 const elDashMargen = document.getElementById('dashMargen');
                 const elDashGastos = document.getElementById('dashGastos');
@@ -2626,8 +2722,11 @@
                 const elDashTickets = document.getElementById('dashTickets');
                 
                 if(elDashGastos) elDashGastos.textContent = totalGastos.toFixed(0) + ' €';
-                if(elDashPendientes) elDashPendientes.textContent = alData.records.length; // Ejemplo: usando albaranes como pendientes
-                if(elDashTickets) elDashTickets.textContent = facturasRes.ok ? fData.records.length : '-';
+                // Asumiendo que albaranesPendientes etc se carga en otro lado o reutilizamos globalStats
+                const albaranes = globalStats.allRecords.filter(f => f.categoria === 'ALBARAN');
+                const facturas = globalStats.allRecords.filter(f => f.categoria === 'FACTURA');
+                if(elDashPendientes) elDashPendientes.textContent = albaranes.length;
+                if(elDashTickets) elDashTickets.textContent = facturas.length;
 
                 const valEl = document.getElementById('margenValor');
                 const subEl = document.getElementById('margenSub');
