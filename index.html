@@ -3067,10 +3067,10 @@
             sendBtn.disabled = true;
 
             const options = {
-                maxSizeMB: 0.8,            // Máximo 800KB
-                maxWidthOrHeight: 1280,   // Máximo 1280px
+                maxSizeMB: 1.5,            // Aumentado para mayor nitidez
+                maxWidthOrHeight: 2160,   // Aumentado (crítico para tickets largos)
                 useWebWorker: true,
-                initialQuality: 0.85
+                initialQuality: 0.9       // Calidad inicial superior
             };
 
             try {
