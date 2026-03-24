@@ -3096,7 +3096,7 @@
         const placeholder = document.getElementById('scannerPlaceholder');
         const sendBtn = document.getElementById('sendBtn');
         const clearBtn = document.getElementById('clearBtn');
-        const resultArea = document.getElementById('resultArea');
+        // resultArea se busca dinámicamente (puede no existir al cargar)
 
         if (btnCamera) btnCamera.addEventListener('click', e => { e.stopPropagation(); fileInputCamera.click(); });
         if (btnGallery) btnGallery.addEventListener('click', e => { e.stopPropagation(); fileInputGallery.click(); });
@@ -3123,7 +3123,7 @@
             scannerArea.classList.add('has-image');
             sendBtn.disabled = false;
             clearBtn.style.display = 'block';
-            resultArea.style.display = 'none';
+            const ra = document.getElementById('resultArea'); if (ra) ra.style.display = 'none';
         }
 
         function dataURLtoFile(dataurl, filename) {
@@ -3203,13 +3203,14 @@
                     ctx.imageSmoothingQuality = 'high';
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    // Calidad adaptativa: archivos grandes → más compresión
+                    // Calidad agresiva para máxima velocidad de subida
                     const sizeMB = file.size / 1024 / 1024;
-                    let quality = sizeMB > 5 ? 0.7 : sizeMB > 2 ? 0.8 : 0.85;
+                    let quality = sizeMB > 8 ? 0.55 : sizeMB > 4 ? 0.65 : sizeMB > 2 ? 0.72 : 0.80;
 
                     canvas.toBlob(blob => {
                         if (!blob) return reject(new Error('Canvas blob vacío'));
                         const compressed = new File([blob], file.name || 'ticket.jpg', { type: 'image/jpeg' });
+                        console.log(`🎯 Ratio: ${sizeMB.toFixed(1)}MB → ${(blob.size/1024/1024).toFixed(2)}MB (q=${quality})`);
                         resolve(compressed);
                     }, 'image/jpeg', quality);
                 };
@@ -3230,6 +3231,7 @@
             clearBtn.style.display = 'none';
             fileInputCamera.value = '';
             fileInputGallery.value = '';
+            const ra = document.getElementById('resultArea'); if (ra) ra.style.display = 'none';
         }
 
         if (sendBtn) sendBtn.addEventListener('click', sendImage);
@@ -3319,7 +3321,8 @@
         }
 
         function showResult(data) {
-            resultArea.style.display = 'block';
+            const resultArea = document.getElementById('resultArea');
+            if (resultArea) resultArea.style.display = 'block';
             const record = Array.isArray(data) ? data[0] : data;
             const fields = record?.fields || record || {};
 
