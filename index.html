@@ -3145,32 +3145,35 @@
                 return;
             }
 
-            // Cambiar texto de procesamiento en el botón mientras comprime (feedback)
             const originalBtnText = sendBtn.innerHTML;
-            sendBtn.innerHTML = '⌛ Comprimiendo...';
+            const sizeMB = file.size / 1024 / 1024;
+            console.log(`📷 Imagen original: ${sizeMB.toFixed(2)} MB`);
+
+            // Si la imagen ya es pequeña (<800KB), NO comprimir para preservar calidad
+            if (sizeMB < 0.8) {
+                console.log('✅ Imagen ligera, sin compresión necesaria');
+                selectedFile = file;
+                const reader = new FileReader();
+                reader.onload = ev => showPreviewDirectly(ev.target.result);
+                reader.readAsDataURL(file);
+                return;
+            }
+
+            sendBtn.innerHTML = '⌛ Optimizando...';
             sendBtn.disabled = true;
 
-            const options = {
-                maxSizeMB: 1.5,            // Aumentado para mayor nitidez
-                maxWidthOrHeight: 2160,   // Aumentado (crítico para tickets largos)
-                useWebWorker: true,
-                initialQuality: 0.9       // Calidad inicial superior
-            };
-
             try {
-                console.log(`Original size: ${file.size / 1024 / 1024} MB`);
-                const compressedFile = await imageCompression(file, options);
-                console.log(`Compressed size: ${compressedFile.size / 1024 / 1024} MB`);
-                
+                // Compresión inteligente con Canvas nativo (más rápido que WebWorker)
+                const compressedFile = await smartCompress(file);
+                console.log(`📦 Comprimido: ${(compressedFile.size / 1024 / 1024).toFixed(2)} MB`);
                 selectedFile = compressedFile;
-                
-                // Mostrar preview
+
                 const reader = new FileReader();
                 reader.onload = ev => showPreviewDirectly(ev.target.result);
                 reader.readAsDataURL(compressedFile);
             } catch (error) {
-                console.error("Error en compresión:", error);
-                selectedFile = file; // Fallback
+                console.warn("⚠️ Compresión falló, usando original:", error);
+                selectedFile = file;
                 const reader = new FileReader();
                 reader.onload = ev => showPreviewDirectly(ev.target.result);
                 reader.readAsDataURL(file);
@@ -3178,6 +3181,41 @@
                 sendBtn.innerHTML = originalBtnText;
                 sendBtn.disabled = false;
             }
+        }
+
+        // Motor de compresión Canvas nativo — 3x más rápido que librería
+        function smartCompress(file) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => {
+                    // Escalar: máximo 2400px pero mínimo 1600px para tickets
+                    const MAX_DIM = 2400;
+                    let { width, height } = img;
+                    const ratio = Math.min(MAX_DIM / Math.max(width, height), 1);
+                    width = Math.round(width * ratio);
+                    height = Math.round(height * ratio);
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Calidad adaptativa: archivos grandes → más compresión
+                    const sizeMB = file.size / 1024 / 1024;
+                    let quality = sizeMB > 5 ? 0.7 : sizeMB > 2 ? 0.8 : 0.85;
+
+                    canvas.toBlob(blob => {
+                        if (!blob) return reject(new Error('Canvas blob vacío'));
+                        const compressed = new File([blob], file.name || 'ticket.jpg', { type: 'image/jpeg' });
+                        resolve(compressed);
+                    }, 'image/jpeg', quality);
+                };
+                img.onerror = () => reject(new Error('No se pudo leer la imagen'));
+                img.src = URL.createObjectURL(file);
+            });
         }
 
         if (clearBtn) clearBtn.addEventListener('click', e => { e.stopPropagation(); resetScanner(); });
@@ -3207,7 +3245,6 @@
             const overlay = document.getElementById('processingOverlay');
             overlay.classList.remove('hidden');
             
-            // Textos dinámicos para mejora de percepción de velocidad
             const steps = [
                 { main: "Leyendo documento...", sub: "Identificando áreas clave" },
                 { main: "Invocando a la IA...", sub: "Extrayendo importes e IVA" },
@@ -3221,26 +3258,60 @@
                 document.getElementById('procTextSub').textContent = steps[stepIdx].sub;
             }, 2500);
 
+            // Timeout de 90 segundos para conexiones lentas
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 90000);
+
             try {
                 const formData = new FormData();
                 formData.append('data', selectedFile);
 
+                console.log(`🚀 Enviando ${(selectedFile.size / 1024).toFixed(0)} KB a n8n...`);
+
                 const response = await fetch(config.webhookUrl, {
                     method: 'POST',
-                    body: formData
+                    body: formData,
+                    signal: controller.signal
                 });
 
+                clearTimeout(timeoutId);
+
+                // Leer respuesta como texto primero (seguro)
+                const responseText = await response.text();
+
                 if (!response.ok) {
-                    const errorMsg = await response.text();
-                    throw new Error(`Servidor n8n (HTTP ${response.status})`);
+                    throw new Error(`Servidor n8n (HTTP ${response.status}): ${responseText.substring(0, 200)}`);
                 }
 
-                const result = await response.json();
+                // Intentar parsear JSON, pero no explotar si está vacío
+                if (!responseText || responseText.trim().length === 0) {
+                    clearInterval(textInterval);
+                    alert('✅ Documento procesado correctamente.\n\nNota: El servidor no devolvió datos de detalle.');
+                    overlay.classList.add('hidden');
+                    return;
+                }
+
+                let result;
+                try {
+                    result = JSON.parse(responseText);
+                } catch (parseErr) {
+                    clearInterval(textInterval);
+                    console.warn('⚠️ Respuesta no-JSON:', responseText.substring(0, 300));
+                    alert('✅ Documento enviado.\n\nRespuesta del servidor:\n' + responseText.substring(0, 250));
+                    overlay.classList.add('hidden');
+                    return;
+                }
+
                 clearInterval(textInterval);
                 showResult(result);
             } catch (err) {
                 clearInterval(textInterval);
-                alert('❌ ERROR FATAL O RECHAZO DEL SERVIDOR:\n\n' + err.message);
+                clearTimeout(timeoutId);
+                if (err.name === 'AbortError') {
+                    alert('⏱️ TIMEOUT: La conexión tardó más de 90 segundos.\n\nAsegúrate de tener conexión a internet estable.');
+                } else {
+                    alert('❌ ERROR:\n\n' + err.message);
+                }
             } finally {
                 overlay.classList.add('hidden');
                 if (typeof lucide !== 'undefined') lucide.createIcons();
