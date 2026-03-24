@@ -137,12 +137,6 @@
             transition: var(--transition);
         }
 
-        .main {
-            padding-top: calc(85px + env(safe-area-inset-top, 0px));
-            padding-bottom: 120px;
-            transition: padding-top 0.3s ease;
-        }
-
         button:active,
         .nav-btn:active {
             transform: scale(0.96);
@@ -234,7 +228,7 @@
         /* ===== HEADER PREMIUM (ZONA ALTA - STITCH FLOATING PILL) ===== */
         .premium-header {
             position: fixed;
-            top: calc(16px + env(safe-area-inset-top, 0px));
+            top: 16px;
             left: 50%;
             transform: translateX(-50%);
             max-width: 480px;
@@ -257,7 +251,6 @@
             background: rgba(12, 12, 12, 0.7); /* Night Glass */
             border: 1px solid rgba(255, 255, 255, 0.05);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            top: calc(16px + env(safe-area-inset-top, 0px));
         }
 
         .header-profile {
