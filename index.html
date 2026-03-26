@@ -251,6 +251,10 @@
             justify-content: space-between;
             z-index: 950;
             transition: var(--transition);
+            pointer-events: none; /* Permite scroll a través del header */
+        }
+        .premium-header > * {
+            pointer-events: auto; /* Restaura interacción para botones y perfil */
         }
 
         body.dark-theme .premium-header {
@@ -396,7 +400,8 @@
         .main {
             max-width: 480px;
             margin: 0 auto;
-            padding: 96px 16px 120px; /* Padding superior ampliado para compensar Top AppBar fijo */
+            min-height: 100vh; /* Asegura área de scroll */
+            padding: calc(115px + env(safe-area-inset-top, 0px)) 16px 140px; /* Padding ajustado v.Final */
         }
 
         .tab-content {
