@@ -469,54 +469,105 @@
         }
 
         .scanner-area {
-            background: var(--white);
+            position: relative;
+            background: var(--bg-card);
             border: 2px dashed var(--border);
-            border-radius: 20px;
-            padding: 42px 20px;
+            border-radius: var(--radius-card);
+            padding: 40px 20px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
+            transition: var(--transition);
             overflow: hidden;
-        }
-
-        .scanner-area::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 50% 100%, var(--rose-glow), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .scanner-area:hover,
-        .scanner-area.drag-over {
-            border-color: var(--rose);
-            background: var(--warm-100);
-        }
-
-        .scanner-area:hover::before,
-        .scanner-area.drag-over::before {
-            opacity: 1;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .scanner-area.has-image {
             border-style: solid;
-            border-color: var(--rose);
-            padding: 0;
+            border-color: var(--premium-red);
+            padding: 10px;
         }
 
-        .scanner-icon-wrap {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, var(--warm-100), var(--warm-200));
+        .preview-img {
+            max-width: 100%;
+            max-height: 350px;
             border-radius: 20px;
-            display: flex;
+            object-fit: contain;
+            display: none;
+        }
+
+        .clear-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(228, 0, 0, 0.9);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: none;
             align-items: center;
             justify-content: center;
-            font-size: 34px;
-            margin: 0 auto 16px;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
+            transition: var(--transition);
+        }
+
+        .clear-btn:hover {
+            transform: scale(1.1);
+            background: #ff0000;
+        }
+
+        .scanner-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .scanner-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .scanner-placeholder p {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+
+        /* ═══ RESULTADO DE ESCANEO ═══ */
+        .result-item {
+            background: var(--bg-card);
             border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+        .result-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .result-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .result-value.amount {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #D4AF37;
         }
 
         .scanner-title {
@@ -1906,9 +1957,9 @@
             align-items: center;
             width: 100%;
             max-width: 420px;
-            background: #FFFFFF; /* MODO CLARO DEFAULT: Píldora blanca */
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background-color: rgba(255, 255, 255, 0.6); /* 🔑 Glassmorphism translúcido */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 50px;
             padding: 8px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
@@ -1917,22 +1968,22 @@
 
         /* En modo oscuro: Glassmorphism nocturno */
         body.dark-theme .navbar-container {
-            background: rgba(10, 10, 10, 0.75);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            background-color: rgba(10, 10, 10, 0.55);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .nav-btn {
-            flex: 1; /* Distribuye espacio uniforme */
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 4px;
-            padding: 12px 0; /* Padding vertical central generoso */
+            padding: 12px 0;
             background: transparent;
             border: none;
-            color: #666666; /* Gris oscuro neutro */
+            color: #757575; /* Gris oscuro neutro elegante */
             cursor: pointer;
             border-radius: 50px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1941,21 +1992,22 @@
 
         /* EL ELEMENTO ACTIVO: Sub-píldora Exacta */
         .nav-btn.active {
-            background: #F5F5F5; /* Modo claro: gris suave */
+            background: rgba(241, 241, 241, 0.9); /* Gris sutil con opacidad */
             color: #ebae1c; /* Color de marca exacto */
         }
         body.dark-theme .nav-btn.active {
-            background: rgba(255, 255, 255, 0.1); /* Modo oscuro: glass */
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .nav-icon i {
             width: 20px;
             height: 20px;
-            stroke-width: 2;
+            stroke-width: 1.8; /* Trazo fino elegante */
             transition: transform 0.3s ease;
         }
 
         .nav-btn.active .nav-icon i {
+            stroke-width: 2.2; /* Ligeramente más grueso cuando activo */
             transform: scale(1.1) translateY(-1px);
         }
 
@@ -2302,6 +2354,10 @@
             <div class="action-circle" onclick="toggleTheme()" title="Modo Claro/Oscuro" id="btn-theme-toggle">
                 <i data-lucide="moon"></i>
             </div>
+            <!-- Reset Caché (Solución Consola Bloqueada) -->
+            <div class="action-circle" onclick="if(confirm('¿Limpiar caché y reiniciar?')){localStorage.clear();location.reload();}" title="Limpiar Caché" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                <i data-lucide="trash-2"></i>
+            </div>
             <!-- Ajustes Técnicos -->
             <div class="action-circle" id="headerGearBtn" title="Ajustes Técnicos">
                 <i data-lucide="settings"></i>
@@ -2399,15 +2455,33 @@
                         </button>
                     </div>
                 </div>
-                <img id="previewImg" class="preview-img" style="display:none" alt="Vista previa">
+                <img id="previewImg" class="preview-img" style="display:none;" alt="Vista previa" />
+                <!-- Botón de limpieza/descarte -->
+                <button id="clearBtn" class="clear-btn" style="display:none;" title="Eliminar y volver a empezar">
+                    <i data-lucide="trash-2"></i>
+                </button>
             </div>
-             <!-- Inputs ocultos preservados -->
              <input type="file" id="fileInputCamera" accept="image/*" capture="environment" style="display:none">
              <input type="file" id="fileInputGallery" accept="image/*" style="display:none">
              
              <div class="btn-group" style="padding: 0 var(--gutter);">
                 <button class="btn btn-primary" id="sendBtn" disabled>🚀 Procesar y Guardar</button>
                 <button class="btn btn-secondary" onclick="hideGlobalScanner()" style="margin-top: 12px;">Volver a Inicio</button>
+            </div>
+
+            <!-- ═══ RESULTADO DEL ESCANEO ═══ -->
+            <div id="resultArea" style="display:none; padding: var(--gutter); margin-top: 16px;">
+                <div class="glass-panel" style="padding: 24px; border-radius: 20px; border: 1px solid rgba(212,175,55,0.3);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                        <div style="width: 40px; height: 40px; background: rgba(16,185,129,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">✅</div>
+                        <div>
+                            <div style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary);">Factura Procesada</div>
+                            <div id="resultCategoria" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Categoría: -</div>
+                        </div>
+                    </div>
+                    <div id="resultGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
+                    <button onclick="document.getElementById('resultArea').style.display='none';" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Cerrar Resumen</button>
+                </div>
             </div>
         </div>
 
@@ -2763,8 +2837,8 @@
     <div class="processing-overlay hidden" id="processingOverlay">
         <div class="processing-bread">🍞</div>
         <div class="spinner-track"></div>
-        <div class="processing-text">Procesando documento...</div>
-        <div class="processing-sub">La IA está analizando tu factura</div>
+        <div class="processing-text">Analizando con Gemini 1.5...</div>
+        <div class="processing-sub">Velocidad Flash Activada • Procesando JSON</div>
     </div>
 
     <!-- ZONA BAJA (DOCK FLOATING PILL - ESTILO APPLE) -->
@@ -2797,7 +2871,7 @@
             <!-- Ruta -->
             <button class="nav-btn" data-tab="ruta" onclick="activateTab('ruta')">
                 <span class="nav-icon"><i data-lucide="map"></i></span>
-                <span class="nav-label">RUTA</span>
+                <span class="nav-label">HOJA RUTA</span>
             </button>
         </div>
     </nav>
@@ -2923,6 +2997,12 @@
             }
         }, 3000);
 
+        // ===== CONSTANTES GLOBALES DE ALMACENAMIENTO =====
+        const CONFIG_KEY = 'dulce_jaleo_config';
+        const CONTACTS_KEY = 'dulce_jaleo_contactos';
+        const VENTA_KEY = 'dulce_jaleo_venta_semanal';
+        const RUTA_KEY = 'dulce_jaleo_ruta';
+
         // Catch-all para evitar cierres abruptos y diagnosticar errores
         window.onerror = function (msg, url, lineNo, columnNo, error) {
             console.error('[Global Error]', msg, 'at', url, ':', lineNo);
@@ -2960,7 +3040,6 @@
         });
 
         // ===== CONFIG =====
-        const CONFIG_KEY = 'dulce_jaleo_config';
         const AIRTABLE_BASE = 'app7VJr4iHt5v1r5c';
         const AIRTABLE_TABLES = {
             FACTURAS: 'tblLC7oMOUQtRWkn7',
@@ -2969,19 +3048,22 @@
         };
 
         function loadConfig() {
+            // URL FIJA - NUNCA usar la de localStorage (causa Error 404)
+            const FIXED_WEBHOOK = 'https://dulce-y-jaleo-n8n.xm1sa3.easypanel.host/webhook/lovable-webhook-v7';
             const saved = localStorage.getItem(CONFIG_KEY);
+            let cfg;
             if (saved) {
-                const cfg = JSON.parse(saved);
-                document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl || '';
-                document.getElementById('cfgAirtableToken').value = cfg.airtableToken || '';
-                return cfg;
+                cfg = JSON.parse(saved);
+                // Siempre sobreescribir la URL con la correcta
+                cfg.webhookUrl = FIXED_WEBHOOK;
+            } else {
+                cfg = { webhookUrl: FIXED_WEBHOOK, airtableToken: '' };
             }
-            const defaults = {
-                webhookUrl: 'https://dulce-y-jaleo-n8n.xm1sa3.easypanel.host/webhook/lovable-webhook',
-                airtableToken: ''
-            };
-            document.getElementById('cfgWebhookUrl').value = defaults.webhookUrl;
-            return defaults;
+            document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl;
+            if (document.getElementById('cfgAirtableToken')) {
+                document.getElementById('cfgAirtableToken').value = cfg.airtableToken || '';
+            }
+            return cfg;
         }
 
         function saveConfig() {
@@ -3135,16 +3217,28 @@
 
 
         // Modal Config desde ⚙️ del header
-        document.getElementById('headerGearBtn').addEventListener('click', () => {
-            document.getElementById('configModal').classList.add('open');
-        });
-        document.getElementById('closeConfigModal').addEventListener('click', () => {
-            document.getElementById('configModal').classList.remove('open');
-        });
-        document.getElementById('configModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('configModal'))
-                document.getElementById('configModal').classList.remove('open');
-        });
+        const hGear = document.getElementById('headerGearBtn');
+        if (hGear) {
+            hGear.addEventListener('click', () => {
+                const cMod = document.getElementById('configModal');
+                if (cMod) cMod.classList.add('open');
+            });
+        }
+        
+        const clCMod = document.getElementById('closeConfigModal');
+        if (clCMod) {
+            clCMod.addEventListener('click', () => {
+                const cMod = document.getElementById('configModal');
+                if (cMod) cMod.classList.remove('open');
+            });
+        }
+
+        const cModOv2 = document.getElementById('configModal');
+        if (cModOv2) {
+            cModOv2.addEventListener('click', (e) => {
+                if (e.target === cModOv2) cModOv2.classList.remove('open');
+            });
+        }
 
         // ===== BOTTOM NAVIGATION =====
         function activateTab(tabId) {
@@ -3178,10 +3272,10 @@
                 }
             }
 
-            if (tabId === 'facturas') loadFacturas();
-            if (tabId === 'agenda') renderAgenda();
-            if (tabId === 'margenes') loadMargenes();
-            if (tabId === 'ruta') renderRuta();
+            if (tabId === 'facturas') { try { loadFacturas(); } catch(e) { console.error(e); } }
+            if (tabId === 'agenda') { try { renderAgenda(); } catch(e) { console.error(e); } }
+            if (tabId === 'margenes') { try { loadMargenes(); } catch(e) { console.error(e); } }
+            if (tabId === 'ruta') { try { renderRuta(); } catch(e) { console.error(e); } }
 
             // FAB Tarea: visible solo en pestaña Ruta
             const fabTask = document.getElementById('fabAddTask');
@@ -3200,13 +3294,12 @@
         }
 
         document.querySelectorAll('.nav-btn[data-tab]').forEach(btn => {
-            btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+            if (btn) btn.addEventListener('click', () => activateTab(btn.dataset.tab));
         });
 
 
 
-        // Activar tab inicial
-        activateTab('inicio');
+        // Activar tab inicial se ha movido al final del script (window.load)
 
         // ===== SCANNER =====
         let selectedFile = null;   // Archivo File verdadero a enviar
@@ -3245,8 +3338,8 @@
             placeholder.style.display = 'none';
             scannerArea.classList.add('has-image');
             sendBtn.disabled = false;
-            clearBtn.style.display = 'block';
-            resultArea.style.display = 'none';
+            if (clearBtn) clearBtn.style.display = 'block';
+            if (resultArea) resultArea.style.display = 'none';
         }
 
         function dataURLtoFile(dataurl, filename) {
@@ -3262,20 +3355,17 @@
         }
 
 
+        if (btnCamera) btnCamera.onclick = () => fileInputCamera.click();
+        if (btnGallery) btnGallery.onclick = () => fileInputGallery.click();
+
         function processSelectedFile(file, isCamera) {
             if (file.type && !file.type.startsWith('image/')) {
                 alert('Por favor selecciona una imagen');
                 return;
             }
 
-            // Paso A: Si es de galería, usamos el archivo original que funcionaba bien
-            if (!isCamera) {
-                selectedFile = file;
-                const reader = new FileReader();
-                reader.onload = ev => showPreviewDirectly(ev.target.result);
-                reader.readAsDataURL(file);
-                return;
-            }
+            // PASO A: Procesado Universal (Cámara y Galería)
+            // Esto asegura que SIEMPRE se comprima antes de enviar para máxima velocidad.
 
             // Paso B: Si es de la Cámara, procesamos DataURL y lo convertimos a File explícitamente
             // Aceptar imagen aunque sea HEIC en iOS (el type puede ser vacío)
@@ -3292,7 +3382,7 @@
                     showPreviewDirectly(ev.target.result);
                 };
                 img.onload = () => {
-                    const MAX_W = 1200;
+                    const MAX_W = 800; // Ultra-Speed Optimization: Gemini Flash doesn't need more for text.
                     let w = img.width, h = img.height;
                     if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
                     const canvas = document.createElement('canvas');
@@ -3303,11 +3393,12 @@
                     ctx.drawImage(img, 0, 0, w, h);
 
                     try {
-                        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-                        selectedFile = dataURLtoFile(dataUrl, 'foto_camara.jpg');
+                        // JPEG 70% es suficiente para Gemini y reduce el peso un 40% adicional
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.70);
+                        selectedFile = dataURLtoFile(dataUrl, 'captura_optimizada.jpg');
                         showPreviewDirectly(dataUrl);
                     } catch (e) {
-                        alert('Error procesando imagen en memoria: ' + e.message);
+                        alert('Error en compresión: ' + e.message);
                         selectedFile = file;
                         showPreviewDirectly(ev.target.result);
                     }
@@ -3328,7 +3419,7 @@
             placeholder.style.display = 'block';
             scannerArea.classList.remove('has-image');
             sendBtn.disabled = true;
-            clearBtn.style.display = 'none';
+            if (clearBtn) clearBtn.style.display = 'none';
             fileInputCamera.value = '';
             fileInputGallery.value = '';
         }
@@ -3337,38 +3428,95 @@
 
         async function sendImage() {
             if (!selectedFile) return;
-            config = loadConfig();
-            if (!config.webhookUrl) {
-                alert('⚠️ Configura la URL del Webhook primero en Ajustes ⚙️');
-                return;
-            }
-
+            const config = loadConfig();
             const overlay = document.getElementById('processingOverlay');
             overlay.classList.remove('hidden');
 
             try {
-                const formData = new FormData();
-                formData.append('data', selectedFile);
+                // Convertir imagen a Base64 (único formato que acepta el webhook v1)
+                const reader = new FileReader();
+                const b64 = await new Promise((resolve) => {
+                    reader.readAsDataURL(selectedFile);
+                    reader.onload = () => resolve(reader.result);
+                });
+                const b64Clean = b64.split(',')[1];
 
+                console.log('📤 Enviando a:', config.webhookUrl);
                 const response = await fetch(config.webhookUrl, {
                     method: 'POST',
-                    body: formData
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        data: b64Clean,
+                        image: b64Clean,
+                        airtable_token: config.airtableToken || ''
+                    })
                 });
 
                 if (!response.ok) {
-                    const errorMsg = await response.text();
-                    throw new Error(`Servidor n8n (HTTP ${response.status}):\n${errorMsg.substring(0, 250)}`);
+                    const errBody = await response.text();
+                    try {
+                        const result = JSON.parse(errBody);
+                        console.log('--- N8N RAW RESPONSE ---', result);
+                        if (result.error) {
+                            console.error('IA Error:', result.error);
+                            if (result.raw) console.log('Raw UI Response:', JSON.stringify(result.raw));
+                        }
+                    } catch (parseError) {
+                        console.error('Could not parse n8n error response as JSON:', parseError);
+                        console.log('--- N8N RAW TEXT RESPONSE ---', errBody);
+                    }
+                    console.error('Fallo n8n:', response.status, errBody);
+                    let diagMsg = `Error n8n (Código ${response.status})`;
+                    if (response.status === 404) {
+                        diagMsg = '🔌 Error 404: El webhook no existe. Revisa que el flujo esté ACTIVO en n8n y que la URL termine en /lovable-webhook';
+                    } else if (response.status === 500) {
+                        diagMsg = '⚙️ Error Interno de n8n: El flujo se ha detenido. Revisa si hay algún nodo con un punto rojo en n8n.';
+                    } else if (response.status === 403 || response.status === 401) {
+                        diagMsg = '❌ Error de Permisos: La clave de Gemini en n8n no es válida.';
+                    }
+                    throw new Error(diagMsg);
                 }
 
-                const result = await response.json();
-                showResult(result);
-            } catch (err) {
-                // Paso C: try/catch con alert() con el err.message exacto
-                alert('❌ ERROR FATAL O RECHAZO DEL SERVIDOR:\n\n' + err.message);
-            } finally {
-                overlay.classList.add('hidden');
+                const resultText = (await response.text()).trim();
+
+            if (!resultText) throw new Error('Servidor n8n respondió vacío (Sin datos)');
+
+            let finalData;
+            const cleanText = resultText.replace(/[\x00-\x1F\x7F-\x9F]/g, "");
+            try {
+                finalData = JSON.parse(cleanText);
+            } catch (pe) {
+                // Reparación de JSON truncado (algoritmo resiliente)
+                let r = cleanText;
+                let b=0, k=0, s=false;
+                for(let i=0; i<r.length; i++) {
+                    if(r[i]==='"' && (i===0 || r[i-1]!=='\\')) s=!s;
+                    if(!s) {
+                        if(r[i]==='{') b++; else if(r[i]==='}') b--;
+                        if(r[i]==='[') k++; else if(r[i]===']') k--;
+                    }
+                }
+                if(s) r+='"';
+                while(b>0) { r+='}'; b--; }
+                while(k>0) { r+=']'; k--; }
+                finalData = JSON.parse(r);
             }
+            showResult(finalData);
+        } catch (err) {
+            // Mostrar modal de diagnóstico premium en lugar de alert simple
+            const errorModal = document.createElement('div');
+            errorModal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);padding:30px;border-radius:24px;box-shadow:0 20px 40px rgba(0,0,0,0.2);z-index:9999;width:90%;max-width:400px;text-align:center;border:1px solid rgba(255,255,255,0.3);';
+            errorModal.innerHTML = `
+                <div style="font-size:40px;margin-bottom:15px;">🔍</div>
+                <h3 style="margin:0 0 10px;color:#333;font-family:Inter,sans-serif;">Auditoría de Conexión</h3>
+                <p style="color:#666;font-size:14px;line-height:1.5;margin-bottom:20px;">${err.message}</p>
+                <button onclick="this.parentElement.remove()" style="background:#007AFF;color:white;border:none;padding:12px 25px;border-radius:12px;font-weight:600;width:100%;cursor:pointer;">Entendido</button>
+            `;
+            document.body.appendChild(errorModal);
+        } finally {
+            overlay.classList.add('hidden');
         }
+    }
 
         function showResult(data) {
             resultArea.style.display = 'block';
@@ -3592,7 +3740,7 @@
         }
 
         // ===== AGENDA / CONTACTOS =====
-        const CONTACTS_KEY = 'dulce_jaleo_contactos';
+
         let newContactType = 'proveedor';
         let agendaFilter = 'all';
 
@@ -3683,36 +3831,53 @@
         });
 
         // Búsqueda en tiempo real
-        if (document.getElementById('agendaSearch')) {
-            document.getElementById('agendaSearch').addEventListener('input', renderAgenda);
+        const agSearch = document.getElementById('agendaSearch');
+        if (agSearch) {
+            agSearch.addEventListener('input', renderAgenda);
         }
 
         // Modal
-        document.getElementById('fabAddContact').addEventListener('click', () => {
-            document.getElementById('contactModal').classList.add('open');
-            document.getElementById('cNombre').focus();
-        });
+        const fabAddC = document.getElementById('fabAddContact');
+        if (fabAddC) {
+            fabAddC.addEventListener('click', () => {
+                const cMod = document.getElementById('contactModal');
+                if (cMod) cMod.classList.add('open');
+                const cNom = document.getElementById('cNombre');
+                if (cNom) cNom.focus();
+            });
+        }
 
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('contactModal').classList.remove('open');
-        });
+        const clMod = document.getElementById('closeModal');
+        if (clMod) {
+            clMod.addEventListener('click', () => {
+                const cMod = document.getElementById('contactModal');
+                if (cMod) cMod.classList.remove('open');
+            });
+        }
 
-        document.getElementById('contactModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('contactModal'))
-                document.getElementById('contactModal').classList.remove('open');
-        });
+        const cModOv = document.getElementById('contactModal');
+        if (cModOv) {
+            cModOv.addEventListener('click', (e) => {
+                if (e.target === cModOv) cModOv.classList.remove('open');
+            });
+        }
 
         document.querySelectorAll('.modal-type-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.modal-type-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                newContactType = btn.dataset.ctype;
-            });
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.modal-type-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    newContactType = btn.dataset.ctype;
+                });
+            }
         });
 
-        document.getElementById('saveContact').addEventListener('click', () => {
-            const nombre = document.getElementById('cNombre').value.trim();
-            if (!nombre) { document.getElementById('cNombre').focus(); return; }
+        const sCont = document.getElementById('saveContact');
+        if (sCont) {
+            sCont.addEventListener('click', () => {
+                const cNom = document.getElementById('cNombre');
+                const nombre = cNom ? cNom.value.trim() : '';
+                if (!nombre) { if (cNom) cNom.focus(); return; }
             const contacts = getContacts();
             contacts.push({
                 id: Date.now().toString(), // Asegurar ID string para data-id
@@ -3724,10 +3889,15 @@
                 creado: new Date().toISOString().slice(0, 10)
             });
             saveContacts(contacts);
-            ['cNombre', 'cTelefono', 'cEmail', 'cCategoria'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('contactModal').classList.remove('open');
+            ['cNombre', 'cTelefono', 'cEmail', 'cCategoria'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            const cMod = document.getElementById('contactModal');
+            if (cMod) cMod.classList.remove('open');
             renderAgenda();
-        });
+            });
+        }
 
         // Borrado de contactos (REGLA DE ORO: Intercambio de Modales para evitar fallos de capa)
         window.confirmarEliminarContacto = function () {
@@ -3793,7 +3963,7 @@
         };
 
         // ===== MÁRGENES =====
-        const VENTA_KEY = 'dulce_jaleo_venta_semanal';
+
 
         async function loadMargenes() {
             const ventaGuardada = localStorage.getItem(VENTA_KEY);
@@ -3958,7 +4128,7 @@
         };
 
         // ===== HOJA DE RUTA - GESTOR OPERATIVO =====
-        const RUTA_KEY = 'dulce_jaleo_ruta';
+
 
         const RUTA_SEED = {
             version: 1,
@@ -4351,6 +4521,13 @@
                 const s = document.querySelector('.splash-screen');
                 if (s) s.classList.add('hide');
             }, 500);
+
+            // 5. Activar tab inicial
+            try {
+                activateTab('inicio');
+            } catch(e) {
+                console.error('Error durante la activación inicial de pestañas:', e);
+            }
         });
     </script>
 </body>

@@ -469,105 +469,54 @@
         }
 
         .scanner-area {
-            position: relative;
-            background: var(--bg-card);
+            background: var(--white);
             border: 2px dashed var(--border);
-            border-radius: var(--radius-card);
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 42px 20px;
             text-align: center;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        }
+
+        .scanner-area::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 100%, var(--rose-glow), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .scanner-area:hover,
+        .scanner-area.drag-over {
+            border-color: var(--rose);
+            background: var(--warm-100);
+        }
+
+        .scanner-area:hover::before,
+        .scanner-area.drag-over::before {
+            opacity: 1;
         }
 
         .scanner-area.has-image {
             border-style: solid;
-            border-color: var(--premium-red);
-            padding: 10px;
+            border-color: var(--rose);
+            padding: 0;
         }
 
-        .preview-img {
-            max-width: 100%;
-            max-height: 350px;
+        .scanner-icon-wrap {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--warm-100), var(--warm-200));
             border-radius: 20px;
-            object-fit: contain;
-            display: none;
-        }
-
-        .clear-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(228, 0, 0, 0.9);
-            color: white;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            backdrop-filter: blur(4px);
-            transition: var(--transition);
-        }
-
-        .clear-btn:hover {
-            transform: scale(1.1);
-            background: #ff0000;
-        }
-
-        .scanner-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .scanner-icon {
-            font-size: 40px;
-            margin-bottom: 8px;
-        }
-
-        .scanner-placeholder p {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-
-        /* ═══ RESULTADO DE ESCANEO ═══ */
-        .result-item {
-            background: var(--bg-card);
+            font-size: 34px;
+            margin: 0 auto 16px;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 14px;
-        }
-        .result-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .result-value {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .result-value.amount {
-            font-family: 'Outfit', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: #D4AF37;
         }
 
         .scanner-title {
@@ -1957,9 +1906,9 @@
             align-items: center;
             width: 100%;
             max-width: 420px;
-            background-color: rgba(255, 255, 255, 0.6); /* 🔑 Glassmorphism translúcido */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: #FFFFFF; /* MODO CLARO DEFAULT: Píldora blanca */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 50px;
             padding: 8px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
@@ -1968,22 +1917,22 @@
 
         /* En modo oscuro: Glassmorphism nocturno */
         body.dark-theme .navbar-container {
-            background-color: rgba(10, 10, 10, 0.55);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: rgba(10, 10, 10, 0.75);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .nav-btn {
-            flex: 1;
+            flex: 1; /* Distribuye espacio uniforme */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 4px;
-            padding: 12px 0;
+            padding: 12px 0; /* Padding vertical central generoso */
             background: transparent;
             border: none;
-            color: #757575; /* Gris oscuro neutro elegante */
+            color: #666666; /* Gris oscuro neutro */
             cursor: pointer;
             border-radius: 50px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1992,22 +1941,21 @@
 
         /* EL ELEMENTO ACTIVO: Sub-píldora Exacta */
         .nav-btn.active {
-            background: rgba(241, 241, 241, 0.9); /* Gris sutil con opacidad */
+            background: #F5F5F5; /* Modo claro: gris suave */
             color: #ebae1c; /* Color de marca exacto */
         }
         body.dark-theme .nav-btn.active {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1); /* Modo oscuro: glass */
         }
 
         .nav-icon i {
             width: 20px;
             height: 20px;
-            stroke-width: 1.8; /* Trazo fino elegante */
+            stroke-width: 2;
             transition: transform 0.3s ease;
         }
 
         .nav-btn.active .nav-icon i {
-            stroke-width: 2.2; /* Ligeramente más grueso cuando activo */
             transform: scale(1.1) translateY(-1px);
         }
 
@@ -2451,33 +2399,17 @@
                         </button>
                     </div>
                 </div>
-                <img id="previewImg" class="preview-img" style="display:none;" alt="Vista previa" />
-                <!-- Botón de limpieza/descarte -->
-                <button id="clearBtn" class="clear-btn" style="display:none;" title="Eliminar y volver a empezar">
-                    <i data-lucide="trash-2"></i>
-                </button>
+                <img id="previewImg" class="preview-img" style="display:none" alt="Vista previa">
             </div>
              <input type="file" id="fileInputCamera" accept="image/*" capture="environment" style="display:none">
              <input type="file" id="fileInputGallery" accept="image/*" style="display:none">
              
+             <!-- Botón de limpieza flotante para el escáner -->
+             <button id="clearBtn" style="display:none; position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); border: none; color: white; border-radius: 50%; width: 32px; height: 32px; cursor: pointer; z-index: 10;">×</button>
+             
              <div class="btn-group" style="padding: 0 var(--gutter);">
                 <button class="btn btn-primary" id="sendBtn" disabled>🚀 Procesar y Guardar</button>
                 <button class="btn btn-secondary" onclick="hideGlobalScanner()" style="margin-top: 12px;">Volver a Inicio</button>
-            </div>
-
-            <!-- ═══ RESULTADO DEL ESCANEO ═══ -->
-            <div id="resultArea" style="display:none; padding: var(--gutter); margin-top: 16px;">
-                <div class="glass-panel" style="padding: 24px; border-radius: 20px; border: 1px solid rgba(212,175,55,0.3);">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-                        <div style="width: 40px; height: 40px; background: rgba(16,185,129,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">✅</div>
-                        <div>
-                            <div style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary);">Factura Procesada</div>
-                            <div id="resultCategoria" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Categoría: -</div>
-                        </div>
-                    </div>
-                    <div id="resultGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
-                    <button onclick="document.getElementById('resultArea').style.display='none';" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Cerrar Resumen</button>
-                </div>
             </div>
         </div>
 
@@ -3354,8 +3286,14 @@
                 return;
             }
 
-            // PASO A: Procesado Universal (Cámara y Galería)
-            // Esto asegura que SIEMPRE se comprima antes de enviar para máxima velocidad.
+            // Paso A: Si es de galería, usamos el archivo original que funcionaba bien
+            if (!isCamera) {
+                selectedFile = file;
+                const reader = new FileReader();
+                reader.onload = ev => showPreviewDirectly(ev.target.result);
+                reader.readAsDataURL(file);
+                return;
+            }
 
             // Paso B: Si es de la Cámara, procesamos DataURL y lo convertimos a File explícitamente
             // Aceptar imagen aunque sea HEIC en iOS (el type puede ser vacío)
@@ -3372,7 +3310,7 @@
                     showPreviewDirectly(ev.target.result);
                 };
                 img.onload = () => {
-                    const MAX_W = 800; // Ultra-Speed Optimization: Gemini Flash doesn't need more for text.
+                    const MAX_W = 1200; // Resolución óptima para Gemini 1.5 Flash
                     let w = img.width, h = img.height;
                     if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
                     const canvas = document.createElement('canvas');
@@ -3383,14 +3321,14 @@
                     ctx.drawImage(img, 0, 0, w, h);
 
                     try {
-                        // JPEG 70% es suficiente para Gemini y reduce el peso un 40% adicional
-                        const dataUrl = canvas.toDataURL('image/jpeg', 0.70);
-                        selectedFile = dataURLtoFile(dataUrl, 'captura_optimizada.jpg');
+                        // Usar WebP para máxima velocidad (30% más ligero que JPEG)
+                        const dataUrl = canvas.toDataURL('image/webp', 0.80);
+                        selectedFile = dataURLtoFile(dataUrl, 'captura_optimizada.webp');
                         showPreviewDirectly(dataUrl);
                     } catch (e) {
-                        alert('Error en compresión: ' + e.message);
-                        selectedFile = file;
-                        showPreviewDirectly(ev.target.result);
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.80);
+                        selectedFile = dataURLtoFile(dataUrl, 'captura_optimizada.jpg');
+                        showPreviewDirectly(dataUrl);
                     }
 
                     canvas.width = 0; canvas.height = 0;
@@ -3441,58 +3379,11 @@
                     throw new Error(`Servidor n8n (HTTP ${response.status}):\n${errorMsg.substring(0, 250)}`);
                 }
 
-                const resultText = (await response.text()).trim();
-                console.log("Respuesta cruda de n8n:", resultText);
-
-                try {
-                    if (!resultText) throw new Error("El servidor devolvió una respuesta vacía. Comprueba el flujo en n8n.");
-                    
-                    // Limpiar caracteres de control invisibles
-                    let cleanText = resultText.replace(/[\x00-\x1F\x7F-\x9F]/g, "");
-                    
-                    let result;
-                    try {
-                        result = JSON.parse(cleanText);
-                    } catch (pErr) {
-                        // ═══ REPARACIÓN AUTOMÁTICA INTELIGENTE ═══
-                        console.warn("JSON truncado detectado, reparando...", pErr.message);
-                        let r = cleanText;
-                        
-                        // 1) Detectar si estamos dentro de un string abierto
-                        let inString = false;
-                        for (let i = 0; i < r.length; i++) {
-                            if (r[i] === '"' && (i === 0 || r[i-1] !== '\\')) inString = !inString;
-                        }
-                        if (inString) r += '"'; // Cerrar string abierto
-                        
-                        // 2) Contar llaves y corchetes abiertos
-                        let openBraces = 0, openBrackets = 0;
-                        let inStr = false;
-                        for (let i = 0; i < r.length; i++) {
-                            if (r[i] === '"' && (i === 0 || r[i-1] !== '\\')) inStr = !inStr;
-                            if (!inStr) {
-                                if (r[i] === '{') openBraces++;
-                                if (r[i] === '}') openBraces--;
-                                if (r[i] === '[') openBrackets++;
-                                if (r[i] === ']') openBrackets--;
-                            }
-                        }
-                        
-                        // 3) Cerrar todas las estructuras abiertas
-                        for (let i = 0; i < openBraces; i++) r += '}';
-                        for (let i = 0; i < openBrackets; i++) r += ']';
-                        
-                        console.log("JSON reparado:", r.substring(r.length - 50));
-                        result = JSON.parse(r);
-                        console.info("✅ JSON reparado con éxito — datos recuperados.");
-                    }
-                    
-                    showResult(result);
-                } catch (jsonErr) {
-                    throw new Error(`Error parseando respuesta de n8n:\n${jsonErr.message}\n\nRespuesta recibida:\n${resultText.substring(0, 800)}`);
-                }
+                const result = await response.json();
+                showResult(result);
             } catch (err) {
-                alert('❌ ERROR DE ESCANEO:\n\n' + err.message);
+                // Paso C: try/catch con alert() con el err.message exacto
+                alert('❌ ERROR FATAL O RECHAZO DEL SERVIDOR:\n\n' + err.message);
             } finally {
                 overlay.classList.add('hidden');
             }
