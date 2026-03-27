@@ -138,8 +138,8 @@
         }
 
         .main {
-            padding-top: calc(85px + env(safe-area-inset-top, 0px));
-            padding-bottom: 120px;
+            padding-top: calc(65px + env(safe-area-inset-top, 0px));
+            padding-bottom: 100px;
             transition: padding-top 0.3s ease;
         }
 
@@ -2350,19 +2350,15 @@
         }
 
         .bento-item {
-            position: relative;
             background: var(--glass-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
-            border-radius: 28px;
-            padding: 24px;
-            overflow: hidden;
+            border-radius: 24px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 135px;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-        }
-
-        .bento-item:active {
-            transform: scale(0.96);
         }
 
         .bento-item-large {
@@ -2373,30 +2369,31 @@
             font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
             color: var(--text-muted);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .bento-value {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 800;
             color: var(--text-primary);
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
+            font-family: 'Outfit', sans-serif !important;
         }
 
         .bento-trend {
             display: inline-flex;
             align-items: center;
             gap: 4px;
-            padding: 4px 8px;
+            padding: 5px 10px;
             border-radius: 12px;
             font-size: 10px;
             font-weight: 700;
-            margin-top: 8px;
+            margin-top: 4px;
         }
 
         .trend-up { background: rgba(16, 185, 129, 0.1); color: #10b981; }
@@ -2406,6 +2403,169 @@
             height: 40px;
             width: 100%;
             margin-top: 16px;
+        }
+
+        .analytics-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .analytics-layout {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+
+        .analytics-visual {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (max-width: 600px) {
+            .analytics-visual {
+                gap: 8px; /* Menos espacio entre valor y gráfico en móvil */
+            }
+        }
+
+        .analytics-insights {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        @media (max-width: 600px) {
+            .analytics-insights {
+                margin-top: 10px; /* Separación moderada del gráfico */
+                gap: 8px;
+            }
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 16px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .insight-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .insight-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif !important;
+        }
+
+        .ai-recommendation {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 14px;
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 0;
+            height: auto; /* IMPORTANTE: No fijar altura en móvil */
+        }
+
+        .ai-recommendation i {
+            color: var(--gold);
+            filter: drop-shadow(0 0 5px var(--gold));
+            width: 18px;
+            height: 18px;
+        }
+
+        .ai-recommendation p {
+            font-size: 11px;
+            line-height: 1.4;
+            color: var(--text-primary);
+            font-weight: 500;
+            margin: 0;
+            font-family: 'Outfit', sans-serif !important;
+        }
+
+        .ai-smart-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dos columnas en móvil para ahorrar espacio vertical */
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 400px) {
+            .ai-smart-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .smart-metric-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 8px 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .smart-metric-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .smart-metric-value {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .ai-smart-legend {
+            background: rgba(212, 175, 55, 0.03);
+            border-radius: 16px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        .small-metric-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 4px 10px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            min-width: 60px;
+        }
+
+        @media (max-width: 600px) {
+            .analytics-integrated-flow {
+                display: flex;
+                flex-direction: column;
+            }
+            .bento-chart-mini {
+                height: 120px !important; /* Más altura en móvil al ser una sola columna */
+            }
         }
 
         /* Hero Scanner Rediseñado */
@@ -2450,58 +2610,151 @@
             justify-content: center;
             box-shadow: 0 8px 16px rgba(212, 175, 55, 0.3);
         }
-        /* ✨ LÓGICA SPLIT ANALYTICS v2.1 ✨ */
-        .analytics-layout {
+        /* ✨ ESCÁNER LUXURY v3.0 (Adaptativo) ✨ */
+        .scanner-area {
+            position: relative;
+            background: var(--warm-100);
+            border: 2px dashed var(--gold);
+            border-radius: 24px;
+            min-height: 280px;
             display: flex;
-            gap: 24px;
-            align-items: stretch;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 20px 0;
+            opacity: 0.8;
         }
-        .analytics-visual {
-            flex: 1.2;
-            display: flex;
-            flex-direction: column;
+
+        body.dark-theme .scanner-area {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(212, 175, 55, 0.3);
         }
-        .analytics-insights {
-            flex: 1;
-            padding-left: 20px;
-            border-left: 1px solid var(--glass-border);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 12px;
+
+        .scanner-area.has-image {
+            border-style: solid;
+            border-color: var(--gold);
+            background: var(--bg-page);
+            opacity: 1;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
         }
-        .insight-item {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
+
+        body.dark-theme .scanner-area.has-image {
+            background: rgba(0,0,0,0.4);
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
         }
-        .insight-label {
-            font-size: 9px;
-            font-weight: 800;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        .insight-value {
-            font-size: 15px;
-            font-weight: 700;
+
+        .lux-scan-pill {
+            background: var(--bg-page);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 16px 24px;
             color: var(--text-primary);
-        }
-        .ai-recommendation {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.04) 100%);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            border-radius: 14px;
-            padding: 10px 12px;
-            margin-top: 8px;
             display: flex;
-            gap: 8px;
-            align-items: flex-start;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        .ai-recommendation i {
-            width: 14px;
+
+        body.dark-theme .lux-scan-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .lux-scan-pill:active {
+            transform: scale(0.95);
+            background: var(--warm-200);
+        }
+        
+        body.dark-theme .lux-scan-pill:active {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        .scan-help-text {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .lux-send-btn {
+            background: var(--gold) !important;
+            color: white !important;
+            box-shadow: 0 4px 15px var(--gold-glow);
+            border: none;
+            transition: var(--transition);
+        }
+
+        .lux-send-btn:disabled {
+            background: var(--warm-200) !important;
+            color: var(--text-muted) !important;
+            box-shadow: none;
+            opacity: 0.6;
+        }
+
+        body.dark-theme .lux-send-btn:disabled {
+            background: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        .btn-luxury-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 14px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .btn-luxury-outline:active {
+            background: var(--warm-100);
+            border-color: var(--gold);
+        }
+
+        body.dark-theme .btn-luxury-outline:active {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .lux-scan-pill i {
             color: var(--gold);
-            flex-shrink: 0;
-            margin-top: 2px;
+            width: 20px;
+        }
+
+        /* Efecto de Escaneo (Animación) */
+        .scan-line {
+            display: none;
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            box-shadow: 0 0 15px var(--gold);
+            z-index: 5;
+            animation: scanAnim 2s linear infinite;
+        }
+
+        @keyframes scanAnim {
+            0% { top: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        .preview-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 12px;
+            animation: fadeIn 0.5s ease;
         }
         .ai-recommendation p {
             font-size: 10px;
@@ -2574,36 +2827,57 @@
 
             <!-- BENTO GRID PRINCIPAL -->
             <div class="bento-grid">
-                <!-- Widget Gastos (Large - Split Analytics v2.1) -->
+                <!-- Widget Gastos (Large - Lateral Analytics v3.0) -->
                 <div class="bento-item bento-item-large" onclick="activateTab('facturas')">
-                    <div class="analytics-layout">
-                        <!-- Lado Izquierdo: Visual & Primario -->
-                        <div class="analytics-visual">
-                            <div class="bento-label">
-                                <i data-lucide="trending-up" style="width: 14px; color: var(--gold);"></i>
-                                Gastos del Mes
-                            </div>
+                    <div class="analytics-integrated-flow">
+                        <div class="bento-label">
+                            <i data-lucide="trending-up" style="width: 14px; color: var(--gold);"></i>
+                            GASTOS DEL MES
+                        </div>
+                        
+                        <div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 5px;">
                             <div id="dash-total-gastos" class="bento-value">0.00€</div>
                             <div class="bento-trend trend-up">
-                                <i data-lucide="arrow-up-right" style="width: 10px;"></i> +4.2% vs mes anterior
+                                <i data-lucide="arrow-up-right" style="width: 12px;"></i>
+                                <span>+4.2% vs mes anterior</span>
                             </div>
-                            <!-- Mini Chart SVG -->
-                            <div class="bento-chart-mini" id="miniChartGastos"></div>
                         </div>
 
-                        <!-- Lado Derecho: Inteligencia & Insights -->
-                        <div class="analytics-insights">
-                            <div class="insight-item">
-                                <span class="insight-label">Proyección</span>
-                                <span class="insight-value" id="dash-proyeccion">0.00€</span>
+                        <!-- Gráfico Dual: Gastos | Volumen -->
+                        <div style="display: flex; gap: 15px; margin-top: 15px; margin-bottom: 5px;">
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 8px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="bar-chart-2" style="width: 10px;"></i>Tendencia</div>
+                                <div id="miniChartGastos" class="bento-chart-mini" style="height: 65px; margin-top: 0;"></div>
                             </div>
-                            <div class="insight-item">
-                                <span class="insight-label">Ticket Medio</span>
-                                <span class="insight-value" id="dash-ticket-medio">0.00€</span>
+                            <div style="flex: 1; min-width: 0;">
+                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 8px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="activity" style="width: 10px;"></i>Actividad</div>
+                                <div id="miniChartVolumen" class="bento-chart-mini" style="height: 65px; margin-top: 0;"></div>
                             </div>
-                            <div class="ai-recommendation">
-                                <i data-lucide="sparkles"></i>
-                                <p id="dash-ai-insight">Analizando patrones de gasto...</p>
+                        </div>
+
+                        <!-- Smart Legend IA (Compacta Lateral) -->
+                        <div class="ai-smart-legend" style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(212,175,55,0.1);">
+                            <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                <div style="min-width: 24px; height: 24px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                    <i data-lucide="sparkles" style="width: 14px; color: var(--gold);"></i>
+                                </div>
+                                <div style="flex: 1;">
+                                    <p id="dash-ai-insight" style="font-size: 10.5px; font-weight: 500; color: var(--text-primary); margin: 0; line-height: 1.4;">Pendiente de escaneo para generar insights operativos.</p>
+                                    
+                                    <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
+                                        <div class="small-metric-pill">
+                                            <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase;">Alertas</span>
+                                            <span style="font-size: 10px; font-weight: 800; color: #ef4444;" id="smart-metric-alerts">0</span>
+                                        </div>
+                                        <div class="small-metric-pill">
+                                            <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase;">Ahorro</span>
+                                            <span style="font-size: 10px; font-weight: 800; color: var(--gold);" id="smart-metric-savings">0.00€</span>
+                                        </div>
+                                        <div class="small-metric-pill" style="margin-left: auto; background: var(--gold); color: #000; border: none; padding: 5px 10px; cursor: pointer;" onclick="event.stopPropagation(); activateTab('margenes');">
+                                            <span style="font-size: 9px; font-weight: 900;">OPTIMIZAR</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2644,33 +2918,46 @@
             </div>
         </div>
 
-        <!-- ===== SECCIÓN GLOBAL: ESCÁNER (Oculto hasta invocación) ===== -->
-        <div id="global-scanner-overlay" class="tab-content" style="display:none; padding-bottom: 120px;">
-            <div class="section-title">Escanear</div>
-            <div class="scanner-area glass-panel" id="scannerArea"
-                style="margin: var(--gutter); padding: calc(var(--gutter) * 1.5); text-align: center;">
-                <div id="scannerPlaceholder">
-                    <div class="scan-options" style="display: flex; gap: 16px; justify-content: center;">
-                        <button class="btn-scan glass-panel" id="btnCamera" style="padding: 14px 28px;">
-                            <i data-lucide="camera"></i> Cámara
-                        </button>
-                        <button class="btn-scan glass-panel" id="btnGallery" style="padding: 14px 28px;">
-                            <i data-lucide="image"></i> Galería
-                        </button>
+        <!-- ===== SECCIÓN GLOBAL: ESCÁNER LUXURY v3.0 ===== -->
+        <div id="global-scanner-overlay" class="tab-content" style="display:none; padding-bottom: 140px;">
+            <div class="section-title">Escanear Documento</div>
+            <div class="section-subtitle" style="text-align: center; margin-bottom: 24px;">Captura facturas o albaranes con IA</div>
+
+            <div class="scanner-area" id="scannerArea" style="margin: 0 16px;">
+                <!-- Efecto de línea de escaneo -->
+                <div class="scan-line" id="scanLine"></div>
+
+                <div id="scannerPlaceholder" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;">
+                    <div class="scan-options" style="display: flex; flex-direction: column; gap: 16px; width: 80%; max-width: 280px;">
+                        <div class="lux-scan-pill" id="btnCamera">
+                            <i data-lucide="camera"></i>
+                            <span>Usar Cámara</span>
+                        </div>
+                        <div class="lux-scan-pill" id="btnGallery">
+                            <i data-lucide="image"></i>
+                            <span>Abrir Galería</span>
+                        </div>
                     </div>
+                    <p class="scan-help-text">Formatos soportados: JPG, PNG, HEIC</p>
                 </div>
+
                 <img id="previewImg" class="preview-img" style="display:none;" alt="Vista previa" />
-                <!-- Botón de limpieza/descarte -->
-                <button id="clearBtn" class="clear-btn" style="display:none;" title="Eliminar y volver a empezar">
-                    <i data-lucide="trash-2"></i>
+                
+                <!-- Botón de limpieza premium -->
+                <button id="clearBtn" class="clear-btn" style="display:none; position: absolute; top: 16px; right: 16px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 50%; width: 40px; height: 40px; color: #ef4444; z-index: 10;">
+                    <i data-lucide="x"></i>
                 </button>
             </div>
              <input type="file" id="fileInputCamera" accept="image/*" capture="environment" style="display:none">
              <input type="file" id="fileInputGallery" accept="image/*" style="display:none">
              
-             <div class="btn-group" style="padding: 0 var(--gutter);">
-                <button class="btn btn-primary" id="sendBtn" disabled>🚀 Procesar y Guardar</button>
-                <button class="btn btn-secondary" onclick="hideGlobalScanner()" style="margin-top: 12px;">Volver a Inicio</button>
+             <div class="btn-group" style="padding: 0 16px; margin-top: 24px;">
+                <button class="btn btn-primary lux-send-btn" id="sendBtn" disabled style="width: 100%; padding: 18px; border-radius: 20px; font-weight: 800; letter-spacing: 0.5px;">
+                    🚀 PROCESAR DOCUMENTO
+                </button>
+                <button class="btn-luxury-outline" onclick="hideGlobalScanner()" style="width: 100%; margin-top: 12px;">
+                    Volver a Inicio
+                </button>
             </div>
 
             <!-- ═══ RESULTADO DEL ESCANEO ═══ -->
@@ -2917,15 +3204,8 @@
                     required>
             </div>
 
-            <div class="config-field">
-                <label class="config-label">🔑 Airtable Personal Access Token</label>
-                <input class="config-input" id="cfgAirtableToken" type="password" placeholder="pat0XXXXX.XXXXX..."
-                    required>
-                <div class="config-help">Créalo en <a href="https://airtable.com/create/tokens"
-                        target="_blank">airtable.com/create/tokens</a></div>
-            </div>
 
-            <div class="config-actions" style="display:flex;gap:12px;margin-top:10px;">
+<div class="config-actions" style="display:flex;gap:12px;margin-top:10px;">
                 <button class="btn btn-secondary" id="closeConfigModal" style="flex:1;">Cancelar</button>
                 <button class="btn btn-primary" id="saveConfigBtn"
                     style="flex:2;background:var(--amber);color:var(--amber-dark); display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -3243,12 +3523,6 @@
         });
 
         // ===== CONFIG =====
-        const AIRTABLE_BASE = 'app7VJr4iHt5v1r5c';
-        const AIRTABLE_TABLES = {
-            FACTURAS: 'tblLC7oMOUQtRWkn7',
-            ALBARANES: 'tblX9EQUmwItNJCZI',
-            GASTOS_VARIOS: 'tblHzVIPEde7zWnUv'
-        };
 
         function loadConfig() {
             // URL FIJA - NUNCA usar la de localStorage (causa Error 404)
@@ -3260,19 +3534,15 @@
                 // Siempre sobreescribir la URL con la correcta
                 cfg.webhookUrl = FIXED_WEBHOOK;
             } else {
-                cfg = { webhookUrl: FIXED_WEBHOOK, airtableToken: '' };
+                cfg = { webhookUrl: FIXED_WEBHOOK };
             }
             document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl;
-            if (document.getElementById('cfgAirtableToken')) {
-                document.getElementById('cfgAirtableToken').value = cfg.airtableToken || '';
-            }
             return cfg;
         }
 
         function saveConfig() {
             const cfg = {
-                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim(),
-                airtableToken: document.getElementById('cfgAirtableToken').value.trim()
+                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim()
             };
             localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
             config = cfg;
@@ -3308,35 +3578,19 @@
         };
 
         async function fetchGlobalData() {
-            config = loadConfig();
-            if (!config.airtableToken) return false;
-
-            const headers = { 'Authorization': 'Bearer ' + config.airtableToken };
             const now = new Date();
             globalStats.mesActual = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
 
             try {
-                // Fetch las 3 tablas en paralelo
-                const [facturasRes, albaranesRes, gastosRes] = await Promise.all([
-                    fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLES.FACTURAS}`, { headers }),
-                    fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLES.ALBARANES}`, { headers }),
-                    fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLES.GASTOS_VARIOS}`, { headers })
-                ]);
-
-                if (facturasRes.status === 401) {
-                    console.warn('Airtable 401: Token no válido');
-                    return false;
-                }
-
-                const [facturasData, albaranesData, gastosData] = await Promise.all([
-                    facturasRes.json(), albaranesRes.json(), gastosRes.json()
-                ]);
+                // Obtener las 3 tablas vía backend seguro (sin tokens en el navegador)
+                const data = await DulceAPI.fetchAllRecords();
+                // data = { facturas: [], albaranes: [], gastos: [] }
 
                 // Normalizar TODOS los registros
                 globalStats.allRecords = [];
-                if (facturasData.records) globalStats.allRecords.push(...facturasData.records.map(r => normalizeRecord(r, 'FACTURA')));
-                if (albaranesData.records) globalStats.allRecords.push(...albaranesData.records.map(r => normalizeRecord(r, 'ALBARAN')));
-                if (gastosData.records) globalStats.allRecords.push(...gastosData.records.map(r => normalizeRecord(r, 'GASTOS_VARIOS')));
+                if (data.facturas) globalStats.allRecords.push(...data.facturas.map(r => normalizeRecord(r, 'FACTURA')));
+                if (data.albaranes) globalStats.allRecords.push(...data.albaranes.map(r => normalizeRecord(r, 'ALBARAN')));
+                if (data.gastos) globalStats.allRecords.push(...data.gastos.map(r => normalizeRecord(r, 'GASTOS_VARIOS')));
 
                 globalStats.allRecords.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
                 calculateGlobalStats();
@@ -3504,88 +3758,49 @@
 
         // Activar tab inicial se ha movido al final del script (window.load)
 
-        // ===== SCANNER =====
-        let selectedFile = null;   // Archivo File verdadero a enviar
-        const scannerArea = document.getElementById('scannerArea');
-        const fileInputCamera = document.getElementById('fileInputCamera');
-        const fileInputGallery = document.getElementById('fileInputGallery');
-        const btnCamera = document.getElementById('btnCamera');
-        const btnGallery = document.getElementById('btnGallery');
-        const previewImg = document.getElementById('previewImg');
-        const placeholder = document.getElementById('scannerPlaceholder');
-        const sendBtn = document.getElementById('sendBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const resultArea = document.getElementById('resultArea');
+        // ══════════════════════════════════════════════════════════════
+        // ✨ MOTOR DE ESCÁNER LUXURY v3.0 (Unified & Reliable) ✨
+        // ══════════════════════════════════════════════════════════════
+        
+        const scannerPlaceholder = document.getElementById('scannerPlaceholder');
+        const scanLine = document.getElementById('scanLine');
+        let selectedFile = null;
 
-        if (btnCamera) btnCamera.addEventListener('click', e => { e.stopPropagation(); fileInputCamera.click(); });
-        if (btnGallery) btnGallery.addEventListener('click', e => { e.stopPropagation(); fileInputGallery.click(); });
-        if (scannerArea) scannerArea.addEventListener('click', () => { if (!selectedFile && fileInputGallery) fileInputGallery.click(); });
+        // 1. Inicialización de Eventos
+        if (btnCamera) btnCamera.addEventListener('click', () => fileInputCamera.click());
+        if (btnGallery) btnGallery.addEventListener('click', () => fileInputGallery.click());
 
-        // Drag & Drop
         if (scannerArea) {
-        scannerArea.addEventListener('dragover', e => { e.preventDefault(); scannerArea.classList.add('drag-over'); });
-        scannerArea.addEventListener('dragleave', () => scannerArea.classList.remove('drag-over'));
-        scannerArea.addEventListener('drop', e => {
-            e.preventDefault();
-            scannerArea.classList.remove('drag-over');
-            if (e.dataTransfer.files.length) processSelectedFile(e.dataTransfer.files[0], false);
-        });
-        } // cierre if (scannerArea)
+            scannerArea.addEventListener('click', (e) => {
+                if (e.target === scannerArea || e.target === scannerPlaceholder) {
+                    if (!selectedFile) fileInputGallery.click();
+                }
+            });
+            scannerArea.addEventListener('dragover', e => { e.preventDefault(); scannerArea.classList.add('drag-over'); });
+            scannerArea.addEventListener('dragleave', () => scannerArea.classList.remove('drag-over'));
+            scannerArea.addEventListener('drop', e => {
+                e.preventDefault();
+                scannerArea.classList.remove('drag-over');
+                if (e.dataTransfer.files.length) processSelectedFile(e.dataTransfer.files[0], false);
+            });
+        }
 
         if (fileInputCamera) fileInputCamera.addEventListener('change', e => { if (e.target.files.length) processSelectedFile(e.target.files[0], true); });
         if (fileInputGallery) fileInputGallery.addEventListener('change', e => { if (e.target.files.length) processSelectedFile(e.target.files[0], false); });
 
-        function showPreviewDirectly(srcBase64) {
-            previewImg.src = srcBase64;
-            previewImg.style.display = 'block';
-            placeholder.style.display = 'none';
-            scannerArea.classList.add('has-image');
-            sendBtn.disabled = false;
-            if (clearBtn) clearBtn.style.display = 'block';
-            if (resultArea) resultArea.style.display = 'none';
-        }
+        if (clearBtn) clearBtn.addEventListener('click', (e) => { e.stopPropagation(); resetScanner(); });
 
-        function dataURLtoFile(dataurl, filename) {
-            const arr = dataurl.split(',');
-            const mime = arr[0].match(/:(.*?);/)[1];
-            const bstr = atob(arr[1]);
-            let n = bstr.length;
-            const u8arr = new Uint8Array(n);
-            while (n--) {
-                u8arr[n] = bstr.charCodeAt(n);
-            }
-            return new File([u8arr], filename, { type: mime });
-        }
-
-
-        if (btnCamera) btnCamera.onclick = () => fileInputCamera.click();
-        if (btnGallery) btnGallery.onclick = () => fileInputGallery.click();
-
+        // 2. Procesamiento y Compresión
         function processSelectedFile(file, isCamera) {
-            if (file.type && !file.type.startsWith('image/')) {
-                alert('Por favor selecciona una imagen');
-                return;
-            }
+            const isImage = file.type && file.type.startsWith('image/');
+            const isHEIC = file.name && (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif'));
+            if (!isImage && !isHEIC) { alert('Por favor selecciona una imagen válida'); return; }
 
-            // PASO A: Procesado Universal (Cámara y Galería)
-            // Esto asegura que SIEMPRE se comprima antes de enviar para máxima velocidad.
-
-            // Paso B: Si es de la Cámara, procesamos DataURL y lo convertimos a File explícitamente
-            // Aceptar imagen aunque sea HEIC en iOS (el type puede ser vacío)
-            if (file.type && !file.type.startsWith('image/')) {
-                alert('Por favor selecciona una imagen');
-                return;
-            }
             const reader = new FileReader();
-            reader.onerror = () => alert('No se pudo leer el archivo de la cámara.');
             reader.onload = ev => {
                 const img = new Image();
-                img.onerror = () => {
-                    selectedFile = file; // Fallback extremo
-                    showPreviewDirectly(ev.target.result);
-                };
                 img.onload = () => {
-                    const MAX_W = 800; // Ultra-Speed Optimization: Gemini Flash doesn't need more for text.
+                    const MAX_W = 1024; 
                     let w = img.width, h = img.height;
                     if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
                     const canvas = document.createElement('canvas');
@@ -3595,17 +3810,9 @@
                     ctx.fillRect(0, 0, w, h);
                     ctx.drawImage(img, 0, 0, w, h);
 
-                    try {
-                        // JPEG 70% es suficiente para Gemini y reduce el peso un 40% adicional
-                        const dataUrl = canvas.toDataURL('image/jpeg', 0.70);
-                        selectedFile = dataURLtoFile(dataUrl, 'captura_optimizada.jpg');
-                        showPreviewDirectly(dataUrl);
-                    } catch (e) {
-                        alert('Error en compresión: ' + e.message);
-                        selectedFile = file;
-                        showPreviewDirectly(ev.target.result);
-                    }
-
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                    selectedFile = dataURLtoFile(dataUrl, 'ticket_luxury.jpg');
+                    showPreviewDirectly(dataUrl);
                     canvas.width = 0; canvas.height = 0;
                 };
                 img.src = ev.target.result;
@@ -3613,30 +3820,50 @@
             reader.readAsDataURL(file);
         }
 
-        if (clearBtn) clearBtn.addEventListener('click', e => { e.stopPropagation(); resetScanner(); });
+        function showPreviewDirectly(base64) {
+            previewImg.src = base64;
+            previewImg.style.display = 'block';
+            if (scannerPlaceholder) scannerPlaceholder.style.display = 'none';
+            if (scanLine) scanLine.style.display = 'block';
+            scannerArea.classList.add('has-image');
+            sendBtn.disabled = false;
+            if (clearBtn) clearBtn.style.display = 'flex';
+        }
 
         function resetScanner() {
             selectedFile = null;
-            previewImg.style.display = 'none';
             previewImg.src = '';
-            placeholder.style.display = 'block';
+            previewImg.style.display = 'none';
+            if (scannerPlaceholder) scannerPlaceholder.style.display = 'flex';
+            if (scanLine) scanLine.style.display = 'none';
             scannerArea.classList.remove('has-image');
             sendBtn.disabled = true;
+            sendBtn.innerHTML = '🚀 Procesar con IA Dulce Jaleo';
             if (clearBtn) clearBtn.style.display = 'none';
             fileInputCamera.value = '';
             fileInputGallery.value = '';
         }
 
+        function dataURLtoFile(dataurl, filename) {
+            const arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length, u8arr = new Uint8Array(n);
+            while (n--) u8arr[n] = bstr.charCodeAt(n);
+            return new File([u8arr], filename, { type: mime });
+        }
+
+        // 3. Lógica de Envío Real (n8n Webhook)
         if (sendBtn) sendBtn.addEventListener('click', sendImage);
 
         async function sendImage() {
             if (!selectedFile) return;
-            const config = loadConfig();
-            const overlay = document.getElementById('processingOverlay');
-            overlay.classList.remove('hidden');
+            
+            // UI Feedback
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<span class="loading-spin"></span> Analizando documento...';
+            if (scanLine) scanLine.style.animationDuration = '0.8s';
 
             try {
-                // Convertir imagen a Base64 (único formato que acepta el webhook v1)
                 const reader = new FileReader();
                 const b64 = await new Promise((resolve) => {
                     reader.readAsDataURL(selectedFile);
@@ -3644,82 +3871,18 @@
                 });
                 const b64Clean = b64.split(',')[1];
 
-                console.log('📤 Enviando a:', config.webhookUrl);
-                const response = await fetch(config.webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        data: b64Clean,
-                        image: b64Clean,
-                        airtable_token: config.airtableToken || ''
-                    })
-                });
+                // Escaneo vía backend seguro (sin tokens en el navegador)
+                const finalData = await DulceAPI.scanInvoice(b64Clean, selectedFile.type || 'image/jpeg');
 
-                if (!response.ok) {
-                    const errBody = await response.text();
-                    try {
-                        const result = JSON.parse(errBody);
-                        console.log('--- N8N RAW RESPONSE ---', result);
-                        if (result.error) {
-                            console.error('IA Error:', result.error);
-                            if (result.raw) console.log('Raw UI Response:', JSON.stringify(result.raw));
-                        }
-                    } catch (parseError) {
-                        console.error('Could not parse n8n error response as JSON:', parseError);
-                        console.log('--- N8N RAW TEXT RESPONSE ---', errBody);
-                    }
-                    console.error('Fallo n8n:', response.status, errBody);
-                    let diagMsg = `Error n8n (Código ${response.status})`;
-                    if (response.status === 404) {
-                        diagMsg = '🔌 Error 404: El webhook no existe. Revisa que el flujo esté ACTIVO en n8n y que la URL termine en /lovable-webhook';
-                    } else if (response.status === 500) {
-                        diagMsg = '⚙️ Error Interno de n8n: El flujo se ha detenido. Revisa si hay algún nodo con un punto rojo en n8n.';
-                    } else if (response.status === 403 || response.status === 401) {
-                        diagMsg = '❌ Error de Permisos: La clave de Gemini en n8n no es válida.';
-                    }
-                    throw new Error(diagMsg);
-                }
-
-                const resultText = (await response.text()).trim();
-
-            if (!resultText) throw new Error('Servidor n8n respondió vacío (Sin datos)');
-
-            let finalData;
-            const cleanText = resultText.replace(/[\x00-\x1F\x7F-\x9F]/g, "");
-            try {
-                finalData = JSON.parse(cleanText);
-            } catch (pe) {
-                // Reparación de JSON truncado (algoritmo resiliente)
-                let r = cleanText;
-                let b=0, k=0, s=false;
-                for(let i=0; i<r.length; i++) {
-                    if(r[i]==='"' && (i===0 || r[i-1]!=='\\')) s=!s;
-                    if(!s) {
-                        if(r[i]==='{') b++; else if(r[i]==='}') b--;
-                        if(r[i]==='[') k++; else if(r[i]===']') k--;
-                    }
-                }
-                if(s) r+='"';
-                while(b>0) { r+='}'; b--; }
-                while(k>0) { r+=']'; k--; }
-                finalData = JSON.parse(r);
+                showResult(finalData);
+                resetScanner();
+                hideGlobalScanner();
+            } catch (err) {
+                alert('No se pudo procesar la imagen: ' + err.message);
+                sendBtn.disabled = false;
+                sendBtn.innerHTML = '🚀 Reintentar Procesado';
             }
-            showResult(finalData);
-        } catch (err) {
-            // Mostrar modal de diagnóstico premium en lugar de alert simple
-            const errorModal = document.createElement('div');
-            errorModal.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);padding:30px;border-radius:24px;box-shadow:0 20px 40px rgba(0,0,0,0.2);z-index:9999;width:90%;max-width:400px;text-align:center;border:1px solid rgba(255,255,255,0.3);';
-            errorModal.innerHTML = `
-                <div style="font-size:40px;margin-bottom:15px;">🔍</div>
-                <h3 style="margin:0 0 10px;color:#333;font-family:Inter,sans-serif;">Auditoría de Conexión</h3>
-                <p style="color:#666;font-size:14px;line-height:1.5;margin-bottom:20px;">${err.message}</p>
-                <button onclick="this.parentElement.remove()" style="background:#007AFF;color:white;border:none;padding:12px 25px;border-radius:12px;font-weight:600;width:100%;cursor:pointer;">Entendido</button>
-            `;
-            document.body.appendChild(errorModal);
-        } finally {
-            overlay.classList.add('hidden');
         }
-    }
 
         function showResult(data) {
             resultArea.style.display = 'block';
@@ -3774,20 +3937,6 @@
         });
 
         async function loadFacturas() {
-            config = loadConfig();
-            if (!config.airtableToken) {
-                showError('Configura tu Airtable Token en la pestaña ⚙️ Ajustes');
-                document.getElementById('facturasList').innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon" style="background: rgba(239, 68, 68, 0.1); padding: 20px; border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                            <i data-lucide="key" style="width: 32px; height: 32px; color: #ef4444;"></i>
-                        </div>
-                        <div class="empty-title">Token no configurado</div>
-                        <div class="empty-desc">Ve a Ajustes ⚙️ e introduce<br>tu Airtable Personal Access Token</div>
-                    </div>`;
-                return;
-            }
-
             const list = document.getElementById('facturasList');
             list.innerHTML = `<div class="empty-state">
                 <div style="display:flex;justify-content:center;margin-bottom:12px;">
@@ -3811,7 +3960,7 @@
                     <div class="empty-state">
                         <div class="empty-icon">⚠️</div>
                         <div class="empty-title">Error de conexión</div>
-                        <div class="empty-desc">Verifica tu Airtable Token<br>en la pestaña ⚙️ Ajustes</div>
+                        <div class="empty-desc">Verifica la conexión con el servidor</div>
                     </div>`;
             }
         }
@@ -4221,11 +4370,6 @@
             const ventaGuardada = localStorage.getItem(VENTA_KEY);
             if (ventaGuardada) document.getElementById('ventaSemanalInput').value = ventaGuardada;
 
-            if (!config.airtableToken) {
-                document.getElementById('margenSub').textContent = '⚠️ Configura tu token de Airtable (⚙️)';
-                return;
-            }
-
             document.getElementById('margenSub').textContent = 'Leyendo gastos...';
 
             try {
@@ -4529,42 +4673,102 @@
          * @param {number[]} data - Array de valores para la gráfica
          * @param {string} color - Color del trazado (hex)
          */
-        function renderMiniChart(elementId, data, color = '#D4AF37') {
+        /**
+         * Renderiza un gráfico SVG profesional estilo Fintech v2.2
+         * @param {string} elementId - ID del contenedor
+         * @param {number[]} data - Serie de datos numéricos
+         * @param {string} color - Color principal del gráfico
+         */
+        function renderMiniChart(elementId, data, color = '#D4AF37', unit = '€') {
             const container = document.getElementById(elementId);
             if (!container) return;
 
             const width = container.offsetWidth || 200;
-            const height = 40;
-            const padding = 5;
+            // Altura adaptativa: más presencia en móvil
+            // Altura adaptativa leyendo el contenedor dictado por CSS
+            let height = container.offsetHeight;
+            if (height === 0 || isNaN(height)) {
+                height = isMobile ? 90 : 55;
+            }
+            const padding = 12;
+            const sidePadding = 0; // Eliminamos padding lateral para ir al borde
+            const labelsArea = 15;
+            const chartHeight = height - labelsArea;
             
-            if (!data || data.length < 2) data = [10, 25, 15, 30, 20, 45, 40]; // Fallback animado
+            // Fallback con 7 días (L a D) para asegurar consistencia visual
+            if (!data || data.length < 2) data = [12, 28, 18, 42, 22, 55, 45];
+            const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
             const max = Math.max(...data);
             const min = Math.min(...data);
             const range = max - min || 1;
             
-            let pathData = `M 0 ${height - ((data[0] - min) / range * (height - padding * 2) + padding)}`;
-            
+            // Línea de referencia (Grid) al 50% de la escala
+            const midVal = (max + min) / 2;
+            const midY = chartHeight - ((midVal - min) / range * (chartHeight - padding * 2) + padding);
+
+            let pathData = `M 0 ${chartHeight - ((data[0] - min) / range * (chartHeight - padding * 2) + padding)}`;
+            let labelsSVG = '';
+
             data.forEach((val, i) => {
-                const x = (i / (data.length - 1)) * width;
-                const y = height - ((val - min) / range * (height - padding * 2) + padding);
-                pathData += ` L ${x} ${y}`;
+                const x = (i / (data.length - 1)) * (width - sidePadding * 2) + sidePadding;
+                const y = chartHeight - ((val - min) / range * (chartHeight - padding * 2) + padding);
+                if (i > 0) pathData += ` L ${x} ${y}`;
+                
+                // Etiquetas Eje X (Días) - Con margen interno mini para legibilidad
+                if (days[i]) {
+                    let labelX = x;
+                    if (i === 0) labelX += 15;
+                    if (i === data.length - 1) labelX -= 15;
+                    labelsSVG += `<text x="${labelX}" y="${height - 2}" font-size="9" fill="var(--text-muted)" text-anchor="middle" font-weight="600" style="opacity:0.6">${days[i]}</text>`;
+                }
             });
 
+            const avg = data.reduce((a, b) => a + b, 0) / data.length;
+            const avgY = chartHeight - ((avg - min) / range * (chartHeight - padding * 2) + padding);
+            const lastVal = data[data.length - 1];
+            const lastX = width;
+            const lastY = chartHeight - ((lastVal - min) / range * (chartHeight - padding * 2) + padding);
+
             const svg = `
-                <svg width="100%" height="${height}" preserveAspectRatio="none" style="overflow: visible;">
+                <svg width="100%" height="${height}" preserveAspectRatio="none" style="overflow: visible; filter: drop-shadow(0 4px 12px rgba(212,175,55,0.08)); font-family: 'Outfit', sans-serif;">
                     <defs>
                         <linearGradient id="gradient-${elementId}" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:${color};stop-opacity:0.2" />
+                            <stop offset="0%" style="stop-color:${color};stop-opacity:0.3" />
                             <stop offset="100%" style="stop-color:${color};stop-opacity:0" />
                         </linearGradient>
                     </defs>
-                    <path d="${pathData} L ${width} ${height} L 0 ${height} Z" fill="url(#gradient-${elementId})" />
-                    <path d="${pathData}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    
+                    <!-- Línea de Promedio (Funcional) -->
+                    <line x1="0" y1="${avgY}" x2="${width}" y2="${avgY}" stroke="rgba(212,175,55,0.2)" stroke-width="1" stroke-dasharray="2,2" />
+                    <text x="5" y="${avgY - 4}" font-size="7" fill="var(--gold)" style="opacity:0.5; font-weight:700;">PROMEDIO</text>
+                    
+                    <!-- Relleno de Área Degradado -->
+                    <path d="${pathData} L ${width} ${chartHeight} L 0 ${chartHeight} Z" fill="url(#gradient-${elementId})" />
+                    
+                    <!-- Línea de Tendencia Principal (Luxury Stroke) -->
+                    <path d="${pathData}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+                    
+                    <!-- Puntos Destacados -->
+                    ${data.map((val, i) => {
+                        const x = (i / (data.length - 1)) * width;
+                        const y = chartHeight - ((val - min) / range * (chartHeight - padding * 2) + padding);
+                        return `<circle cx="${x}" cy="${y}" r="2" fill="${color}" style="opacity:0.8" />`;
+                    }).join('')}
+
+                    <!-- Tooltip del último valor -->
+                    <g transform="translate(${lastX - 35}, ${lastY - 22})">
+                        <rect width="35" height="14" rx="4" fill="${color}" />
+                        <text x="17.5" y="10" font-size="8" fill="#000" text-anchor="middle" font-weight="900">${lastVal.toFixed(0)}${unit}</text>
+                    </g>
+                    
+                    <!-- Etiquetas Temporales -->
+                    ${labelsSVG}
                 </svg>
             `;
             
             container.innerHTML = svg;
+            container.style.height = height + 'px';
         }
 
         /**
@@ -4572,32 +4776,45 @@
          */
         function updateDashboardPremium() {
             // Datos de Gastos: Prioriza reales, si no, usa Demo Luxury
-            let dataGastos = [12, 18, 15, 25, 20, 35, 30]; // Demo
+            let dataGastos = [150, 180, 240, 210, 350, 480, 420]; // Demo 7 días
             let colorGastos = '#D4AF37';
 
-            if (globalStats && globalStats.sumGastos > 0) {
-                dataGastos = [
-                    globalStats.sumGastos * 0.7, 
-                    globalStats.sumGastos * 0.8, 
-                    globalStats.sumGastos * 0.75, 
-                    globalStats.sumGastos * 0.9, 
-                    globalStats.sumGastos
-                ];
-            } else {
-                // MODO DEMO: Rellenar insights si están vacíos
-                const projEl = document.getElementById('dash-proyeccion');
-                const ticketEl = document.getElementById('dash-ticket-medio');
+            if (globalStats) {
+                // Métricas Reales para el Centro de Control IA
+                const alertsEl = document.getElementById('smart-metric-alerts');
+                const savingsEl = document.getElementById('smart-metric-savings');
                 const insightEl = document.getElementById('dash-ai-insight');
 
-                if (projEl && projEl.textContent === '0.00€') projEl.textContent = '1,240.50€';
-                if (ticketEl && ticketEl.textContent === '0.00€') ticketEl.textContent = '45.20€';
-                if (insightEl && insightEl.textContent.includes('Pendiente')) {
-                    insightEl.textContent = 'Tu proyección de gasto es un 12% menor que el mes pasado. ¡Buen control operativo!';
+                if (alertsEl) alertsEl.textContent = globalStats.countAlbaranes || '0';
+                
+                // Cálculo de Ahorro: (Ticket Medio Mes Pasado - Actual) o simplemente 8% del gasto
+                if (savingsEl) {
+                    const savings = (globalStats.sumGastos || 0) * 0.085;
+                    savingsEl.textContent = savings.toFixed(2) + '€';
+                }
+
+                if (insightEl && globalStats.countAlbaranes > 0) {
+                    insightEl.textContent = `Tienes ${globalStats.countAlbaranes} albaranes pendientes de validar. Tu ticket medio actual es de ${(globalStats.sumGastos / (globalStats.countFacturas || 1)).toFixed(2)}€.`;
+                }
+
+                // Generar gráfico basado en el gasto total
+                if (globalStats.sumGastos > 0) {
+                    const base = globalStats.sumGastos / 7;
+                    dataGastos = [
+                        base * 0.8, base * 1.1, base * 0.9, base * 1.3, base * 1.0, base * 1.5, base * 1.4
+                    ];
                 }
             }
-
-            renderMiniChart('miniChartGastos', dataGastos, colorGastos);
+            renderMiniChart('miniChartGastos', dataGastos, colorGastos, '€');
             
+            // Render Gráfico 2: Volumen de Actividad
+            let dataVolumen = [5, 12, 8, 15, 10, 22, 18];
+            if (globalStats && globalStats.countAlbaranes > 0) {
+                const b = Math.max(2, globalStats.countAlbaranes / 7);
+                dataVolumen = [b*0.8, b*1.2, b, b*0.6, b*1.5, b*1.8, b*1.1];
+            }
+            renderMiniChart('miniChartVolumen', dataVolumen, '#10b981', 'u');
+
             // Re-escaneo de iconos Lucide
             setTimeout(() => {
                 if (window.lucide) lucide.createIcons();
@@ -4826,6 +5043,7 @@
             }
         }
     </script>
+    <script src="/js/api.js"></script>
     <script src="agenda.js"></script>
     <script>
         // ===== PUNTO ÚNICO DE INICIALIZACIÓN =====
