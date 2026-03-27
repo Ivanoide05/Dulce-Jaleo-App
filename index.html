@@ -1733,8 +1733,8 @@
         }
 
         .det-action-btn {
-            background: var(--warm-50);
-            border: 1px solid var(--border);
+            background: var(--white);
+            border: 1.5px solid var(--border);
             border-radius: 16px;
             padding: 14px 4px;
             display: flex;
@@ -1742,19 +1742,20 @@
             align-items: center;
             justify-content: center;
             gap: 7px;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .det-action-btn:active {
-            transform: scale(0.95);
+            transform: scale(0.93);
         }
 
         .det-action-btn:hover {
-            background: var(--warm-100);
+            background: rgba(245,158,11,0.07);
             border-color: var(--amber);
             color: var(--amber-dark);
         }
@@ -2385,13 +2386,10 @@
         /* 💎 PREMIUM DASHBOARD v2.0 (BENTO & GLASS) 💎 */
         :root {
             --bento-gap: 16px;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-blur: blur(25px) saturate(160%);
+            /* NO sobreescribir --glass-bg ni --glass-blur aquí para no romper los modales */
         }
 
         body.dark-theme {
-            --glass-bg: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
@@ -3101,13 +3099,17 @@
         <!-- ===== TAB: AGENDA / CONTACTOS ===== -->
         <div id="tab-agenda" class="tab-content">
             <div id="contenedor-lista-agenda">
-                <div class="agenda-header-row"
-                    style="flex-direction: column; align-items: center; text-align: center; margin-bottom: 24px;">
+                <!-- Header con botón + integrado -->
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 20px;">
                     <div>
-                        <div class="section-title">Agenda</div>
-                        <div class="section-subtitle">Proveedores y clientes</div>
+                        <div class="section-title" style="text-align:left; margin-bottom:2px;">Agenda</div>
+                        <div class="agenda-count" id="agendaCount" style="font-size:12px; color:var(--text-muted);">0 contactos</div>
                     </div>
-                    <div class="agenda-count" id="agendaCount" style="margin-top: 8px; opacity: 0.5;">0 contactos</div>
+                    <button id="agendaAddBtn"
+                        style="display:flex; align-items:center; gap:7px; padding:10px 18px; background:var(--amber); color:#fff; border:none; border-radius:50px; font-size:13px; font-weight:700; cursor:pointer; box-shadow:0 4px 14px rgba(245,158,11,0.3); transition: all 0.2s;">
+                        <i data-lucide="plus" style="width:16px;height:16px;"></i>
+                        Añadir
+                    </button>
                 </div>
 
                 <!-- Buscador -->
@@ -3298,8 +3300,8 @@
         </div>
     </div>
 
-    <!-- FAB Añadir Contacto -->
-    <button class="fab-add" id="fabAddContact" title="Añadir contacto">➕</button>
+    <!-- FAB Añadir Contacto (oculto — reemplazado por botón inline en header) -->
+    <button class="fab-add" id="fabAddContact" title="Añadir contacto" style="display:none;">➕</button>
 
     <!-- FAB Añadir Tarea (Hoja de Ruta) -->
     <button class="fab-add" id="fabAddTask" title="Añadir tarea"
@@ -3331,42 +3333,44 @@
         </div>
     </div>
 
-    <!-- Modal Añadir Contacto [GLASS VERSION] -->
+    <!-- Modal Añadir Contacto -->
     <div class="modal-overlay" id="contactModal">
-        <div class="modal-sheet glass-panel"
-            style="padding: 32px; border-top: 1px solid var(--border); border-radius: 32px 32px 0 0;">
-            <div class="modal-handle" style="background: rgba(255,255,255,0.1);"></div>
-            <div class="modal-title" style="font-size: 22px; font-weight: 500; margin-bottom: 24px;">Nuevo Contacto
-            </div>
-            <div class="modal-type-tabs glass-panel"
-                style="padding: 6px; display: inline-flex; margin-bottom: 32px; background: rgba(255,255,255,0.03);">
+        <div class="modal-sheet" style="background: var(--white); border-top: 1px solid var(--border); border-radius: 32px 32px 0 0; padding: 16px 24px 40px; padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));">
+            <div class="modal-handle"></div>
+            <div class="modal-title" style="font-size: 20px; font-weight: 700; margin-bottom: 24px; text-align:left;">Nuevo Contacto</div>
+
+            <!-- Selector tipo — flex 100% para simetría -->
+            <div style="display:flex; width:100%; background: var(--warm-100); border-radius: 16px; padding: 5px; gap: 6px; margin-bottom: 24px; border: 1px solid var(--border);">
                 <button class="modal-type-btn active" data-ctype="proveedor"
-                    style="padding: 10px 24px; border-radius: 16px;">
-                    <i data-lucide="truck" style="width: 16px; margin-right: 8px;"></i>
+                    style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding: 12px 8px; border-radius: 12px;">
+                    <i data-lucide="truck" style="width: 15px; height:15px;"></i>
                     Proveedor
                 </button>
-                <button class="modal-type-btn" data-ctype="cliente" style="padding: 10px 24px; border-radius: 16px;">
-                    <i data-lucide="shopping-bag" style="width: 16px; margin-right: 8px;"></i>
+                <button class="modal-type-btn" data-ctype="cliente"
+                    style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px; padding: 12px 8px; border-radius: 12px;">
+                    <i data-lucide="shopping-bag" style="width: 15px; height:15px;"></i>
                     Cliente
                 </button>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
-                <input class="modal-input glass-panel" id="cNombre" type="text" placeholder="Nombre o empresa *"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
-                <input class="modal-input glass-panel" id="cTelefono" type="tel" placeholder="Teléfono"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
-                <input class="modal-input glass-panel" id="cEmail" type="email" placeholder="Email"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
-                <input class="modal-input glass-panel" id="cCategoria" type="text"
-                    placeholder="Categoría (ej: Harina, Café, Reparto...)"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
+
+            <!-- Campos -->
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px;">
+                <input class="modal-input" id="cNombre" type="text" placeholder="Nombre o empresa *"
+                    style="background: var(--warm-50); border: 1.5px solid var(--border); color: var(--text-primary);">
+                <input class="modal-input" id="cTelefono" type="tel" placeholder="Teléfono"
+                    style="background: var(--warm-50); border: 1.5px solid var(--border); color: var(--text-primary);">
+                <input class="modal-input" id="cEmail" type="email" placeholder="Email"
+                    style="background: var(--warm-50); border: 1.5px solid var(--border); color: var(--text-primary);">
+                <input class="modal-input" id="cCategoria" type="text" placeholder="Categoría (ej: Harina, Café, Reparto...)"
+                    style="background: var(--warm-50); border: 1.5px solid var(--border); color: var(--text-primary);">
             </div>
-            <div style="display:flex;gap:12px;">
-                <button class="btn glass-panel" id="closeModal"
-                    style="flex: 1; padding: 16px; border: 1px solid var(--border);">Cancelar</button>
-                <button class="btn glass-panel" id="saveContact"
-                    style="flex: 2; padding: 16px; background: var(--rose); color: #fff; font-weight: 500;">Guardar
-                    Contacto</button>
+
+            <!-- Botones -->
+            <div style="display:flex; gap:12px;">
+                <button class="btn" id="closeModal"
+                    style="flex:1; padding:16px; border:1.5px solid var(--border); background: var(--warm-50); color: var(--text-secondary); border-radius: 16px; font-size:14px; font-weight:600;">Cancelar</button>
+                <button class="btn" id="saveContact"
+                    style="flex:2; padding:16px; background: var(--amber); color: #fff; font-weight:700; border:none; border-radius:16px; font-size:14px;">Guardar Contacto</button>
             </div>
         </div>
     </div>
@@ -4277,20 +4281,22 @@
             list.innerHTML = filtered.map((c) => {
                 const initials = c.nombre.split(' ').slice(0, 2).map(w => w[0] || '').join('').toUpperCase();
                 const avatarClass = c.tipo === 'proveedor' ? 'avatar-proveedor' : 'avatar-cliente';
-                const badgeClass = c.tipo === 'proveedor' ? 'badge-tipo-proveedor' : 'badge-tipo-cliente';
-                const badgeText = c.tipo === 'proveedor' ? 'Proveedor' : 'Cliente';
+                // Badge solo visible en vista "Todos" (evita redundancia al filtrar por tipo)
+                const badgeHTML = agendaFilter === 'all'
+                    ? `<span class="${c.tipo === 'proveedor' ? 'badge-tipo-proveedor' : 'badge-tipo-cliente'}">${c.tipo === 'proveedor' ? 'Proveedor' : 'Cliente'}</span>`
+                    : '';
                 const metaItems = [
                     c.telefono ? `<span style="display:flex;align-items:center;gap:3px;"><i data-lucide="phone" style="width:11px;height:11px;"></i>${c.telefono}</span>` : '',
                     c.email ? `<span style="display:flex;align-items:center;gap:3px;"><i data-lucide="mail" style="width:11px;height:11px;"></i>${c.email}</span>` : '',
                     c.categoria ? `<span>${c.categoria}</span>` : ''
-                ].filter(Boolean).join('<span style="opacity:0.3;">·</span>');
+                ].filter(Boolean).join('<span style="opacity:0.3;margin:0 2px;">·</span>');
                 return `
                 <div class="contact-card" onclick="window.forzarAperturaCliente('${c.id}')" style="cursor:pointer;position:relative;z-index:50;pointer-events:auto;">
                     <div class="contact-avatar ${avatarClass}">${initials}</div>
                     <div class="contact-info">
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
                             <div class="contact-name" style="margin:0;">${c.nombre}</div>
-                            <span class="${badgeClass}">${badgeText}</span>
+                            ${badgeHTML}
                         </div>
                         <div class="contact-meta">${metaItems || '<span style="opacity:0.4;">Sin datos de contacto</span>'}</div>
                     </div>
@@ -4318,16 +4324,21 @@
             agSearch.addEventListener('input', renderAgenda);
         }
 
-        // Modal
-        const fabAddC = document.getElementById('fabAddContact');
-        if (fabAddC) {
-            fabAddC.addEventListener('click', () => {
-                const cMod = document.getElementById('contactModal');
-                if (cMod) cMod.classList.add('open');
+        // Botón inline "Añadir" en el header de Agenda
+        function openContactModal() {
+            const cMod = document.getElementById('contactModal');
+            if (cMod) cMod.classList.add('open');
+            setTimeout(() => {
                 const cNom = document.getElementById('cNombre');
                 if (cNom) cNom.focus();
-            });
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }, 50);
         }
+        const agendaAddBtn = document.getElementById('agendaAddBtn');
+        if (agendaAddBtn) agendaAddBtn.addEventListener('click', openContactModal);
+        // FAB legacy (oculto, por si acaso)
+        const fabAddC = document.getElementById('fabAddContact');
+        if (fabAddC) fabAddC.addEventListener('click', openContactModal);
 
         const clMod = document.getElementById('closeModal');
         if (clMod) {
