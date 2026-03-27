@@ -1869,6 +1869,114 @@
 
         .text-white { color: #fff !important; }
 
+        /* ===== HISTORIAL MODAL ===== */
+        #historial-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10001;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #historial-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .historial-sheet {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 28px 28px 0 0;
+            width: 100%;
+            max-width: 520px;
+            padding: 12px 24px;
+            padding-bottom: calc(36px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -8px 48px rgba(0,0,0,0.10);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 88vh;
+            overflow-y: auto;
+        }
+        #historial-modal.active .historial-sheet {
+            transform: translateY(0);
+        }
+        .hist-bar-track {
+            height: 8px;
+            border-radius: 50px;
+            background: linear-gradient(to right, #ef4444, #eab308, #22c55e);
+            position: relative;
+            margin: 8px 0 6px;
+        }
+        .hist-bar-marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: var(--white);
+            border: 2.5px solid var(--text-primary);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .hist-bar-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .hist-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .hist-stat-card {
+            background: var(--warm-50);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 16px;
+        }
+        .hist-stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .hist-stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .hist-stat-wide { grid-column: span 2; }
+        .hist-total-value {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.03em;
+            text-align: center;
+        }
+        /* Dark mode */
+        body.dark-theme #historial-modal { background: rgba(0,0,0,0.65); }
+        body.dark-theme .historial-sheet { background: #1c1c1e; border-color: rgba(255,255,255,0.08); }
+        body.dark-theme .hist-stat-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.07); }
+        body.dark-theme .hist-bar-marker { background: #1c1c1e; border-color: rgba(255,255,255,0.7); }
+
         /* FAB Añadir Contacto */
         .fab-add {
             position: fixed;
@@ -3300,6 +3408,87 @@
         </div>
     </div>
 
+    <!-- ===== HISTORIAL CONTACTO ===== -->
+    <div id="historial-modal" onclick="if(event.target===this) window.cerrarHistorial()">
+        <div class="historial-sheet">
+            <div class="det-drag-handle"></div>
+            <div class="det-modal-close" onclick="window.cerrarHistorial()">
+                <i data-lucide="x" style="width:16px;"></i>
+            </div>
+
+            <!-- Header -->
+            <div style="margin-bottom:22px; padding-right:40px;">
+                <div style="font-size:22px;font-weight:800;font-family:'Outfit',sans-serif;color:var(--text-primary);margin-bottom:3px;">Historial</div>
+                <div style="font-size:13px;color:var(--text-muted);font-weight:500;" id="hist-contacto-nombre">—</div>
+            </div>
+
+            <!-- Salud del cliente -->
+            <div style="margin-bottom:2px;">
+                <div style="font-size:13px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                    Salud del cliente
+                    <span style="font-size:11px;font-weight:500;color:var(--text-muted);" id="hist-salud-label">– Nuevo (Sin datos)</span>
+                </div>
+                <div class="hist-bar-track">
+                    <div class="hist-bar-marker" id="hist-salud-marker" style="left:5%;"></div>
+                </div>
+                <div class="hist-bar-labels">
+                    <span>Mala</span><span>Media</span><span>Buena</span>
+                </div>
+            </div>
+
+            <!-- Tasa de incidencias -->
+            <div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                    Tasa de incidencias
+                    <span style="font-size:11px;font-weight:500;color:var(--text-muted);" id="hist-incid-label">Inexistente</span>
+                </div>
+                <div class="hist-bar-track">
+                    <div class="hist-bar-marker" id="hist-incid-marker" style="left:95%;"></div>
+                </div>
+                <div class="hist-bar-labels">
+                    <span>Elevada</span><span>Moderada</span><span>Inexistente</span>
+                </div>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="hist-stats-grid">
+                <div class="hist-stat-card">
+                    <div class="hist-stat-label"><i data-lucide="package-check" style="width:13px;height:13px;"></i> Pedidos OK</div>
+                    <div class="hist-stat-value" id="hist-pedidos-ok">0</div>
+                </div>
+                <div class="hist-stat-card">
+                    <div class="hist-stat-label"><i data-lucide="file-check" style="width:13px;height:13px;"></i> Documentos</div>
+                    <div class="hist-stat-value" id="hist-docs">0</div>
+                </div>
+                <div class="hist-stat-card">
+                    <div class="hist-stat-label"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> Incidencias</div>
+                    <div class="hist-stat-value" id="hist-incidencias">0</div>
+                </div>
+                <div class="hist-stat-card">
+                    <div class="hist-stat-label"><i data-lucide="clock" style="width:13px;height:13px;"></i> Deudas Pen.</div>
+                    <div class="hist-stat-value" id="hist-deudas">0</div>
+                </div>
+                <!-- Total facturado -->
+                <div class="hist-stat-card hist-stat-wide" style="text-align:center; padding:18px;">
+                    <div class="hist-stat-label" style="justify-content:center;"><i data-lucide="banknote" style="width:13px;height:13px;"></i> Total facturado €</div>
+                    <div class="hist-total-value" id="hist-total">0.00</div>
+                </div>
+                <!-- Compras frecuentes -->
+                <div class="hist-stat-card hist-stat-wide">
+                    <div class="hist-stat-label"><i data-lucide="star" style="width:13px;height:13px;color:#f59e0b;"></i> Compras frecuentes</div>
+                    <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;" id="hist-compras">Sin datos de compra</div>
+                </div>
+            </div>
+
+            <!-- Ver todos los documentos -->
+            <button onclick="window.verDocumentosContacto()"
+                style="width:100%;padding:15px;background:var(--amber);color:#fff;border:none;border-radius:16px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;">
+                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+                Ver todos los documentos
+            </button>
+        </div>
+    </div>
+
     <!-- FAB Añadir Contacto (oculto — reemplazado por botón inline en header) -->
     <button class="fab-add" id="fabAddContact" title="Añadir contacto" style="display:none;">➕</button>
 
@@ -4555,18 +4744,81 @@
             }
         };
 
+        function calcularDatosHistorial(nombre) {
+            const fuente = globalStats.loaded ? globalStats.allRecords : allFacturas;
+            const docs = fuente.filter(f => normalize(f.proveedor || '').includes(normalize(nombre)));
+            const total = docs.reduce((s, d) => s + (d.total || 0), 0);
+            const count = docs.length;
+            // Compras frecuentes: top 3 categorías por frecuencia
+            const cats = {};
+            docs.forEach(d => {
+                const cat = d.categoria || 'Sin categoría';
+                cats[cat] = (cats[cat] || 0) + 1;
+            });
+            const topCats = Object.entries(cats)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([cat, n]) => `${cat} (×${n})`)
+                .join(' · ');
+            return { docs, count, total, topCats };
+        }
+
         window.ejecutarHistorial = function () {
             if (!window.contactSelected) return;
+            const c = window.contactSelected;
+            const { count, total, topCats } = calcularDatosHistorial(c.nombre);
+
+            // Salud del cliente basada en volumen de documentos
+            let saludLabel, saludPct;
+            if (count === 0)      { saludLabel = 'Nuevo (Sin datos)'; saludPct = 5;  }
+            else if (count <= 2)  { saludLabel = 'En desarrollo';     saludPct = 25; }
+            else if (count <= 6)  { saludLabel = 'Media';             saludPct = 55; }
+            else if (count <= 12) { saludLabel = 'Buena';             saludPct = 78; }
+            else                  { saludLabel = 'Excelente';         saludPct = 95; }
+
+            // Poblar campos
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+            set('hist-contacto-nombre', c.nombre + (c.categoria ? ' (' + c.categoria + ')' : ''));
+            set('hist-salud-label',     '– ' + saludLabel);
+            set('hist-incid-label',     'Inexistente');
+            set('hist-pedidos-ok',      count);
+            set('hist-docs',            count);
+            set('hist-incidencias',     '0');
+            set('hist-deudas',          '0');
+            set('hist-total',           total.toFixed(2));
+            set('hist-compras',         topCats || 'Sin datos de compra');
+
+            // Animar marcadores de barras (pequeño delay para que la transición CSS sea visible)
+            setTimeout(() => {
+                const sm = document.getElementById('hist-salud-marker');
+                const im = document.getElementById('hist-incid-marker');
+                if (sm) sm.style.left = saludPct + '%';
+                if (im) im.style.left = '95%';
+            }, 80);
+
+            // Abrir modal
+            const modal = document.getElementById('historial-modal');
+            if (modal) {
+                modal.classList.add('active');
+                setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 60);
+            }
+        };
+
+        window.cerrarHistorial = function () {
+            const modal = document.getElementById('historial-modal');
+            if (modal) modal.classList.remove('active');
+        };
+
+        window.verDocumentosContacto = function () {
+            if (!window.contactSelected) return;
             const nombre = window.contactSelected.nombre;
-            // Cerrar el modal antes de navegar
-            window.cerrarVistaCliente();
-            // Navegar a facturas
+            window.cerrarHistorial();
             activateTab('facturas');
             currentFilter = 'all';
             setTimeout(() => {
                 const fuente = globalStats.loaded ? globalStats.allRecords : allFacturas;
-                const results = fuente.filter(f => normalize(f.proveedor).includes(normalize(nombre)));
-                updateListWithCustomData(results, `Historial: ${nombre}`);
+                const results = fuente.filter(f => normalize(f.proveedor || '').includes(normalize(nombre)));
+                updateListWithCustomData(results, 'Historial: ' + nombre);
                 if (typeof lucide !== 'undefined') lucide.createIcons();
             }, 150);
         };
