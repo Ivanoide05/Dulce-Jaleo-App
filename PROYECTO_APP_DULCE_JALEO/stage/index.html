@@ -10,7 +10,7 @@
 
     <!-- PWA: Manifest -->
     <link rel="manifest" href="manifest.json?v=3">
-    <meta name="theme-color" content="#0f0f14">
+    <meta name="theme-color" content="#f8f9fb">
 
     <!-- Universal PWA (Chrome, Brave, Android) -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -25,75 +25,47 @@
     <!-- Icono redundante para asegurar detección en versiones antiguas de iOS -->
     <link rel="apple-touch-icon" sizes="180x180" href="icon-512.png?v=3">
 
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Lucide Icons (Carga Temprana) -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            /* Paleta Luxury Glass (OLED Black) */
-            --bg-page: #0a0a0a;
-            --cream: #0a0a0a;
-            --cream-dark: #000000;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-blur: blur(20px);
-            --white: rgba(255, 255, 255, 0.03);
-            --warm-100: rgba(255, 255, 255, 0.05);
-            --warm-200: rgba(255, 255, 255, 0.08);
-            --warm-300: rgba(255, 255, 255, 0.12);
-
-            /* Acentos */
-            --rose: #f59e0b;
-            --gold: #D4AF37;
-            --cyan-glow: 0 0 15px rgba(212, 175, 55, 0.4);
-
-            /* Texto Outfit/Inter */
-            --text-primary: #ffffff;
-            --text-secondary: #cccccc;
-            --text-muted: #888888;
-
-            /* Bordes iPhone Style */
-            --border: rgba(255, 255, 255, 0.1);
-            --border-soft: rgba(255, 255, 255, 0.05);
-
-            /* Radios & Layered Shadows */
-            --radius-native: 24px;
-            --radius: 16px;
-            --radius-sm: 12px;
-            --gutter: 24px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Paleta Qantas/Apple High-End (Light Mode Default) */
+            --bg-page: #f8f9fb;
+            --bg-card: #ffffff;
+            --premium-red: #e40000;
+            --text-primary: #1a1c1d;
+            --text-secondary: #5f6368;
+            --text-muted: #8e8e93;
             
-            /* Layered Shadows (Secreto Técnico) */
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.4);
-            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+            /* Glass & Depth */
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-blur: blur(20px);
+            --border: rgba(0, 0, 0, 0.05);
+            --border-soft: rgba(0, 0, 0, 0.02);
+            
+            /* Shadows Apple Style */
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 12px 32px rgba(26, 28, 29, 0.08); /* Sombra ambiental Stitch */
+            --shadow-lg: 0 24px 64px rgba(26, 28, 29, 0.12);
+            
+            --gutter: 24px;
+            --radius-pill: 50px;
+            --radius-card: 32px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* [NUEVO] MODO CLARO PROFESSIONAL */
-        body.light-theme {
-            --bg-page: #f2f2f7;
-            --cream: #ffffff;
-            --cream-dark: #f8f9fa;
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --white: #ffffff;
-            --warm-100: #ffffff;
-            --warm-200: #f1f1f5;
-            --warm-300: #e2e2e8;
-
-            --rose: #d97706;
-            --gold: #b28e1a;
-            --rose-glow: rgba(217, 119, 6, 0.08);
-            --cyan-glow: 0 0 15px rgba(212, 175, 55, 0.2);
-
-            --text-primary: #1c1c1e;
-            --text-secondary: #3a3a3c;
-            --text-muted: #8e8e93;
-
-            --border: rgba(0, 0, 0, 0.08);
-            --border-soft: rgba(0, 0, 0, 0.04);
-
-            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.1);
+        /* MODO NOCHE (OLED/PREMIUM DARK) */
+        body.dark-theme {
+            --bg-page: #0a0a0a;
+            --bg-card: #151515;
+            --text-primary: #ffffff;
+            --text-secondary: #aaaaaa;
+            --text-muted: #666666;
+            --glass-bg: rgba(20, 20, 20, 0.8);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-soft: rgba(255, 255, 255, 0.03);
+            --shadow-md: 0 12px 48px rgba(0, 0, 0, 0.5);
         }
 
         * {
@@ -111,7 +83,7 @@
             min-height: -webkit-fill-available;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 0%, rgba(0, 255, 255, 0.03) 0%, transparent 50%);
+            background-image: none; /* Modo claro Qantas: fondo limpio */
             overscroll-behavior: none;
             -webkit-overflow-scrolling: touch;
             transition: var(--transition);
@@ -124,21 +96,27 @@
         .logo-text h1,
         .section-title,
         .scanner-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            text-align: center;
+            font-family: 'Manrope', sans-serif; /* Qantas Typography */
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            text-align: left; /* Editorial alignment */
         }
 
         .section-title {
-            font-size: 28px;
-            margin-bottom: 8px;
+            font-size: 34px; /* Qantas editorial size */
+            margin-bottom: 4px;
+            color: var(--text-primary);
         }
 
         .section-subtitle {
-            text-align: center;
-            margin-bottom: 24px;
-            opacity: 0.6;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 32px;
+            color: var(--text-muted);
         }
 
         /* [REGLA DE HIERRO: GLASSMORPHISM] */
@@ -157,6 +135,12 @@
         .det-action-btn,
         .agenda-item {
             transition: var(--transition);
+        }
+
+        .main {
+            padding-top: calc(85px + env(safe-area-inset-top, 0px));
+            padding-bottom: 120px;
+            transition: padding-top 0.3s ease;
         }
 
         button:active,
@@ -198,7 +182,7 @@
             transition: var(--transition);
         }
 
-        body.light-theme .theme-toggle-dot {
+        body.dark-theme .theme-toggle-dot {
             transform: translateX(20px);
         }
 
@@ -247,29 +231,33 @@
             }
         }
 
-        /* ===== HEADER PREMIUM (ZONA ALTA) ===== */
+        /* ===== HEADER PREMIUM (ZONA ALTA - STITCH FLOATING PILL) ===== */
         .premium-header {
-            margin: var(--gutter);
-            margin-bottom: 24px;
-            padding: 16px 20px;
-            background: rgba(10, 10, 10, 0.6);
+            position: fixed;
+            top: calc(16px + env(safe-area-inset-top, 0px));
+            left: 50%;
+            transform: translateX(-50%);
+            max-width: 480px;
+            width: calc(100% - 32px);
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.85); /* MODO CLARO DEFAULT: Clarity Pill */
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 28px;
-            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            border-radius: 50px; /* Ambient Pill */
+            box-shadow: 0 8px 32px rgba(26, 28, 29, 0.05); /* Ambient shadow */
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: var(--gutter);
-            z-index: 100;
+            z-index: 950;
             transition: var(--transition);
         }
 
-        body.light-theme .premium-header {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+        body.dark-theme .premium-header {
+            background: rgba(12, 12, 12, 0.7); /* Night Glass */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            top: calc(16px + env(safe-area-inset-top, 0px));
         }
 
         .header-profile {
@@ -279,81 +267,82 @@
         }
 
         .avatar-glow {
-            width: 44px;
-            height: 44px;
+            width: 40px; /* Stitch W-10 sizing */
+            height: 40px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), #f59e0b);
-            padding: 2px;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            background: var(--bg-page);
+            border: 2px solid #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.dark-theme .avatar-glow {
+            border: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
         .avatar-img {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            border: 2px solid var(--bg-page);
-            object-fit: contain;
-            background: var(--bg-page);
+            object-fit: cover;
         }
 
         .header-text h1 {
-            font-size: 16px;
+            font-size: 19px; /* Stitch text-xl */
             font-weight: 700;
+            letter-spacing: -0.5px;
             color: var(--text-primary);
             margin: 0;
-            letter-spacing: 0.2px;
+            line-height: 1.1;
             text-align: left;
         }
 
         .header-text p {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin: 2px 0 0;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            text-align: left;
+            display: none; /* Minimalismo: sólo display-lg info */
         }
 
         /* ===== HEADER ACTIONS (SEPARADOS PARA ESTABILIDAD) ===== */
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px; /* Stitch condensed inner elements */
         }
 
         .action-circle {
-            width: 42px;
-            height: 42px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: transparent; /* Seamless with pill */
             cursor: pointer;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        body.light-theme .action-circle {
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        .action-circle:hover {
+            background: rgba(0, 0, 0, 0.05); /* Modo claro por defecto */
+            transform: scale(0.95); /* Active press physics */
         }
 
-        .action-circle:active {
-            transform: scale(0.9);
-            background: rgba(212, 175, 55, 0.1);
+        body.dark-theme .action-circle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(0.95);
         }
 
         .action-circle i {
-            color: var(--gold);
+            color: var(--text-primary); /* Base color neutrally adapts */
             width: 20px;
             height: 20px;
-            stroke-width: 1.5;
+            stroke-width: 2; /* Editorial bolding */
+        }
+
+        /* Branding Injection in Primary Action (Busca) */
+        .action-circle[title="Buscar"] i {
+            color: #ebae1c; 
         }
 
         /* Estética Luxury para Iconos del Dock */
@@ -407,7 +396,7 @@
         .main {
             max-width: 480px;
             margin: 0 auto;
-            padding: 20px 16px 120px;
+            padding: 96px 16px 120px; /* Padding superior ampliado para compensar Top AppBar fijo */
         }
 
         .tab-content {
@@ -443,30 +432,32 @@
             box-shadow: 0 12px 30px rgba(212, 175, 55, 0.15);
         }
         .dash-widget {
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.04); /* Modo claro default */
+            background: var(--bg-card); /* Tarjeta blanca limpia */
             transition: all 0.3s ease;
         }
         .dash-widget:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(0, 0, 0, 0.02);
             border-color: rgba(212, 175, 55, 0.2);
             transform: scale(1.02);
         }
-        body.light-theme .dash-widget {
-            background: rgba(0, 0, 0, 0.02);
-            border-color: rgba(0, 0, 0, 0.05);
+        body.dark-theme .dash-widget {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.05);
         }
 
-        /* ===== SECTION TITLES REFINED ===== */
+        /* ===== SECTION TITLES: QANTAS EDITORIAL ===== */
         .section-title {
-            font-size: 26px;
+            font-size: 34px;
             margin-bottom: 4px;
+            color: var(--text-primary); /* Texto sólido, no gradiente */
+            -webkit-text-fill-color: unset; /* Desactivar gradiente antigua */
+        }
+        body.dark-theme .section-title {
+            /* En modo oscuro, gradiente blanco sutil */
             background: linear-gradient(to bottom, #fff, #aaa);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        body.light-theme .section-title {
-            background: linear-gradient(to bottom, #000, #444);
-            -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -478,54 +469,105 @@
         }
 
         .scanner-area {
-            background: var(--white);
+            position: relative;
+            background: var(--bg-card);
             border: 2px dashed var(--border);
-            border-radius: 20px;
-            padding: 42px 20px;
+            border-radius: var(--radius-card);
+            padding: 40px 20px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
+            transition: var(--transition);
             overflow: hidden;
-        }
-
-        .scanner-area::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 50% 100%, var(--rose-glow), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .scanner-area:hover,
-        .scanner-area.drag-over {
-            border-color: var(--rose);
-            background: var(--warm-100);
-        }
-
-        .scanner-area:hover::before,
-        .scanner-area.drag-over::before {
-            opacity: 1;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .scanner-area.has-image {
             border-style: solid;
-            border-color: var(--rose);
-            padding: 0;
+            border-color: var(--premium-red);
+            padding: 10px;
         }
 
-        .scanner-icon-wrap {
-            width: 72px;
-            height: 72px;
-            background: linear-gradient(135deg, var(--warm-100), var(--warm-200));
+        .preview-img {
+            max-width: 100%;
+            max-height: 350px;
             border-radius: 20px;
-            display: flex;
+            object-fit: contain;
+            display: none;
+        }
+
+        .clear-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(228, 0, 0, 0.9);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: none;
             align-items: center;
             justify-content: center;
-            font-size: 34px;
-            margin: 0 auto 16px;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
+            transition: var(--transition);
+        }
+
+        .clear-btn:hover {
+            transform: scale(1.1);
+            background: #ff0000;
+        }
+
+        .scanner-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .scanner-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .scanner-placeholder p {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+
+        /* ═══ RESULTADO DE ESCANEO ═══ */
+        .result-item {
+            background: var(--bg-card);
             border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+        }
+        .result-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .result-value {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .result-value.amount {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #D4AF37;
         }
 
         .scanner-title {
@@ -1711,6 +1753,58 @@
             color: #fff;
         }
 
+        /* ===== MODAL CONTACTO: MODO CLARO (DEFAULT) ===== */
+        /* NOTA: Los estilos claros ya son los valores base de las clases.
+           Solo necesitamos override para modo oscuro. */
+        body.dark-theme #detalles-contacto-modal {
+            background: rgba(0, 0, 0, 0.6);
+        }
+        body.dark-theme .det-modal-content {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        body.dark-theme .det-modal-close {
+            color: #888;
+        }
+        body.dark-theme .det-modal-close:hover {
+            color: #fff;
+        }
+        body.dark-theme .det-initials-circle {
+            background: #D4AF37;
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        body.dark-theme .det-name {
+            color: #fff;
+        }
+        body.dark-theme .det-status {
+            color: #888;
+        }
+        body.dark-theme .det-action-btn {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+        body.dark-theme .det-action-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #D4AF37;
+            color: #D4AF37;
+        }
+        body.dark-theme .det-resumen-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        body.dark-theme .det-resumen-title {
+            color: #888;
+        }
+        body.dark-theme .res-label {
+            color: #666;
+        }
+        body.dark-theme .res-value {
+            color: #fff;
+        }
+
         .text-white {
             color: #fff !important;
         }
@@ -1845,34 +1939,38 @@
             border-color: var(--rose);
         }
 
-        /* ===== BOTTOM NAVIGATION (DOCK PREMIUM 5 PILARES) ===== */
+        /* ===== BOTTOM NAVIGATION (DOCK PREMIUM APPLE PILL) ===== */
         .bottom-nav {
             position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 40px);
-            max-width: 420px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: 0 16px 24px 16px; /* Métrica exacta Director Técnico */
             z-index: 1000;
+            display: flex;
+            justify-content: center;
         }
 
         .navbar-container {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-evenly;
             align-items: center;
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            padding: 8px 12px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 420px;
+            background-color: rgba(255, 255, 255, 0.6); /* 🔑 Glassmorphism translúcido */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 50px;
+            padding: 8px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
         }
 
-        body.light-theme .navbar-container {
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        /* En modo oscuro: Glassmorphism nocturno */
+        body.dark-theme .navbar-container {
+            background-color: rgba(10, 10, 10, 0.55);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .nav-btn {
@@ -1880,65 +1978,61 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 4px;
-            padding: 8px 0;
-            background: none;
+            padding: 12px 0;
+            background: transparent;
             border: none;
-            color: var(--text-muted);
+            color: #757575; /* Gris oscuro neutro elegante */
             cursor: pointer;
-            border-radius: 20px;
+            border-radius: 50px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            outline: none;
         }
 
+        /* EL ELEMENTO ACTIVO: Sub-píldora Exacta */
         .nav-btn.active {
-            color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
+            background: rgba(241, 241, 241, 0.9); /* Gris sutil con opacidad */
+            color: #ebae1c; /* Color de marca exacto */
+        }
+        body.dark-theme .nav-btn.active {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .nav-icon i {
             width: 20px;
             height: 20px;
-            stroke-width: 1.5;
+            stroke-width: 1.8; /* Trazo fino elegante */
             transition: transform 0.3s ease;
         }
 
         .nav-btn.active .nav-icon i {
-            transform: scale(1.1) translateY(-2px);
+            stroke-width: 2.2; /* Ligeramente más grueso cuando activo */
+            transform: scale(1.1) translateY(-1px);
         }
 
         .nav-label {
             font-size: 9px;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: inherit;
         }
 
-        body.light-theme .nav-btn.active {
-            background: rgba(212, 175, 55, 0.15);
-        }
-
-        /* ===== MOBILE ===== */
+        /* ===== MOBILE MEDIA QUERY ===== */
         @media (max-width: 380px) {
-            .stats-row {
-                gap: 7px;
+            .navbar-container {
+                padding: 6px;
             }
-
-            .stat-card {
-                padding: 12px 8px;
-            }
-
-            .stat-value {
-                font-size: 22px;
-            }
-
-            .result-grid {
-                grid-template-columns: 1fr;
-            }
-
             .nav-btn {
-                min-width: 50px;
-                padding: 4px 8px;
+                padding: 10px 0;
+            }
+            .nav-icon i {
+                width: 18px;
+                height: 18px;
+            }
+            .nav-label {
+                font-size: 8px;
             }
         }
 
@@ -2082,6 +2176,153 @@
             opacity: 1;
             transform: rotate(45deg);
         }
+
+        /* ===== HOJA DE RUTA - PREMIUM OPERATIVO ===== */
+
+        /* Barra de progreso */
+        .ruta-progress-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            height: 12px;
+            overflow: hidden;
+        }
+        body.dark-theme .ruta-progress-track {
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .ruta-progress-fill {
+            height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #D4AF37, #ebae1c);
+            transition: width 0.8s ease;
+        }
+
+        /* Hornada summary */
+        .ruta-hornada-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        body.dark-theme .ruta-hornada-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(212, 175, 55, 0.15);
+        }
+        .ruta-hornada-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .ruta-hornada-item + .ruta-hornada-item {
+            border-top: 1px solid var(--border);
+        }
+        .ruta-hornada-qty {
+            font-weight: 700;
+            color: #D4AF37;
+            font-size: 13px;
+        }
+
+        /* Card de tarea/pedido */
+        .ruta-card {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .ruta-card.ruta-completing {
+            opacity: 0.4;
+            transform: scale(0.96);
+        }
+        .ruta-card.ruta-done {
+            background: rgba(16, 185, 129, 0.06) !important;
+            border-color: rgba(16, 185, 129, 0.18) !important;
+            opacity: 0.65;
+        }
+        body.dark-theme .ruta-card.ruta-done {
+            background: rgba(16, 185, 129, 0.08) !important;
+        }
+        .ruta-card.ruta-done .ruta-product-name {
+            text-decoration: line-through;
+            color: var(--text-muted);
+        }
+
+        /* Botones de acción ruta */
+        .ruta-btn {
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: inherit;
+        }
+        .ruta-btn-complete {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.06);
+            color: #D4AF37;
+        }
+        .ruta-btn-complete:hover {
+            background: rgba(212, 175, 55, 0.15);
+        }
+        .ruta-btn-whatsapp {
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            background: rgba(37, 211, 102, 0.06);
+            color: #25D366;
+        }
+        .ruta-btn-whatsapp:hover {
+            background: rgba(37, 211, 102, 0.15);
+        }
+        .ruta-btn-delete {
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            background: rgba(239, 68, 68, 0.05);
+            color: #ef4444;
+            padding: 7px 10px;
+        }
+        .ruta-btn-delete:hover {
+            background: rgba(239, 68, 68, 0.12);
+        }
+
+        /* Sección finalizadas */
+        .ruta-finalizadas-wrap {
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px solid rgba(16, 185, 129, 0.1);
+            border-radius: 16px;
+            padding: 16px;
+        }
+        body.dark-theme .ruta-finalizadas-wrap {
+            background: rgba(16, 185, 129, 0.06);
+            border-color: rgba(16, 185, 129, 0.12);
+        }
+
+        /* Modal tarea */
+        .ruta-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 9000;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .ruta-modal-overlay.open {
+            display: flex;
+        }
+
+        /* Sección header ruta */
+        .ruta-section-header {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
     </style>
 </head>
 
@@ -2109,9 +2350,9 @@
             <div class="action-circle" onclick="activateTab('agenda')" title="Buscar">
                 <i data-lucide="search"></i>
             </div>
-            <!-- Tema (Sol/Luna) -->
-            <div class="action-circle" onclick="toggleTheme()" title="Modo Claro/Oscuro">
-                <i data-lucide="moon" id="themeIcon"></i>
+            <!-- Tema (Sol/Luna) con Contenedor Inmutable -->
+            <div class="action-circle" onclick="toggleTheme()" title="Modo Claro/Oscuro" id="btn-theme-toggle">
+                <i data-lucide="moon"></i>
             </div>
             <!-- Ajustes Técnicos -->
             <div class="action-circle" id="headerGearBtn" title="Ajustes Técnicos">
@@ -2174,9 +2415,9 @@
                     <i data-lucide="pie-chart" style="width: 20px; color: var(--gold); margin-bottom: 8px;"></i>
                     <div style="font-size: 11px; font-weight: 600;">Ver Márgenes</div>
                 </div>
-                <div onclick="activateTab('alertas')" class="glass-panel" style="flex: 0 0 120px; padding: 16px; text-align: center; border-radius: 20px; cursor: pointer;">
-                    <i data-lucide="bell" style="width: 20px; color: var(--gold); margin-bottom: 8px;"></i>
-                    <div style="font-size: 11px; font-weight: 600;">Alertas Inteligentes</div>
+                <div onclick="activateTab('ruta')" class="glass-panel" style="flex: 0 0 120px; padding: 16px; text-align: center; border-radius: 20px; cursor: pointer;">
+                    <i data-lucide="map" style="width: 20px; color: var(--gold); margin-bottom: 8px;"></i>
+                    <div style="font-size: 11px; font-weight: 600;">Hoja de Ruta</div>
                 </div>
             </div>
 
@@ -2210,15 +2451,33 @@
                         </button>
                     </div>
                 </div>
-                <img id="previewImg" class="preview-img" style="display:none" alt="Vista previa">
+                <img id="previewImg" class="preview-img" style="display:none;" alt="Vista previa" />
+                <!-- Botón de limpieza/descarte -->
+                <button id="clearBtn" class="clear-btn" style="display:none;" title="Eliminar y volver a empezar">
+                    <i data-lucide="trash-2"></i>
+                </button>
             </div>
-             <!-- Inputs ocultos preservados -->
              <input type="file" id="fileInputCamera" accept="image/*" capture="environment" style="display:none">
              <input type="file" id="fileInputGallery" accept="image/*" style="display:none">
              
              <div class="btn-group" style="padding: 0 var(--gutter);">
                 <button class="btn btn-primary" id="sendBtn" disabled>🚀 Procesar y Guardar</button>
                 <button class="btn btn-secondary" onclick="hideGlobalScanner()" style="margin-top: 12px;">Volver a Inicio</button>
+            </div>
+
+            <!-- ═══ RESULTADO DEL ESCANEO ═══ -->
+            <div id="resultArea" style="display:none; padding: var(--gutter); margin-top: 16px;">
+                <div class="glass-panel" style="padding: 24px; border-radius: 20px; border: 1px solid rgba(212,175,55,0.3);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
+                        <div style="width: 40px; height: 40px; background: rgba(16,185,129,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">✅</div>
+                        <div>
+                            <div style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary);">Factura Procesada</div>
+                            <div id="resultCategoria" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Categoría: -</div>
+                        </div>
+                    </div>
+                    <div id="resultGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
+                    <button onclick="document.getElementById('resultArea').style.display='none';" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Cerrar Resumen</button>
+                </div>
             </div>
         </div>
 
@@ -2397,20 +2656,38 @@
                 Estimación basada en gastos reales de Airtable + venta media configurada. Los márgenes reales dependen
                 también de la merma diaria.
             </p>
-            <!-- ===== TAB: ALERTAS ===== -->
-            <div id="tab-alertas" class="tab-content">
-                <div class="section-title">Alertas</div>
-                <div class="section-subtitle">Avisos de tu negocio</div>
-                <div class="empty-state">
-                    <div class="empty-icon"
-                        style="background: rgba(212, 175, 55, 0.1); padding: 20px; border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
-                        <i data-lucide="bell" style="width: 32px; height: 32px; color: #D4AF37;"></i>
-                    </div>
-                    <div class="empty-title">Sin alertas nuevas</div>
-                    <div class="empty-desc">Todo está en orden por ahora</div>
+        </div>
+
+        <!-- ===== TAB: HOJA DE RUTA ===== -->
+        <div id="tab-ruta" class="tab-content">
+            <div class="section-title">Hoja de Ruta</div>
+            <div class="section-subtitle" style="text-align: center;">Pedidos recurrentes y elaboraciones</div>
+
+            <!-- Barra de Progreso -->
+            <div id="ruta-progress-section" style="margin: 16px var(--gutter) 0; width: calc(100% - 48px);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span id="ruta-progress-text" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">0 de 0 tareas</span>
+                    <span id="ruta-progress-pct" style="font-size: 13px; font-weight: 700; color: #D4AF37;">0%</span>
+                </div>
+                <div class="ruta-progress-track">
+                    <div id="ruta-progress-bar" class="ruta-progress-fill" style="width: 0%;"></div>
                 </div>
             </div>
 
+            <!-- Resumen Hornada -->
+            <div id="ruta-hornada-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
+
+            <!-- Pedidos Recurrentes -->
+            <div id="ruta-recurrentes-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
+
+            <!-- Pedidos Dinámicos -->
+            <div id="ruta-dinamicos-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
+
+            <!-- Tareas Manuales -->
+            <div id="ruta-manuales-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
+
+            <!-- Tareas Finalizadas -->
+            <div id="ruta-finalizadas-section" style="margin: 24px var(--gutter) 32px; width: calc(100% - 48px);"></div>
         </div>
 
     </main>
@@ -2482,6 +2759,36 @@
     <!-- FAB Añadir Contacto -->
     <button class="fab-add" id="fabAddContact" title="Añadir contacto">➕</button>
 
+    <!-- FAB Añadir Tarea (Hoja de Ruta) -->
+    <button class="fab-add" id="fabAddTask" title="Añadir tarea"
+        style="background: linear-gradient(135deg, #ebae1c, #D4AF37); box-shadow: 0 6px 24px rgba(212,175,55,0.45); color: #fff; font-size: 22px;">
+        <i data-lucide="plus" style="width: 22px; height: 22px;"></i>
+    </button>
+
+    <!-- Modal Nueva Tarea (Hoja de Ruta) -->
+    <div class="ruta-modal-overlay" id="taskModal">
+        <div class="modal-sheet glass-panel"
+            style="padding: 32px; border-top: 1px solid var(--border); border-radius: 32px 32px 0 0; width: 100%; max-width: 480px; animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
+            <div style="width: 36px; height: 4px; background: rgba(128,128,128,0.3); border-radius: 2px; margin: 0 auto 20px;"></div>
+            <div style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="clipboard-plus" style="width: 20px; color: #D4AF37;"></i>
+                Nueva Tarea
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
+                <input class="modal-input glass-panel" id="taskName" type="text" placeholder="Nombre de la tarea *"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <input class="modal-input glass-panel" id="taskNotes" type="text" placeholder="Notas (opcional)"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn glass-panel" onclick="closeTaskModal()"
+                    style="flex: 1; padding: 16px; border: 1px solid var(--border); font-size: 14px;">Cancelar</button>
+                <button class="btn glass-panel" onclick="saveNewTask()"
+                    style="flex: 2; padding: 16px; background: #D4AF37; color: #fff; font-weight: 600; font-size: 14px; border: none;">Guardar Tarea</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Añadir Contacto [GLASS VERSION] -->
     <div class="modal-overlay" id="contactModal">
         <div class="modal-sheet glass-panel"
@@ -2526,12 +2833,11 @@
     <div class="processing-overlay hidden" id="processingOverlay">
         <div class="processing-bread">🍞</div>
         <div class="spinner-track"></div>
-        <div class="processing-text">Procesando documento...</div>
-        <div class="processing-sub">La IA está analizando tu factura</div>
+        <div class="processing-text">Analizando con Gemini 1.5...</div>
+        <div class="processing-sub">Velocidad Flash Activada • Procesando JSON</div>
     </div>
 
-    <!-- ZONA BAJA (DOCK FLOTANTE 5 ICONOS) -->
-    <!-- ZONA BAJA (DOCK PREMIUM 5 PILARES) -->
+    <!-- ZONA BAJA (DOCK FLOATING PILL - ESTILO APPLE) -->
     <nav class="bottom-nav">
         <div class="navbar-container">
             <!-- Inicio -->
@@ -2555,13 +2861,13 @@
             <!-- Márgenes -->
             <button class="nav-btn" data-tab="margenes" onclick="activateTab('margenes')">
                 <span class="nav-icon"><i data-lucide="trending-up"></i></span>
-                <span class="nav-label">MARGENES</span>
+                <span class="nav-label">MÁRGENES</span>
             </button>
 
-            <!-- Alertas -->
-            <button class="nav-btn" data-tab="alertas" onclick="activateTab('alertas')">
-                <span class="nav-icon"><i data-lucide="bell"></i></span>
-                <span class="nav-label">ALERTAS</span>
+            <!-- Ruta -->
+            <button class="nav-btn" data-tab="ruta" onclick="activateTab('ruta')">
+                <span class="nav-icon"><i data-lucide="map"></i></span>
+                <span class="nav-label">HOJA RUTA</span>
             </button>
         </div>
     </nav>
@@ -2618,9 +2924,8 @@
     <!-- [MODAL POPUP (PREMIUM) RESTAURADO] -->
     <!-- [MODAL POPUP (PREMIUM) RESTAURADO - GLASS VERSION] -->
     <div id="detalles-contacto-modal" onclick="if(event.target === this) window.cerrarVistaCliente()">
-        <div class="det-modal-content glass-panel"
-            style="padding: 32px; border: 1px solid var(--border); width: 90%; max-width: 440px;">
-            <div class="det-modal-close" style="right: 60px; color: #ef4444; opacity: 1;"
+        <div class="det-modal-content">
+            <div class="det-modal-close" style="right: 60px; color: #ef4444;"
                 onclick="window.confirmarEliminarContacto()">
                 <i data-lucide="trash-2" style="width: 20px;"></i>
             </div>
@@ -2628,63 +2933,50 @@
                 <i data-lucide="x" style="width: 20px;"></i>
             </div>
 
-            <div class="det-header" style="margin-bottom: 32px;">
-                <div class="det-initials-circle glass-panel" id="det-initials"
-                    style="width: 70px; height: 70px; font-size: 24px; background: rgba(255,255,255,0.05); color: var(--rose); border: 2px solid var(--rose);">
-                    IM</div>
+            <div class="det-header">
+                <div class="det-initials-circle" id="det-initials">IM</div>
                 <div class="det-header-text">
-                    <h2 class="det-name" id="det-name" style="font-size: 24px; font-weight: 500; margin-bottom: 4px;">
-                        Contacto</h2>
-                    <div class="det-status"
-                        style="display: flex; align-items: center; gap: 8px; opacity: 0.6; font-size: 13px;">
-                        <div class="status-dot" id="det-status-dot"
-                            style="width: 8px; height: 8px; border-radius: 50%;"></div>
+                    <h2 class="det-name" id="det-name">Contacto</h2>
+                    <div class="det-status">
+                        <div class="status-dot" id="det-status-dot"></div>
                         <span id="det-category-text">Sin Registros</span>
                     </div>
                 </div>
             </div>
 
-            <div class="det-actions-grid"
-                style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px;">
-                <div class="det-action-btn glass-panel" onclick="ejecutarLlamada()"
-                    style="padding: 16px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                    <i data-lucide="phone" style="width: 20px;"></i>
-                    <span style="font-size: 10px; font-weight: 500;">LLAMAR</span>
+            <div class="det-actions-grid">
+                <div class="det-action-btn" onclick="ejecutarLlamada()">
+                    <i data-lucide="phone" style="width: 22px;"></i>
+                    <span>Llamar</span>
                 </div>
-                <div class="det-action-btn glass-panel" onclick="ejecutarWhatsApp()"
-                    style="padding: 16px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                    <i data-lucide="message-circle" style="width: 20px;"></i>
-                    <span style="font-size: 10px; font-weight: 500;">CHAT</span>
+                <div class="det-action-btn" onclick="ejecutarWhatsApp()">
+                    <i data-lucide="message-square" style="width: 22px;"></i>
+                    <span>WhatsApp</span>
                 </div>
-                <div class="det-action-btn glass-panel" onclick="ejecutarHistorial()"
-                    style="padding: 16px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                    <i data-lucide="history" style="width: 20px;"></i>
-                    <span style="font-size: 10px; font-weight: 500;">HITO</span>
+                <div class="det-action-btn" onclick="ejecutarHistorial()">
+                    <i data-lucide="bar-chart-3" style="width: 22px;"></i>
+                    <span>Historial</span>
                 </div>
-                <div class="det-action-btn glass-panel" onclick="ejecutarNota()"
-                    style="padding: 16px 0; display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                    <i data-lucide="sticky-note" style="width: 20px;"></i>
-                    <span style="font-size: 10px; font-weight: 500;">NOTA</span>
+                <div class="det-action-btn" onclick="ejecutarNota()">
+                    <i data-lucide="bell" style="width: 22px;"></i>
+                    <span>Nota</span>
                 </div>
             </div>
 
-            <div class="det-resumen-box glass-panel"
-                style="padding: 24px; background: rgba(255,255,255,0.02); border: 1px solid var(--border);">
-                <div class="det-resumen-title"
-                    style="font-size: 11px; opacity: 0.4; letter-spacing: 1px; margin-bottom: 20px;">RESUMEN FINANCIERO
-                </div>
-                <div class="det-resumen-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+            <div class="det-resumen-box">
+                <div class="det-resumen-title">RESUMEN FINANCIERO RÁPIDO</div>
+                <div class="det-resumen-grid">
                     <div class="res-col">
-                        <span class="res-label" style="font-size: 10px; opacity: 0.5;">Saldo</span>
-                        <span class="res-value" id="det-saldo" style="font-size: 16px; font-weight: 500;">0.00 €</span>
+                        <span class="res-label">Saldo Pend.</span>
+                        <span class="res-value" id="det-saldo">0.00 €</span>
                     </div>
                     <div class="res-col">
-                        <span class="res-label" style="font-size: 10px; opacity: 0.5;">Ticket</span>
-                        <span class="res-value" id="det-ticket" style="font-size: 16px; font-weight: 500;">0.00 €</span>
+                        <span class="res-label">Ticket Medio</span>
+                        <span class="res-value" id="det-ticket">0.00 €</span>
                     </div>
                     <div class="res-col">
-                        <span class="res-label" style="font-size: 10px; opacity: 0.5;">Última</span>
-                        <span class="res-value" id="det-ultima" style="font-size: 12px; font-weight: 500;">--</span>
+                        <span class="res-label">Última Acc.</span>
+                        <span class="res-value" id="det-ultima">--</span>
                     </div>
                 </div>
             </div>
@@ -2700,6 +2992,12 @@
                 console.warn('Splash forzado por seguridad (3s)');
             }
         }, 3000);
+
+        // ===== CONSTANTES GLOBALES DE ALMACENAMIENTO =====
+        const CONFIG_KEY = 'dulce_jaleo_config';
+        const CONTACTS_KEY = 'dulce_jaleo_contactos';
+        const VENTA_KEY = 'dulce_jaleo_venta_semanal';
+        const RUTA_KEY = 'dulce_jaleo_ruta';
 
         // Catch-all para evitar cierres abruptos y diagnosticar errores
         window.onerror = function (msg, url, lineNo, columnNo, error) {
@@ -2738,7 +3036,6 @@
         });
 
         // ===== CONFIG =====
-        const CONFIG_KEY = 'dulce_jaleo_config';
         const AIRTABLE_BASE = 'app7VJr4iHt5v1r5c';
         const AIRTABLE_TABLES = {
             FACTURAS: 'tblLC7oMOUQtRWkn7',
@@ -2913,16 +3210,28 @@
 
 
         // Modal Config desde ⚙️ del header
-        document.getElementById('headerGearBtn').addEventListener('click', () => {
-            document.getElementById('configModal').classList.add('open');
-        });
-        document.getElementById('closeConfigModal').addEventListener('click', () => {
-            document.getElementById('configModal').classList.remove('open');
-        });
-        document.getElementById('configModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('configModal'))
-                document.getElementById('configModal').classList.remove('open');
-        });
+        const hGear = document.getElementById('headerGearBtn');
+        if (hGear) {
+            hGear.addEventListener('click', () => {
+                const cMod = document.getElementById('configModal');
+                if (cMod) cMod.classList.add('open');
+            });
+        }
+        
+        const clCMod = document.getElementById('closeConfigModal');
+        if (clCMod) {
+            clCMod.addEventListener('click', () => {
+                const cMod = document.getElementById('configModal');
+                if (cMod) cMod.classList.remove('open');
+            });
+        }
+
+        const cModOv2 = document.getElementById('configModal');
+        if (cModOv2) {
+            cModOv2.addEventListener('click', (e) => {
+                if (e.target === cModOv2) cModOv2.classList.remove('open');
+            });
+        }
 
         // ===== BOTTOM NAVIGATION =====
         function activateTab(tabId) {
@@ -2956,9 +3265,21 @@
                 }
             }
 
-            if (tabId === 'facturas') loadFacturas();
-            if (tabId === 'agenda') renderAgenda();
-            if (tabId === 'margenes') loadMargenes();
+            if (tabId === 'facturas') { try { loadFacturas(); } catch(e) { console.error(e); } }
+            if (tabId === 'agenda') { try { renderAgenda(); } catch(e) { console.error(e); } }
+            if (tabId === 'margenes') { try { loadMargenes(); } catch(e) { console.error(e); } }
+            if (tabId === 'ruta') { try { renderRuta(); } catch(e) { console.error(e); } }
+
+            // FAB Tarea: visible solo en pestaña Ruta
+            const fabTask = document.getElementById('fabAddTask');
+            if (fabTask) {
+                if (tabId === 'ruta') {
+                    fabTask.classList.add('visible');
+                } else {
+                    fabTask.classList.remove('visible');
+                }
+            }
+
             if (tabId === 'inicio') {
                 console.log('Inicio cargado');
                 // Aquí podrías cargar widgets de dashboard más adelante
@@ -2966,13 +3287,12 @@
         }
 
         document.querySelectorAll('.nav-btn[data-tab]').forEach(btn => {
-            btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+            if (btn) btn.addEventListener('click', () => activateTab(btn.dataset.tab));
         });
 
 
 
-        // Activar tab inicial
-        activateTab('inicio');
+        // Activar tab inicial se ha movido al final del script (window.load)
 
         // ===== SCANNER =====
         let selectedFile = null;   // Archivo File verdadero a enviar
@@ -2987,11 +3307,12 @@
         const clearBtn = document.getElementById('clearBtn');
         const resultArea = document.getElementById('resultArea');
 
-        btnCamera.addEventListener('click', e => { e.stopPropagation(); fileInputCamera.click(); });
-        btnGallery.addEventListener('click', e => { e.stopPropagation(); fileInputGallery.click(); });
-        scannerArea.addEventListener('click', () => { if (!selectedFile) fileInputGallery.click(); });
+        if (btnCamera) btnCamera.addEventListener('click', e => { e.stopPropagation(); fileInputCamera.click(); });
+        if (btnGallery) btnGallery.addEventListener('click', e => { e.stopPropagation(); fileInputGallery.click(); });
+        if (scannerArea) scannerArea.addEventListener('click', () => { if (!selectedFile && fileInputGallery) fileInputGallery.click(); });
 
         // Drag & Drop
+        if (scannerArea) {
         scannerArea.addEventListener('dragover', e => { e.preventDefault(); scannerArea.classList.add('drag-over'); });
         scannerArea.addEventListener('dragleave', () => scannerArea.classList.remove('drag-over'));
         scannerArea.addEventListener('drop', e => {
@@ -2999,9 +3320,10 @@
             scannerArea.classList.remove('drag-over');
             if (e.dataTransfer.files.length) processSelectedFile(e.dataTransfer.files[0], false);
         });
+        } // cierre if (scannerArea)
 
-        fileInputCamera.addEventListener('change', e => { if (e.target.files.length) processSelectedFile(e.target.files[0], true); });
-        fileInputGallery.addEventListener('change', e => { if (e.target.files.length) processSelectedFile(e.target.files[0], false); });
+        if (fileInputCamera) fileInputCamera.addEventListener('change', e => { if (e.target.files.length) processSelectedFile(e.target.files[0], true); });
+        if (fileInputGallery) fileInputGallery.addEventListener('change', e => { if (e.target.files.length) processSelectedFile(e.target.files[0], false); });
 
         function showPreviewDirectly(srcBase64) {
             previewImg.src = srcBase64;
@@ -3009,8 +3331,8 @@
             placeholder.style.display = 'none';
             scannerArea.classList.add('has-image');
             sendBtn.disabled = false;
-            clearBtn.style.display = 'block';
-            resultArea.style.display = 'none';
+            if (clearBtn) clearBtn.style.display = 'block';
+            if (resultArea) resultArea.style.display = 'none';
         }
 
         function dataURLtoFile(dataurl, filename) {
@@ -3032,14 +3354,8 @@
                 return;
             }
 
-            // Paso A: Si es de galería, usamos el archivo original que funcionaba bien
-            if (!isCamera) {
-                selectedFile = file;
-                const reader = new FileReader();
-                reader.onload = ev => showPreviewDirectly(ev.target.result);
-                reader.readAsDataURL(file);
-                return;
-            }
+            // PASO A: Procesado Universal (Cámara y Galería)
+            // Esto asegura que SIEMPRE se comprima antes de enviar para máxima velocidad.
 
             // Paso B: Si es de la Cámara, procesamos DataURL y lo convertimos a File explícitamente
             // Aceptar imagen aunque sea HEIC en iOS (el type puede ser vacío)
@@ -3056,7 +3372,7 @@
                     showPreviewDirectly(ev.target.result);
                 };
                 img.onload = () => {
-                    const MAX_W = 1200;
+                    const MAX_W = 800; // Ultra-Speed Optimization: Gemini Flash doesn't need more for text.
                     let w = img.width, h = img.height;
                     if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
                     const canvas = document.createElement('canvas');
@@ -3067,11 +3383,12 @@
                     ctx.drawImage(img, 0, 0, w, h);
 
                     try {
-                        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
-                        selectedFile = dataURLtoFile(dataUrl, 'foto_camara.jpg');
+                        // JPEG 70% es suficiente para Gemini y reduce el peso un 40% adicional
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.70);
+                        selectedFile = dataURLtoFile(dataUrl, 'captura_optimizada.jpg');
                         showPreviewDirectly(dataUrl);
                     } catch (e) {
-                        alert('Error procesando imagen en memoria: ' + e.message);
+                        alert('Error en compresión: ' + e.message);
                         selectedFile = file;
                         showPreviewDirectly(ev.target.result);
                     }
@@ -3083,7 +3400,7 @@
             reader.readAsDataURL(file);
         }
 
-        clearBtn.addEventListener('click', e => { e.stopPropagation(); resetScanner(); });
+        if (clearBtn) clearBtn.addEventListener('click', e => { e.stopPropagation(); resetScanner(); });
 
         function resetScanner() {
             selectedFile = null;
@@ -3097,7 +3414,7 @@
             fileInputGallery.value = '';
         }
 
-        sendBtn.addEventListener('click', sendImage);
+        if (sendBtn) sendBtn.addEventListener('click', sendImage);
 
         async function sendImage() {
             if (!selectedFile) return;
@@ -3124,11 +3441,58 @@
                     throw new Error(`Servidor n8n (HTTP ${response.status}):\n${errorMsg.substring(0, 250)}`);
                 }
 
-                const result = await response.json();
-                showResult(result);
+                const resultText = (await response.text()).trim();
+                console.log("Respuesta cruda de n8n:", resultText);
+
+                try {
+                    if (!resultText) throw new Error("El servidor devolvió una respuesta vacía. Comprueba el flujo en n8n.");
+                    
+                    // Limpiar caracteres de control invisibles
+                    let cleanText = resultText.replace(/[\x00-\x1F\x7F-\x9F]/g, "");
+                    
+                    let result;
+                    try {
+                        result = JSON.parse(cleanText);
+                    } catch (pErr) {
+                        // ═══ REPARACIÓN AUTOMÁTICA INTELIGENTE ═══
+                        console.warn("JSON truncado detectado, reparando...", pErr.message);
+                        let r = cleanText;
+                        
+                        // 1) Detectar si estamos dentro de un string abierto
+                        let inString = false;
+                        for (let i = 0; i < r.length; i++) {
+                            if (r[i] === '"' && (i === 0 || r[i-1] !== '\\')) inString = !inString;
+                        }
+                        if (inString) r += '"'; // Cerrar string abierto
+                        
+                        // 2) Contar llaves y corchetes abiertos
+                        let openBraces = 0, openBrackets = 0;
+                        let inStr = false;
+                        for (let i = 0; i < r.length; i++) {
+                            if (r[i] === '"' && (i === 0 || r[i-1] !== '\\')) inStr = !inStr;
+                            if (!inStr) {
+                                if (r[i] === '{') openBraces++;
+                                if (r[i] === '}') openBraces--;
+                                if (r[i] === '[') openBrackets++;
+                                if (r[i] === ']') openBrackets--;
+                            }
+                        }
+                        
+                        // 3) Cerrar todas las estructuras abiertas
+                        for (let i = 0; i < openBraces; i++) r += '}';
+                        for (let i = 0; i < openBrackets; i++) r += ']';
+                        
+                        console.log("JSON reparado:", r.substring(r.length - 50));
+                        result = JSON.parse(r);
+                        console.info("✅ JSON reparado con éxito — datos recuperados.");
+                    }
+                    
+                    showResult(result);
+                } catch (jsonErr) {
+                    throw new Error(`Error parseando respuesta de n8n:\n${jsonErr.message}\n\nRespuesta recibida:\n${resultText.substring(0, 800)}`);
+                }
             } catch (err) {
-                // Paso C: try/catch con alert() con el err.message exacto
-                alert('❌ ERROR FATAL O RECHAZO DEL SERVIDOR:\n\n' + err.message);
+                alert('❌ ERROR DE ESCANEO:\n\n' + err.message);
             } finally {
                 overlay.classList.add('hidden');
             }
@@ -3356,7 +3720,7 @@
         }
 
         // ===== AGENDA / CONTACTOS =====
-        const CONTACTS_KEY = 'dulce_jaleo_contactos';
+
         let newContactType = 'proveedor';
         let agendaFilter = 'all';
 
@@ -3447,36 +3811,53 @@
         });
 
         // Búsqueda en tiempo real
-        if (document.getElementById('agendaSearch')) {
-            document.getElementById('agendaSearch').addEventListener('input', renderAgenda);
+        const agSearch = document.getElementById('agendaSearch');
+        if (agSearch) {
+            agSearch.addEventListener('input', renderAgenda);
         }
 
         // Modal
-        document.getElementById('fabAddContact').addEventListener('click', () => {
-            document.getElementById('contactModal').classList.add('open');
-            document.getElementById('cNombre').focus();
-        });
+        const fabAddC = document.getElementById('fabAddContact');
+        if (fabAddC) {
+            fabAddC.addEventListener('click', () => {
+                const cMod = document.getElementById('contactModal');
+                if (cMod) cMod.classList.add('open');
+                const cNom = document.getElementById('cNombre');
+                if (cNom) cNom.focus();
+            });
+        }
 
-        document.getElementById('closeModal').addEventListener('click', () => {
-            document.getElementById('contactModal').classList.remove('open');
-        });
+        const clMod = document.getElementById('closeModal');
+        if (clMod) {
+            clMod.addEventListener('click', () => {
+                const cMod = document.getElementById('contactModal');
+                if (cMod) cMod.classList.remove('open');
+            });
+        }
 
-        document.getElementById('contactModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('contactModal'))
-                document.getElementById('contactModal').classList.remove('open');
-        });
+        const cModOv = document.getElementById('contactModal');
+        if (cModOv) {
+            cModOv.addEventListener('click', (e) => {
+                if (e.target === cModOv) cModOv.classList.remove('open');
+            });
+        }
 
         document.querySelectorAll('.modal-type-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.modal-type-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                newContactType = btn.dataset.ctype;
-            });
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.modal-type-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    newContactType = btn.dataset.ctype;
+                });
+            }
         });
 
-        document.getElementById('saveContact').addEventListener('click', () => {
-            const nombre = document.getElementById('cNombre').value.trim();
-            if (!nombre) { document.getElementById('cNombre').focus(); return; }
+        const sCont = document.getElementById('saveContact');
+        if (sCont) {
+            sCont.addEventListener('click', () => {
+                const cNom = document.getElementById('cNombre');
+                const nombre = cNom ? cNom.value.trim() : '';
+                if (!nombre) { if (cNom) cNom.focus(); return; }
             const contacts = getContacts();
             contacts.push({
                 id: Date.now().toString(), // Asegurar ID string para data-id
@@ -3488,10 +3869,15 @@
                 creado: new Date().toISOString().slice(0, 10)
             });
             saveContacts(contacts);
-            ['cNombre', 'cTelefono', 'cEmail', 'cCategoria'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('contactModal').classList.remove('open');
+            ['cNombre', 'cTelefono', 'cEmail', 'cCategoria'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            const cMod = document.getElementById('contactModal');
+            if (cMod) cMod.classList.remove('open');
             renderAgenda();
-        });
+            });
+        }
 
         // Borrado de contactos (REGLA DE ORO: Intercambio de Modales para evitar fallos de capa)
         window.confirmarEliminarContacto = function () {
@@ -3557,7 +3943,7 @@
         };
 
         // ===== MÁRGENES =====
-        const VENTA_KEY = 'dulce_jaleo_venta_semanal';
+
 
         async function loadMargenes() {
             const ventaGuardada = localStorage.getItem(VENTA_KEY);
@@ -3721,47 +4107,406 @@
             alert('En desarrollo: ' + (window.contactSelected && window.contactSelected.email ? window.contactSelected.email : 'Sin nota.'));
         };
 
-        // ===== THEME TOGGLE LOGIC =====
-        window.toggleTheme = function () {
-            const isLight = document.body.classList.toggle('light-theme');
-            localStorage.setItem('dulce_jaleo_theme', isLight ? 'light' : 'dark');
-            updateThemeUI(isLight);
+        // ===== HOJA DE RUTA - GESTOR OPERATIVO =====
+
+
+        const RUTA_SEED = {
+            version: 1,
+            date: new Date().toISOString().slice(0, 10),
+            orders: [
+                { id: 'rec-1', type: 'recurrent', product: 'Bollería Fin de Semana', quantity: 150, unit: 'Uds', schedule: 'Viernes, Sábado y Domingo', icon: 'coffee', completed: false, completedAt: null },
+                { id: 'rec-2', type: 'recurrent', product: 'Pan de Masa Madre (Bar)', quantity: 30, unit: 'Hogazas', schedule: 'Lunes a Viernes', icon: 'shopping-bag', completed: false, completedAt: null },
+                { id: 'dyn-1', type: 'dynamic', source: 'whatsapp', product: 'Tarta de Zanahoria (8 rac.)', quantity: 8, unit: 'rac.', client: 'María J.', clientPhone: '34612345678', note: 'Sin nueces, recoger el viernes a las 18:00.', completed: false, completedAt: null },
+                { id: 'dyn-2', type: 'dynamic', source: 'n8n', product: 'Caja Surtida (12 Mini Dulces)', quantity: 12, unit: 'Uds', client: 'Eventos XYZ', clientPhone: '', note: 'Hoy, 14:00.', completed: false, completedAt: null }
+            ]
         };
 
-        function updateThemeUI(isLight) {
-            const icon = document.getElementById('themeIcon');
-            if (icon) {
-                icon.setAttribute('data-lucide', isLight ? 'sun' : 'moon');
-                if (typeof lucide !== 'undefined') lucide.createIcons();
+        function getRutaData() {
+            const raw = localStorage.getItem(RUTA_KEY);
+            if (!raw) {
+                saveRutaData(RUTA_SEED);
+                return JSON.parse(JSON.stringify(RUTA_SEED));
             }
+            const data = JSON.parse(raw);
+            // Reset diario para recurrentes
+            const today = new Date().toISOString().slice(0, 10);
+            if (data.date !== today) {
+                data.date = today;
+                data.orders.forEach(function(o) {
+                    if (o.type === 'recurrent') {
+                        o.completed = false;
+                        o.completedAt = null;
+                    }
+                });
+                saveRutaData(data);
+            }
+            return data;
         }
 
-        // Finalización de carga
-        (function() {
-            // Activar tema guardado
-            const savedTheme = localStorage.getItem('dulce_jaleo_theme');
-            const icon = document.getElementById('themeIcon');
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-theme');
-                if (icon) icon.setAttribute('data-lucide', 'sun');
-            } else {
-                document.body.classList.remove('light-theme');
-                if (icon) icon.setAttribute('data-lucide', 'moon');
+        function saveRutaData(data) {
+            localStorage.setItem(RUTA_KEY, JSON.stringify(data));
+        }
+
+        // --- Renderizado principal ---
+        function renderRuta() {
+            const data = getRutaData();
+            const orders = data.orders;
+            const pending = orders.filter(function(o) { return !o.completed; });
+            const done = orders.filter(function(o) { return o.completed; });
+
+            renderRutaProgress(orders);
+            renderRutaHornada(pending);
+            renderRutaRecurrentes(pending.filter(function(o) { return o.type === 'recurrent'; }));
+            renderRutaDinamicos(pending.filter(function(o) { return o.type === 'dynamic'; }));
+            renderRutaManuales(pending.filter(function(o) { return o.type === 'manual'; }));
+            renderRutaFinalizadas(done);
+
+            setTimeout(function() {
+                if (typeof lucide !== 'undefined') lucide.createIcons({ attrs: { 'stroke-width': 1.8, 'stroke': 'currentColor' } });
+            }, 50);
+        }
+
+        // --- Barra de progreso ---
+        function renderRutaProgress(orders) {
+            const total = orders.length;
+            const done = orders.filter(function(o) { return o.completed; }).length;
+            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            var txt = document.getElementById('ruta-progress-text');
+            var pctEl = document.getElementById('ruta-progress-pct');
+            var bar = document.getElementById('ruta-progress-bar');
+            if (txt) txt.textContent = done + ' de ' + total + ' tareas';
+            if (pctEl) pctEl.textContent = pct + '%';
+            if (bar) bar.style.width = pct + '%';
+        }
+
+        // --- Resumen de Hornada (Batching) ---
+        function renderRutaHornada(pendingOrders) {
+            var section = document.getElementById('ruta-hornada-section');
+            if (!section) return;
+
+            // Agrupar cantidades por producto
+            var groups = {};
+            pendingOrders.forEach(function(o) {
+                if (o.quantity && o.quantity > 0) {
+                    var key = o.product;
+                    if (!groups[key]) groups[key] = { quantity: 0, unit: o.unit || 'Uds' };
+                    groups[key].quantity += o.quantity;
+                }
+            });
+
+            var keys = Object.keys(groups);
+            if (keys.length === 0) {
+                section.innerHTML = '';
+                return;
             }
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-            
-            // Ocultar splash rápido
+
+            var itemsHtml = '';
+            keys.forEach(function(k) {
+                itemsHtml += '<div class="ruta-hornada-item">' +
+                    '<span>' + k + '</span>' +
+                    '<span class="ruta-hornada-qty">' + groups[k].quantity + ' ' + groups[k].unit + '</span>' +
+                    '</div>';
+            });
+
+            section.innerHTML =
+                '<div class="ruta-section-header">' +
+                    '<i data-lucide="flame" style="width: 18px; color: #e78a22;"></i> Resumen de Hornada' +
+                '</div>' +
+                '<div class="ruta-hornada-card">' + itemsHtml + '</div>';
+        }
+
+        // --- Pedidos Recurrentes ---
+        function renderRutaRecurrentes(items) {
+            var section = document.getElementById('ruta-recurrentes-section');
+            if (!section) return;
+            if (items.length === 0) { section.innerHTML = ''; return; }
+
+            var html = '<div class="ruta-section-header">' +
+                '<i data-lucide="calendar-check" style="width: 18px; color: #D4AF37;"></i> Fijos / Recurrentes' +
+                '</div>' +
+                '<div style="display: flex; flex-direction: column; gap: 12px;">';
+
+            items.forEach(function(o) {
+                html += '<div class="dashboard-widget glass-panel ruta-card" data-ruta-id="' + o.id + '" style="padding: 16px; border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; gap: 14px;">' +
+                    '<div style="width: 40px; height: 40px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center;">' +
+                        '<i data-lucide="' + (o.icon || 'package') + '" style="width: 20px; color: #D4AF37;"></i>' +
+                    '</div>' +
+                    '<div style="flex: 1; min-width: 0;">' +
+                        '<div class="ruta-product-name" style="font-size: 14px; font-weight: 600; color: var(--text-primary);">' + o.product + '</div>' +
+                        '<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">' + (o.schedule || '') + '</div>' +
+                    '</div>' +
+                    '<div style="padding: 5px 10px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-size: 11px; font-weight: 700; white-space: nowrap;">' +
+                        'x' + o.quantity + ' ' + o.unit +
+                    '</div>' +
+                    '<button class="ruta-btn ruta-btn-complete" onclick="completeRutaOrder(\'' + o.id + '\')">' +
+                        '<i data-lucide="check" style="width: 14px;"></i>' +
+                    '</button>' +
+                '</div>';
+            });
+
+            html += '</div>';
+            section.innerHTML = html;
+        }
+
+        // --- Pedidos Dinámicos ---
+        function renderRutaDinamicos(items) {
+            var section = document.getElementById('ruta-dinamicos-section');
+            if (!section) return;
+            if (items.length === 0) { section.innerHTML = ''; return; }
+
+            var html = '<div class="ruta-section-header" style="display: flex; justify-content: space-between; align-items: center;">' +
+                '<span style="display: flex; align-items: center; gap: 8px;">' +
+                    '<i data-lucide="inbox" style="width: 18px; color: #C97474;"></i> Pedidos Dinámicos' +
+                '</span>' +
+                '<span style="font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 4px 8px; color: var(--text-muted);">Integración: Activa</span>' +
+                '</div>' +
+                '<div style="display: flex; flex-direction: column; gap: 12px;">';
+
+            items.forEach(function(o) {
+                var isWA = o.source === 'whatsapp';
+                var badgeBg = isWA ? 'rgba(37, 211, 102, 0.15)' : 'rgba(231, 138, 34, 0.15)';
+                var badgeColor = isWA ? '#25D366' : '#e78a22';
+                var badgeIcon = isWA ? 'message-circle' : 'zap';
+                var badgeText = isWA ? 'WHATSAPP' : 'N8N AUTO';
+                var clientIcon = o.client && o.client.includes('Evento') ? 'building' : 'user';
+                var clientLabel = o.client && o.client.includes('Evento') ? 'Empresa' : 'Cliente';
+
+                html += '<div class="dashboard-widget glass-panel ruta-card" data-ruta-id="' + o.id + '" style="padding: 16px; border-radius: 16px; border: 1px solid var(--border); position: relative; overflow: hidden;">' +
+                    '<div style="position: absolute; top: 0; right: 0; background: ' + badgeBg + '; color: ' + badgeColor + '; font-size: 9px; font-weight: 700; padding: 4px 8px; border-radius: 0 16px 0 8px; display: flex; align-items: center; gap: 4px;">' +
+                        '<i data-lucide="' + badgeIcon + '" style="width: 10px;"></i> ' + badgeText +
+                    '</div>' +
+                    '<div style="display: flex; gap: 16px; align-items: flex-start; margin-top: 4px;">' +
+                        '<div style="flex: 1;">' +
+                            '<div class="ruta-product-name" style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">' + o.product + '</div>' +
+                            '<div style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">' +
+                                '<i data-lucide="' + clientIcon + '" style="width: 12px;"></i> ' + clientLabel + ': ' + (o.client || 'N/A') +
+                            '</div>' +
+                            (o.note ? '<div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;"><strong>Nota:</strong> ' + o.note + '</div>' : '') +
+                        '</div>' +
+                    '</div>' +
+                    '<div style="margin-top: 14px; display: flex; justify-content: flex-end; gap: 8px;">' +
+                        (o.clientPhone ? '<button class="ruta-btn ruta-btn-whatsapp" onclick="sendWhatsAppRuta(\'' + o.id + '\')">' +
+                            '<i data-lucide="message-circle" style="width: 14px;"></i> Avisar' +
+                        '</button>' : '') +
+                        '<button class="ruta-btn ruta-btn-complete" onclick="completeRutaOrder(\'' + o.id + '\')">' +
+                            '<i data-lucide="check" style="width: 14px;"></i> Completar' +
+                        '</button>' +
+                    '</div>' +
+                '</div>';
+            });
+
+            html += '</div>';
+            section.innerHTML = html;
+        }
+
+        // --- Tareas Manuales ---
+        function renderRutaManuales(items) {
+            var section = document.getElementById('ruta-manuales-section');
+            if (!section) return;
+            if (items.length === 0) { section.innerHTML = ''; return; }
+
+            var html = '<div class="ruta-section-header">' +
+                '<i data-lucide="clipboard-list" style="width: 18px; color: #D4AF37;"></i> Tareas Manuales' +
+                '</div>' +
+                '<div style="display: flex; flex-direction: column; gap: 12px;">';
+
+            items.forEach(function(o) {
+                html += '<div class="dashboard-widget glass-panel ruta-card" data-ruta-id="' + o.id + '" style="padding: 16px; border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; gap: 14px;">' +
+                    '<div style="width: 40px; height: 40px; background: rgba(212, 175, 55, 0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center;">' +
+                        '<i data-lucide="clipboard-check" style="width: 20px; color: #D4AF37;"></i>' +
+                    '</div>' +
+                    '<div style="flex: 1; min-width: 0;">' +
+                        '<div class="ruta-product-name" style="font-size: 14px; font-weight: 600; color: var(--text-primary);">' + o.product + '</div>' +
+                        (o.note ? '<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">' + o.note + '</div>' : '') +
+                    '</div>' +
+                    '<button class="ruta-btn ruta-btn-delete" onclick="deleteRutaTask(\'' + o.id + '\')" title="Eliminar">' +
+                        '<i data-lucide="trash-2" style="width: 14px;"></i>' +
+                    '</button>' +
+                    '<button class="ruta-btn ruta-btn-complete" onclick="completeRutaOrder(\'' + o.id + '\')">' +
+                        '<i data-lucide="check" style="width: 14px;"></i>' +
+                    '</button>' +
+                '</div>';
+            });
+
+            html += '</div>';
+            section.innerHTML = html;
+        }
+
+        // --- Tareas Finalizadas ---
+        function renderRutaFinalizadas(items) {
+            var section = document.getElementById('ruta-finalizadas-section');
+            if (!section) return;
+            if (items.length === 0) { section.innerHTML = ''; return; }
+
+            // Ordenar por completedAt (más reciente primero)
+            items.sort(function(a, b) { return (b.completedAt || 0) - (a.completedAt || 0); });
+
+            var html = '<div class="ruta-section-header" style="color: #10b981;">' +
+                '<i data-lucide="check-circle-2" style="width: 18px; color: #10b981;"></i> Finalizadas (' + items.length + ')' +
+                '</div>' +
+                '<div class="ruta-finalizadas-wrap" style="display: flex; flex-direction: column; gap: 8px;">';
+
+            items.forEach(function(o) {
+                html += '<div class="dashboard-widget glass-panel ruta-card ruta-done" data-ruta-id="' + o.id + '" style="padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(16,185,129,0.15); display: flex; align-items: center; gap: 12px;">' +
+                    '<div style="width: 32px; height: 32px; background: rgba(16, 185, 129, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">' +
+                        '<i data-lucide="check" style="width: 16px; color: #10b981;"></i>' +
+                    '</div>' +
+                    '<div style="flex: 1; min-width: 0;">' +
+                        '<div class="ruta-product-name" style="font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: line-through;">' + o.product + '</div>' +
+                    '</div>' +
+                '</div>';
+            });
+
+            html += '</div>';
+            section.innerHTML = html;
+        }
+
+        // --- Acciones ---
+        window.completeRutaOrder = function(orderId) {
+            var card = document.querySelector('[data-ruta-id="' + orderId + '"]');
+            if (card) {
+                card.classList.add('ruta-completing');
+            }
+            setTimeout(function() {
+                var data = getRutaData();
+                var order = data.orders.find(function(o) { return o.id === orderId; });
+                if (order) {
+                    order.completed = true;
+                    order.completedAt = Date.now();
+                }
+                saveRutaData(data);
+                renderRuta();
+            }, 500);
+        };
+
+        window.deleteRutaTask = function(taskId) {
+            var data = getRutaData();
+            data.orders = data.orders.filter(function(o) { return o.id !== taskId; });
+            saveRutaData(data);
+            renderRuta();
+        };
+
+        window.sendWhatsAppRuta = function(orderId) {
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (!order || !order.clientPhone) {
+                alert('Este pedido no tiene teléfono de cliente.');
+                return;
+            }
+            var msg = encodeURIComponent(
+                '\u00a1Hola ' + order.client + '! Tu ' + order.product + ' ya est\u00e1 lista en Dulce y Jaleo. \u00a1Te esperamos!'
+            );
+            var phone = order.clientPhone.replace(/\s+/g, '');
+            window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
+        };
+
+        // --- Modal Nueva Tarea ---
+        window.openTaskModal = function() {
+            var modal = document.getElementById('taskModal');
+            if (modal) {
+                modal.classList.add('open');
+                var nameInput = document.getElementById('taskName');
+                if (nameInput) { nameInput.value = ''; nameInput.focus(); }
+                var notesInput = document.getElementById('taskNotes');
+                if (notesInput) notesInput.value = '';
+            }
+        };
+
+        window.closeTaskModal = function() {
+            var modal = document.getElementById('taskModal');
+            if (modal) modal.classList.remove('open');
+        };
+
+        window.saveNewTask = function() {
+            var nameInput = document.getElementById('taskName');
+            var notesInput = document.getElementById('taskNotes');
+            var name = nameInput ? nameInput.value.trim() : '';
+            if (!name) { alert('Escribe un nombre para la tarea.'); return; }
+
+            var data = getRutaData();
+            data.orders.push({
+                id: 'man-' + Date.now(),
+                type: 'manual',
+                product: name,
+                note: notesInput ? notesInput.value.trim() : '',
+                completed: false,
+                completedAt: null
+            });
+            saveRutaData(data);
+            closeTaskModal();
+            renderRuta();
+        };
+
+        // FAB Tarea -> abrir modal
+        (function() {
+            var fab = document.getElementById('fabAddTask');
+            if (fab) fab.addEventListener('click', function() { openTaskModal(); });
+
+            // Cerrar modal al hacer click en overlay
+            var modal = document.getElementById('taskModal');
+            if (modal) {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) closeTaskModal();
+                });
+            }
+        })();
+
+        // ===== THEME TOGGLE LOGIC (INVERSIÓN: CLARO = DEFAULT) =====
+        // Ahora `:root` es CLARO. La clase `dark-theme` activa el modo oscuro.
+        window.toggleTheme = function () {
+            const isDark = document.body.classList.toggle('dark-theme');
+            localStorage.setItem('dulce_jaleo_theme', isDark ? 'dark' : 'light');
+            updateThemeIcon(isDark);
+        };
+
+        // Patrón Contenedor Inmutable: destruye el icono viejo y crea uno nuevo
+        function updateThemeIcon(isDark) {
+            const container = document.getElementById('btn-theme-toggle');
+            if (!container) return;
+            // Luna = "puedo activar modo oscuro", Sol = "puedo volver al claro"
+            container.innerHTML = '<i data-lucide="' + (isDark ? 'sun' : 'moon') + '"></i>';
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons({ attrs: { 'stroke-width': 1.8, 'stroke': 'currentColor' } });
+            }
+        }
+    </script>
+    <script src="agenda.js"></script>
+    <script>
+        // ===== PUNTO ÚNICO DE INICIALIZACIÓN =====
+        // Todo se ejecuta AQUÍ, cuando el DOM ya existe al 100%
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Restaurar el tema guardado ANTES de renderizar iconos
+            const savedTheme = localStorage.getItem('dulce_jaleo_theme');
+            const isDark = savedTheme === 'dark';
+            if (isDark) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+
+            // 2. Actualizar el icono del botón de tema al correcto (sol o luna)
+            const themeBtn = document.getElementById('btn-theme-toggle');
+            if (themeBtn) {
+                themeBtn.innerHTML = '<i data-lucide="' + (isDark ? 'sun' : 'moon') + '"></i>';
+            }
+
+            // 3. UNA SOLA llamada a Lucide para renderizar TODOS los iconos de la página
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons({ attrs: { 'stroke-width': 1.8, 'stroke': 'currentColor' } });
+            }
+
+            // 4. Ocultar splash screen
             setTimeout(() => {
                 const s = document.querySelector('.splash-screen');
                 if (s) s.classList.add('hide');
             }, 500);
-        })();
-    </script>
-    <script src="agenda.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons({ attrs: { 'stroke-width': 1.8, 'stroke': 'currentColor' } });
+
+            // 5. Activar tab inicial
+            try {
+                activateTab('inicio');
+            } catch(e) {
+                console.error('Error durante la activación inicial de pestañas:', e);
             }
         });
     </script>
