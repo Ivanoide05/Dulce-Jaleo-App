@@ -38,14 +38,6 @@
             --text-secondary: #5f6368;
             --text-muted: #8e8e93;
             
-            /* Dulce Jaleo Official Gold/Amber */
-            --gold: #D4AF37;
-            --amber: #f59e0b;
-            --amber-dark: #b45309;
-            --warm-50: #fafaf9;
-            --warm-100: #f5f5f4;
-            --warm-200: #e7e5e4;
-            
             /* Glass & Depth */
             --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-blur: blur(20px);
@@ -67,13 +59,9 @@
         body.dark-theme {
             --bg-page: #0a0a0a;
             --bg-card: #151515;
-            --white: #1c1c1e;
             --text-primary: #ffffff;
             --text-secondary: #aaaaaa;
             --text-muted: #666666;
-            --warm-50: rgba(255, 255, 255, 0.03);
-            --warm-100: rgba(255, 255, 255, 0.06);
-            --warm-200: rgba(255, 255, 255, 0.1);
             --glass-bg: rgba(20, 20, 20, 0.8);
             --border: rgba(255, 255, 255, 0.08);
             --border-soft: rgba(255, 255, 255, 0.03);
@@ -608,9 +596,9 @@
         }
 
         .btn-scan {
-            background: var(--white);
-            border: 1.5px solid var(--border);
-            color: var(--text-secondary);
+            background: var(--bg-card);
+            border: 1.5px solid rgba(0,0,0,0.12);
+            color: var(--text-primary);
             padding: 9px 18px;
             border-radius: 50px;
             font-size: 13px;
@@ -629,6 +617,9 @@
             border-color: var(--rose);
             color: var(--rose);
             background: var(--warm-100);
+        }
+        body.dark-theme .btn-scan {
+            border-color: rgba(255,255,255,0.15);
         }
 
         .preview-img {
@@ -1464,39 +1455,25 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* Tarjeta de contacto Luxury */
+        /* Tarjeta de contacto */
         .contact-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 12px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 14px;
+            transition: all 0.2s;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: var(--shadow-sm);
         }
 
         .contact-card:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: translateY(-2px);
-            border-color: var(--gold);
-            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
-        }
-
-        body.dark-theme .contact-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-
-        body.dark-theme .contact-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(212, 175, 55, 0.3);
+            border-color: var(--rose-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
         }
 
         .contact-avatar {
@@ -1514,11 +1491,11 @@
         }
 
         .avatar-proveedor {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(135deg, #d4af37, #b8942e);
         }
 
         .avatar-cliente {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(135deg, #c9a84c, #a68b3a);
         }
 
         .contact-info {
@@ -1527,38 +1504,12 @@
         }
 
         .contact-name {
-            font-family: 'Outfit', sans-serif;
-            font-size: 17px;
-            font-weight: 700;
+            font-size: 15px;
+            font-weight: 600;
             color: var(--text-primary);
-            letter-spacing: -0.01em;
-        }
-
-        body.dark-theme .contact-name {
-            color: #fff;
-        }
-
-        /* Badges de tipo en lista */
-        .badge-tipo-proveedor {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--amber-dark);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            font-size: 10px; font-weight: 700;
-            padding: 2px 8px; border-radius: 50px;
-            text-transform: uppercase; letter-spacing: 0.05em;
-            flex-shrink: 0;
-            display: inline-flex;
-        }
-
-        .badge-tipo-cliente {
-            background: rgba(59, 130, 246, 0.1);
-            color: #1d4ed8;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            font-size: 10px; font-weight: 700;
-            padding: 2px 8px; border-radius: 50px;
-            text-transform: uppercase; letter-spacing: 0.05em;
-            flex-shrink: 0;
-            display: inline-flex;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .factura-date {
@@ -1611,20 +1562,27 @@
             opacity: 0.5;
         }
 
-        /* ===== POPUP DETALLES CONTACTO Luxury ===== */
+        /* ===== NUEVO POPUP AGENDA (PERFECTO) ===== */
         #detalles-contacto-modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 15, 0.95);
             z-index: 10000;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            padding: 24px;
         }
 
         #detalles-contacto-modal.active {
@@ -1633,384 +1591,231 @@
         }
 
         .det-modal-content {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 32px 32px 0 0;
+            background: #111111;
+            /* Negro Profundo */
+            border: 1px solid #ebae1c;
+            /* Borde amarillo neón (Gold) */
+            border-radius: 20px;
             width: 100%;
-            max-width: 520px;
-            padding: 16px 24px 40px;
-            padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+            max-width: 380px;
+            padding: 30px 24px;
             position: relative;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            max-height: 88vh;
-            overflow-y: auto;
-        }
-
-        body.dark-theme .det-modal-content {
-            background: rgba(40, 40, 40, 0.75);
-            border-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 0 40px rgba(235, 174, 28, 0.15);
+            /* Resplandor dorado */
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         #detalles-contacto-modal.active .det-modal-content {
-            transform: translateY(0);
-        }
-
-        .det-drag-handle {
-            width: 36px;
-            height: 4px;
-            background: var(--border);
-            border-radius: 4px;
-            margin: 0 auto 20px;
+            transform: scale(1) translateY(0);
         }
 
         .det-modal-close {
             position: absolute;
             top: 20px;
             right: 20px;
-            color: var(--text-muted);
+            color: #888;
+            font-size: 20px;
             cursor: pointer;
             width: 32px;
             height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--warm-100);
-            border-radius: 50%;
-            transition: all 0.2s;
+            transition: color 0.2s;
         }
 
         .det-modal-close:hover {
-            background: var(--gold);
-            color: #000;
+            color: #fff;
         }
 
         .det-header {
             display: flex;
             align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 28px;
             gap: 16px;
-            margin-bottom: 24px;
+            text-align: left;
         }
 
         .det-initials-circle {
-            width: 60px;
-            height: 60px;
+            width: 66px;
+            height: 66px;
+            background: #ebae1c;
+            color: #000;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
             font-family: 'Outfit', sans-serif;
-        }
-
-        .det-initials-proveedor {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
-        }
-
-        .det-initials-cliente {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-            color: #fff;
-            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
+            box-shadow: 0 0 20px rgba(235, 174, 28, 0.5);
+            /* Glowing dot */
         }
 
         .det-header-text {
             flex: 1;
-            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .det-name {
             font-family: 'Outfit', sans-serif;
             font-size: 20px;
             font-weight: 700;
-            color: var(--text-primary);
+            color: #fff;
             margin: 0 0 4px 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
-        .det-tipo-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            padding: 3px 10px;
-            border-radius: 50px;
-        }
-
-        .det-tipo-proveedor {
-            background: rgba(245, 158, 11, 0.12);
-            color: var(--amber-dark);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-        }
-
-        .det-tipo-cliente {
-            background: rgba(59, 130, 246, 0.1);
-            color: #1d4ed8;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-
-
-
-        .det-contact-info, .det-resumen-box {
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 18px;
-            backdrop-filter: blur(5px);
-            transition: all 0.2s;
-            margin-bottom: 20px;
-        }
-
-        .det-contact-row {
+        .det-status {
+            font-size: 13px;
+            color: #aaa;
             display: flex;
             align-items: center;
-            gap: 12px;
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-        .det-contact-row:last-child {
-            margin-bottom: 0;
+            gap: 6px;
         }
 
-        body.dark-theme .det-contact-info, body.dark-theme .det-resumen-box {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.06);
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #FFEA00;
+            box-shadow: 0 0 8px rgba(255, 234, 0, 0.5);
         }
 
-        .det-contact-info:hover, .det-resumen-box:hover {
-            background: rgba(255, 255, 255, 0.6);
-            border-color: var(--gold);
-        }
-
-        /* Cuadrícula de Botones de Acción (4 columnas) */
         .det-actions-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 24px;
         }
 
-        /* Ajuste de botones de acción en cristal */
         .det-action-btn {
-            background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 20px;
-            padding: 12px 4px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            color: var(--text-primary);
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 14px 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 8px;
+            color: #eee;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 500;
             cursor: pointer;
-            text-align: center;
+            transition: all 0.2s;
         }
 
         .det-action-btn:hover {
-            background: rgba(255, 255, 255, 0.6);
-            border-color: var(--gold);
-            color: var(--gold);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.15);
+            background: #222;
+            border-color: #ebae1c;
+            color: #ebae1c;
         }
 
-        /* Botón de WhatsApp destacado */
-        .det-action-btn[onclick*="whatsapp"], .det-action-btn[onclick*="WhatsApp"] {
-            border-color: rgba(212, 175, 55, 0.5);
-            background: rgba(212, 175, 55, 0.05);
+        .det-btn-icon {
+            font-size: 20px;
         }
 
-        /* Cuadrícula Resumen Financiero */
+        .det-resumen-box {
+            background: #181818;
+            border: 1px solid #282828;
+            border-radius: 16px;
+            padding: 20px;
+        }
+
         .det-resumen-title {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 11px;
+            color: #888;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-            margin-bottom: 20px;
+            letter-spacing: 1.2px;
+            margin-bottom: 16px;
         }
+
         .det-resumen-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
+            gap: 10px;
         }
+
         .res-col {
             display: flex;
             flex-direction: column;
             gap: 6px;
+            text-align: center;
         }
+
         .res-label {
             font-size: 11px;
+            color: #888;
             font-weight: 500;
-            color: var(--text-muted);
         }
+
         .res-value {
             font-size: 16px;
             font-weight: 700;
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
+            color: #fff;
         }
 
-        /* Soporte Dark Mode Unificado para Modal Cristal */
+        /* ===== MODAL CONTACTO: MODO CLARO (DEFAULT) ===== */
+        /* NOTA: Los estilos claros ya son los valores base de las clases.
+           Solo necesitamos override para modo oscuro. */
+        body.dark-theme #detalles-contacto-modal {
+            background: rgba(0, 0, 0, 0.6);
+        }
         body.dark-theme .det-modal-content {
-            background: rgba(20, 20, 20, 0.85);
-            border-color: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
-
-        body.dark-theme .det-contact-info, body.dark-theme .det-resumen-box {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(255, 255, 255, 0.08);
+        body.dark-theme .det-modal-close {
+            color: #888;
         }
-
+        body.dark-theme .det-modal-close:hover {
+            color: #fff;
+        }
+        body.dark-theme .det-initials-circle {
+            background: #D4AF37;
+            color: #000;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+        body.dark-theme .det-name {
+            color: #fff;
+        }
+        body.dark-theme .det-status {
+            color: #888;
+        }
         body.dark-theme .det-action-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-            color: #ddd;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
         }
-
         body.dark-theme .det-action-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--gold);
-            color: var(--gold);
+            background: rgba(255,255,255,0.1);
+            border-color: #D4AF37;
+            color: #D4AF37;
+        }
+        body.dark-theme .det-resumen-box {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        body.dark-theme .det-resumen-title {
+            color: #888;
+        }
+        body.dark-theme .res-label {
+            color: #666;
+        }
+        body.dark-theme .res-value {
+            color: #fff;
         }
 
-        body.dark-theme .det-drag-handle { background: rgba(255,255,255,0.15); }
-        body.dark-theme .det-modal-close { background: rgba(255,255,255,0.1); color: #fff; }
-        body.dark-theme .det-name { color: #fff; }
-        body.dark-theme .det-contact-row { color: #aaa; }
-        body.dark-theme .res-label { color: rgba(255,255,255,0.4); }
-        body.dark-theme .res-value { color: #fff; font-weight: 600; }
-        body.dark-theme .det-resumen-title { color: var(--gold); opacity: 0.8; }
-
-        .text-white { color: #fff !important; }
-
-        /* ===== HISTORIAL MODAL ===== */
-        #historial-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            z-index: 10001;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+        .text-white {
+            color: #fff !important;
         }
-        #historial-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .historial-sheet {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 28px 28px 0 0;
-            width: 100%;
-            max-width: 520px;
-            padding: 12px 24px;
-            padding-bottom: calc(36px + env(safe-area-inset-bottom, 0px));
-            box-shadow: 0 -8px 48px rgba(0,0,0,0.10);
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            max-height: 88vh;
-            overflow-y: auto;
-        }
-        #historial-modal.active .historial-sheet {
-            transform: translateY(0);
-        }
-        .hist-bar-track {
-            height: 8px;
-            border-radius: 50px;
-            background: linear-gradient(to right, #ef4444, #eab308, #22c55e);
-            position: relative;
-            margin: 8px 0 6px;
-        }
-        .hist-bar-marker {
-            position: absolute;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 16px;
-            height: 16px;
-            background: var(--white);
-            border: 2.5px solid var(--text-primary);
-            border-radius: 50%;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .hist-bar-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 10px;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .hist-stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        .hist-stat-card {
-            background: var(--warm-50);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 14px 16px;
-        }
-        .hist-stat-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .hist-stat-value {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
-            letter-spacing: -0.02em;
-        }
-        .hist-stat-wide { grid-column: span 2; }
-        .hist-total-value {
-            font-size: 34px;
-            font-weight: 800;
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
-            letter-spacing: -0.03em;
-            text-align: center;
-        }
-        /* Dark mode */
-        body.dark-theme #historial-modal { background: rgba(0,0,0,0.65); }
-        body.dark-theme .historial-sheet { background: #1c1c1e; border-color: rgba(255,255,255,0.08); }
-        body.dark-theme .hist-stat-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.07); }
-        body.dark-theme .hist-bar-marker { background: #1c1c1e; border-color: rgba(255,255,255,0.7); }
 
         /* FAB Añadir Contacto */
         .fab-add {
@@ -2019,15 +1824,16 @@
             right: 20px;
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, var(--rose-light), var(--rose));
+            background: linear-gradient(135deg, #ebae1c, #D4AF37);
             border-radius: 50%;
             border: none;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 22px;
+            color: #fff;
             cursor: pointer;
-            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.45);
+            box-shadow: 0 6px 24px rgba(212, 175, 55, 0.45);
             z-index: 150;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -2040,82 +1846,73 @@
             transform: scale(1.12) rotate(45deg);
         }
 
-        /* Modal Añadir Contacto & Genéricos */
+        /* Modal Añadir Contacto */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 2000;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
             display: none;
             align-items: flex-end;
-            opacity: 0;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
         }
 
         .modal-overlay.open {
             display: flex;
-            opacity: 1;
         }
 
         .modal-sheet {
-            background: var(--bg-card);
-            border-radius: 32px 32px 0 0;
-            padding: 16px 24px 40px;
-            padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
+            background: var(--cream-dark);
+            border-radius: 24px 24px 0 0;
+            padding: 20px 20px 40px;
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             margin: 0 auto;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border-top: 1px solid var(--border);
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .modal-overlay.open .modal-sheet {
-            transform: translateY(0);
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         .modal-handle {
-            width: 36px;
+            width: 40px;
             height: 4px;
-            background: var(--warm-200);
-            border-radius: 10px;
+            background: var(--border);
+            border-radius: 2px;
             margin: 0 auto 20px;
         }
 
         .modal-title {
-            font-family: 'Manrope', sans-serif;
+            font-family: 'Outfit', sans-serif;
             font-size: 20px;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 24px;
-            text-align: left;
-            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .modal-type-tabs {
             display: flex;
-            background: var(--warm-100);
-            border-radius: 16px;
-            padding: 4px;
-            gap: 4px;
-            margin-bottom: 24px;
-            border: 1px solid var(--border);
+            gap: 8px;
+            margin-bottom: 18px;
         }
 
         .modal-type-btn {
             flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 8px;
-            border-radius: 12px;
-            border: none;
-            background: transparent;
-            color: var(--text-muted); /* Gris suave de base */
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            color: var(--text-muted);
             font-family: inherit;
             font-size: 13px;
             font-weight: 600;
@@ -2123,52 +1920,63 @@
             transition: all 0.2s;
         }
 
-        .modal-type-btn i {
-            opacity: 0.6; /* Icono visible pero inactivo */
-        }
-
         .modal-type-btn.active {
-            background: var(--bg-card);
-            color: var(--gold);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .modal-type-btn.active i {
-            opacity: 1;
-        }
-
-        body.dark-theme .modal-type-btn {
-            color: rgba(255, 255, 255, 0.5); /* Mejor visibilidad en dark inactivo */
-        }
-
-        body.dark-theme .modal-type-btn.active {
-            color: var(--gold);
-            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--rose);
+            color: var(--rose);
+            background: rgba(245, 158, 11, 0.08);
         }
 
         .modal-input {
             width: 100%;
-            padding: 16px;
-            background: var(--warm-50);
-            border: 1px solid var(--border);
-            border-radius: 16px;
+            padding: 13px 14px;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
             color: var(--text-primary);
             font-family: inherit;
-            font-size: 15px;
-            margin-bottom: 12px;
-            transition: all 0.2s;
+            font-size: 14px;
+            margin-bottom: 10px;
+            transition: border-color 0.2s;
         }
+
+        .modal-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Placeholder legibility fix for ruta modals */
+        .ruta-modal-overlay .modal-input.glass-panel {
+            background: rgba(255,255,255,0.07) !important;
+        }
+        .ruta-modal-overlay .modal-input.glass-panel::placeholder {
+            color: rgba(180, 175, 165, 0.7) !important;
+        }
+        body:not(.dark-theme) .ruta-modal-overlay .modal-input.glass-panel {
+            background: rgba(0,0,0,0.04) !important;
+        }
+        body:not(.dark-theme) .ruta-modal-overlay .modal-input.glass-panel::placeholder {
+            color: rgba(80, 70, 60, 0.55) !important;
+        }
+
+        /* Day selector chips */
+        .ruta-day-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+        .ruta-day-chip {
+            width: 38px; height: 38px; border-radius: 12px;
+            border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+            color: var(--text-muted); font-size: 13px; font-weight: 600;
+            font-family: inherit; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .ruta-day-chip.active {
+            background: rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.5);
+            color: #D4AF37;
+        }
+        .ruta-day-chip:hover { border-color: rgba(212,175,55,0.3); }
+        body:not(.dark-theme) .ruta-day-chip { background: rgba(0,0,0,0.03); }
+        body:not(.dark-theme) .ruta-day-chip.active { background: rgba(212,175,55,0.12); }
 
         .modal-input:focus {
             outline: none;
-            border-color: var(--amber);
-            background: var(--bg-card);
-            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
-        }
-
-        body.dark-theme .modal-type-btn.active {
-            color: var(--amber);
-            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--rose);
         }
 
         /* ===== BOTTOM NAVIGATION (DOCK PREMIUM APPLE PILL) ===== */
@@ -2533,7 +2341,7 @@
         .ruta-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(40, 30, 15, 0.3);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             z-index: 9000;
@@ -2555,13 +2363,44 @@
             align-items: center;
             gap: 8px;
         }
+
+        /* Hornada editable - botones +/- */
+        .ruta-hornada-qty-wrap { display: inline-flex; align-items: center; gap: 6px; }
+        .ruta-hornada-qty-btn {
+            width: 26px; height: 26px; border-radius: 8px;
+            border: 1px solid rgba(212,175,55,0.25); background: rgba(212,175,55,0.06);
+            color: #D4AF37; font-size: 16px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-family: inherit; padding: 0; transition: all 0.2s;
+        }
+        .ruta-hornada-qty-btn:hover { background: rgba(212,175,55,0.15); }
+        .ruta-hornada-qty-btn:active { transform: scale(0.92); }
+
+        /* Botones restaurar/editar en finalizadas */
+        .ruta-btn-restore {
+            border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.06); color: #10b981; padding: 7px 10px;
+        }
+        .ruta-btn-restore:hover { background: rgba(16,185,129,0.15); }
+        .ruta-btn-edit {
+            border: 1px solid rgba(212,175,55,0.25); background: rgba(212,175,55,0.06); color: #D4AF37; padding: 7px 10px;
+        }
+        .ruta-btn-edit:hover { background: rgba(212,175,55,0.12); }
+
+        /* Secciones vacías colapsan */
+        #ruta-hornada-section:empty, #ruta-recurrentes-section:empty,
+        #ruta-dinamicos-section:empty, #ruta-manuales-section:empty,
+        #ruta-finalizadas-section:empty { margin: 0 !important; padding: 0; }
+
         /* 💎 PREMIUM DASHBOARD v2.0 (BENTO & GLASS) 💎 */
         :root {
             --bento-gap: 16px;
-            /* NO sobreescribir --glass-bg ni --glass-blur aquí para no romper los modales */
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-blur: blur(25px) saturate(160%);
         }
 
         body.dark-theme {
+            --glass-bg: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
@@ -2782,6 +2621,79 @@
             min-width: 60px;
         }
 
+        /* Control Horario Widget */
+        .horario-widget {
+            margin-top: 8px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(212,175,55,0.1);
+        }
+        .horario-widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .horario-widget-header .hw-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gold);
+        }
+        .horario-widget-header .hw-link {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--gold);
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .horario-widget-header .hw-link:hover { opacity: 1; }
+        .horario-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .horario-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 8px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.06);
+        }
+        body:not(.dark-theme) .horario-row {
+            background: rgba(0,0,0,0.02);
+            border-color: rgba(0,0,0,0.06);
+        }
+        .horario-row .hw-name {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .horario-row .hw-name .hw-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .hw-status {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .hw-status-puntual { background: rgba(16,185,129,0.12); color: #10b981; }
+        .hw-status-retraso { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .hw-status-tarde { background: rgba(239,68,68,0.12); color: #ef4444; }
+        .hw-status-falta { background: rgba(107,114,128,0.12); color: #6b7280; }
+
         @media (max-width: 600px) {
             .analytics-integrated-flow {
                 display: flex;
@@ -2826,7 +2738,7 @@
         .scanner-btn-circle {
             width: 48px;
             height: 48px;
-            background: var(--gold);
+            background: #d4af37;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -3049,6 +2961,18 @@
                 </div>
             </div>
 
+            <!-- MINI CHART: Desglose mensual -->
+            <div id="dashMiniChart" class="glass-panel" style="margin: 0 var(--gutter) 16px; padding: 16px 20px; border-radius: 20px; border: 1px solid var(--border); display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold); display: flex; align-items: center; gap: 6px;">
+                        <i data-lucide="bar-chart-3" style="width: 13px;"></i>
+                        Desglose del Mes
+                    </div>
+                    <div id="dashChartTotal" style="font-size: 11px; color: var(--text-muted); font-weight: 600;">0.00€</div>
+                </div>
+                <div id="dashBarChart" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+
             <!-- BENTO GRID PRINCIPAL -->
             <div class="bento-grid">
                 <!-- Widget Gastos (Large - Lateral Analytics v3.0) -->
@@ -3067,40 +2991,43 @@
                             </div>
                         </div>
 
-                        <!-- Gráfico Dual: Gastos | Volumen -->
-                        <div style="display: flex; gap: 15px; margin-top: 15px; margin-bottom: 5px;">
+                        <!-- Gráfico Dual: Gastos | Volumen (oculto si vacío) -->
+                        <div id="dashChartsDual" style="display: none; gap: 15px; margin-top: 12px; margin-bottom: 0;">
                             <div style="flex: 1; min-width: 0;">
-                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 8px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="bar-chart-2" style="width: 10px;"></i>Tendencia</div>
-                                <div id="miniChartGastos" class="bento-chart-mini" style="height: 65px; margin-top: 0;"></div>
+                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="bar-chart-2" style="width: 10px;"></i>Tendencia</div>
+                                <div id="miniChartGastos" class="bento-chart-mini" style="height: 45px; margin-top: 0;"></div>
                             </div>
                             <div style="flex: 1; min-width: 0;">
-                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 8px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="activity" style="width: 10px;"></i>Actividad</div>
-                                <div id="miniChartVolumen" class="bento-chart-mini" style="height: 65px; margin-top: 0;"></div>
+                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="activity" style="width: 10px;"></i>Actividad</div>
+                                <div id="miniChartVolumen" class="bento-chart-mini" style="height: 45px; margin-top: 0;"></div>
                             </div>
                         </div>
 
-                        <!-- Smart Legend IA (Compacta Lateral) -->
-                        <div class="ai-smart-legend" style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(212,175,55,0.1);">
-                            <div style="display: flex; align-items: flex-start; gap: 10px;">
-                                <div style="min-width: 24px; height: 24px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                    <i data-lucide="sparkles" style="width: 14px; color: var(--gold);"></i>
+                        <!-- Widget Control Horario -->
+                        <div class="horario-widget">
+                            <div class="horario-widget-header">
+                                <div class="hw-title">
+                                    <i data-lucide="clock" style="width: 12px;"></i>
+                                    Control de Horario
                                 </div>
-                                <div style="flex: 1;">
-                                    <p id="dash-ai-insight" style="font-size: 10.5px; font-weight: 500; color: var(--text-primary); margin: 0; line-height: 1.4;">Pendiente de escaneo para generar insights operativos.</p>
-                                    
-                                    <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
-                                        <div class="small-metric-pill">
-                                            <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase;">Alertas</span>
-                                            <span style="font-size: 10px; font-weight: 800; color: #ef4444;" id="smart-metric-alerts">0</span>
-                                        </div>
-                                        <div class="small-metric-pill">
-                                            <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase;">Ahorro</span>
-                                            <span style="font-size: 10px; font-weight: 800; color: var(--gold);" id="smart-metric-savings">0.00€</span>
-                                        </div>
-                                        <div class="small-metric-pill" style="margin-left: auto; background: var(--gold); color: #000; border: none; padding: 5px 10px; cursor: pointer;" onclick="event.stopPropagation(); activateTab('margenes');">
-                                            <span style="font-size: 9px; font-weight: 900;">OPTIMIZAR</span>
-                                        </div>
-                                    </div>
+                                <div class="hw-link" onclick="event.stopPropagation();">Ver todo →</div>
+                            </div>
+                            <div class="horario-list">
+                                <div class="horario-row">
+                                    <div class="hw-name"><span class="hw-dot" style="background:#10b981;"></span>María G.</div>
+                                    <span class="hw-status hw-status-puntual">Puntual</span>
+                                </div>
+                                <div class="horario-row">
+                                    <div class="hw-name"><span class="hw-dot" style="background:#f59e0b;"></span>Carlos R.</div>
+                                    <span class="hw-status hw-status-retraso">Retraso 12min</span>
+                                </div>
+                                <div class="horario-row">
+                                    <div class="hw-name"><span class="hw-dot" style="background:#10b981;"></span>Ana P.</div>
+                                    <span class="hw-status hw-status-puntual">Puntual</span>
+                                </div>
+                                <div class="horario-row">
+                                    <div class="hw-name"><span class="hw-dot" style="background:#6b7280;"></span>Pedro L.</div>
+                                    <span class="hw-status hw-status-falta">Falta · Pte. justificar</span>
                                 </div>
                             </div>
                         </div>
@@ -3118,7 +3045,7 @@
                 </div>
 
                 <!-- Widget Ruta (Medium) -->
-                <div class="bento-item" onclick="activateTab('hojaruta')">
+                <div class="bento-item" onclick="activateTab('ruta')">
                     <div class="bento-label">
                         <i data-lucide="map" style="width: 14px; color: var(--gold);"></i>
                         Hoja Ruta
@@ -3195,7 +3122,7 @@
                         </div>
                     </div>
                     <div id="resultGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
-                    <button onclick="document.getElementById('resultArea').style.display='none';" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Cerrar Resumen</button>
+                    <button onclick="document.getElementById('resultArea').style.display='none'; resetScanner(); hideGlobalScanner();" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Cerrar y Volver</button>
                 </div>
             </div>
         </div>
@@ -3271,17 +3198,13 @@
         <!-- ===== TAB: AGENDA / CONTACTOS ===== -->
         <div id="tab-agenda" class="tab-content">
             <div id="contenedor-lista-agenda">
-                <!-- Header con botón + integrado -->
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 20px;">
+                <div class="agenda-header-row"
+                    style="flex-direction: column; align-items: center; text-align: center; margin-bottom: 24px;">
                     <div>
-                        <div class="section-title" style="text-align:left; margin-bottom:2px;">Agenda</div>
-                        <div class="agenda-count" id="agendaCount" style="font-size:12px; color:var(--text-muted);">0 contactos</div>
+                        <div class="section-title">Agenda</div>
+                        <div class="section-subtitle">Proveedores y clientes</div>
                     </div>
-                    <button id="agendaAddBtn"
-                        style="display:flex; align-items:center; gap:7px; padding:10px 18px; background:var(--gold); color:#000; border:none; border-radius:50px; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(212,175,55,0.3); transition: all 0.2s;">
-                        <i data-lucide="plus" style="width:16px;height:16px; stroke-width: 3.5px;"></i>
-                        Añadir
-                    </button>
+                    <div class="agenda-count" id="agendaCount" style="margin-top: 8px; opacity: 0.5;">0 contactos</div>
                 </div>
 
                 <!-- Buscador -->
@@ -3289,7 +3212,7 @@
                     style="margin: 0 auto 24px; max-width: 400px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--border);">
                     <i data-lucide="search" style="width: 18px; opacity: 0.5;"></i>
                     <input class="search-input" id="agendaSearch" type="text" placeholder="Nombre, teléfono o email..."
-                        style="background: none; border: none; color: var(--text-primary); width: 100%; outline: none; font-family: 'Montserrat', sans-serif;">
+                        style="background: none; border: none; color: #fff; width: 100%; outline: none; font-family: 'Montserrat', sans-serif;">
                 </div>
 
                 <!-- Sub-tabs -->
@@ -3410,7 +3333,7 @@
             <div id="ruta-manuales-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
 
             <!-- Tareas Finalizadas -->
-            <div id="ruta-finalizadas-section" style="margin: 24px var(--gutter) 32px; width: calc(100% - 48px);"></div>
+            <div id="ruta-finalizadas-section" style="margin: 8px var(--gutter) 32px; width: calc(100% - 48px);"></div>
         </div>
 
     </main>
@@ -3428,7 +3351,8 @@
 
             <div class="config-field">
                 <label class="config-label">🔑 Airtable Personal Access Token</label>
-                <input class="config-input" id="cfgAirtableToken" type="password" placeholder="Para pruebas de entorno local (opcional)">
+                <input class="config-input" id="cfgAirtableToken" type="password" placeholder="Para pruebas de entorno local (opcional)"
+                    required>
                 <div class="config-help">No compartas este token. El backend lo maneja automáticamente. Úsalo aquí solo para pruebas locales (override).</div>
             </div>
 
@@ -3478,89 +3402,11 @@
         </div>
     </div>
 
-    <!-- ===== HISTORIAL CONTACTO ===== -->
-    <div id="historial-modal" onclick="if(event.target===this) window.cerrarHistorial()">
-        <div class="historial-sheet">
-            <div class="det-drag-handle"></div>
-            <div class="det-modal-close" onclick="window.cerrarHistorial()">
-                <i data-lucide="x" style="width:16px;"></i>
-            </div>
-
-            <!-- Header -->
-            <div style="margin-bottom:22px; padding-right:40px;">
-                <div style="font-size:22px;font-weight:800;font-family:'Outfit',sans-serif;color:var(--text-primary);margin-bottom:3px;">Historial</div>
-                <div style="font-size:13px;color:var(--text-muted);font-weight:500;" id="hist-contacto-nombre">—</div>
-            </div>
-
-            <!-- Salud del cliente -->
-            <div style="margin-bottom:2px;">
-                <div style="font-size:13px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                    Salud del cliente
-                    <span style="font-size:11px;font-weight:500;color:var(--text-muted);" id="hist-salud-label">– Nuevo (Sin datos)</span>
-                </div>
-                <div class="hist-bar-track">
-                    <div class="hist-bar-marker" id="hist-salud-marker" style="left:5%;"></div>
-                </div>
-                <div class="hist-bar-labels">
-                    <span>Mala</span><span>Media</span><span>Buena</span>
-                </div>
-            </div>
-
-            <!-- Tasa de incidencias -->
-            <div>
-                <div style="font-size:13px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-                    Tasa de incidencias
-                    <span style="font-size:11px;font-weight:500;color:var(--text-muted);" id="hist-incid-label">Inexistente</span>
-                </div>
-                <div class="hist-bar-track">
-                    <div class="hist-bar-marker" id="hist-incid-marker" style="left:95%;"></div>
-                </div>
-                <div class="hist-bar-labels">
-                    <span>Elevada</span><span>Moderada</span><span>Inexistente</span>
-                </div>
-            </div>
-
-            <!-- Stats grid -->
-            <div class="hist-stats-grid">
-                <div class="hist-stat-card">
-                    <div class="hist-stat-label"><i data-lucide="package-check" style="width:13px;height:13px;"></i> Pedidos OK</div>
-                    <div class="hist-stat-value" id="hist-pedidos-ok">0</div>
-                </div>
-                <div class="hist-stat-card">
-                    <div class="hist-stat-label"><i data-lucide="file-check" style="width:13px;height:13px;"></i> Documentos</div>
-                    <div class="hist-stat-value" id="hist-docs">0</div>
-                </div>
-                <div class="hist-stat-card">
-                    <div class="hist-stat-label"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> Incidencias</div>
-                    <div class="hist-stat-value" id="hist-incidencias">0</div>
-                </div>
-                <div class="hist-stat-card">
-                    <div class="hist-stat-label"><i data-lucide="clock" style="width:13px;height:13px;"></i> Deudas Pen.</div>
-                    <div class="hist-stat-value" id="hist-deudas">0</div>
-                </div>
-                <!-- Total facturado -->
-                <div class="hist-stat-card hist-stat-wide" style="text-align:center; padding:18px;">
-                    <div class="hist-stat-label" style="justify-content:center;"><i data-lucide="banknote" style="width:13px;height:13px;"></i> Total facturado €</div>
-                    <div class="hist-total-value" id="hist-total">0.00</div>
-                </div>
-                <!-- Compras frecuentes -->
-                <div class="hist-stat-card hist-stat-wide">
-                    <div class="hist-stat-label"><i data-lucide="star" style="width:13px;height:13px;color:#f59e0b;"></i> Compras frecuentes</div>
-                    <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;" id="hist-compras">Sin datos de compra</div>
-                </div>
-            </div>
-
-            <!-- Ver todos los documentos -->
-            <button onclick="window.verDocumentosContacto()"
-                style="width:100%;padding:15px;background:var(--amber);color:#fff;border:none;border-radius:16px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;">
-                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-                Ver todos los documentos
-            </button>
-        </div>
-    </div>
-
-    <!-- FAB Añadir Contacto (oculto — reemplazado por botón inline en header) -->
-    <button class="fab-add" id="fabAddContact" title="Añadir contacto" style="display:none;">➕</button>
+    <!-- FAB Añadir Contacto -->
+    <button class="fab-add" id="fabAddContact" title="Añadir contacto"
+        style="background: linear-gradient(135deg, #ebae1c, #D4AF37); box-shadow: 0 6px 24px rgba(212,175,55,0.45); color: #fff;">
+        <i data-lucide="plus" style="width: 22px; height: 22px;"></i>
+    </button>
 
     <!-- FAB Añadir Tarea (Hoja de Ruta) -->
     <button class="fab-add" id="fabAddTask" title="Añadir tarea"
@@ -3580,8 +3426,27 @@
             <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
                 <input class="modal-input glass-panel" id="taskName" type="text" placeholder="Nombre de la tarea *"
                     style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <div style="display: flex; gap: 10px;">
+                    <input class="modal-input glass-panel" id="taskQty" type="number" min="1" placeholder="Cantidad"
+                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
+                    <input class="modal-input glass-panel" id="taskUnit" type="text" placeholder="Uds, Kg..."
+                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
+                </div>
                 <input class="modal-input glass-panel" id="taskNotes" type="text" placeholder="Notas (opcional)"
                     style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">¿Para qué día?</div>
+                    <div class="ruta-day-chips" id="taskDayChips">
+                        <button type="button" class="ruta-day-chip" data-day="1">L</button>
+                        <button type="button" class="ruta-day-chip" data-day="2">M</button>
+                        <button type="button" class="ruta-day-chip" data-day="3">X</button>
+                        <button type="button" class="ruta-day-chip" data-day="4">J</button>
+                        <button type="button" class="ruta-day-chip" data-day="5">V</button>
+                        <button type="button" class="ruta-day-chip" data-day="6">S</button>
+                        <button type="button" class="ruta-day-chip" data-day="0">D</button>
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Si no seleccionas ninguno, aparecerá todos los días</div>
+                </div>
             </div>
             <div style="display: flex; gap: 12px;">
                 <button class="btn glass-panel" onclick="closeTaskModal()"
@@ -3592,38 +3457,79 @@
         </div>
     </div>
 
-    <!-- Modal Añadir Contacto -->
-    <div class="modal-overlay" id="contactModal">
-        <div class="modal-sheet">
-            <div class="modal-handle"></div>
-            <div class="modal-title">Nuevo Contacto</div>
+    <!-- Modal Editar Tarea (Hoja de Ruta) -->
+    <div class="ruta-modal-overlay" id="editTaskModal">
+        <div class="modal-sheet glass-panel"
+            style="padding: 32px; border-top: 1px solid var(--border); border-radius: 32px 32px 0 0; width: 100%; max-width: 480px; animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
+            <div style="width: 36px; height: 4px; background: rgba(128,128,128,0.3); border-radius: 2px; margin: 0 auto 20px;"></div>
+            <div style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="pencil" style="width: 20px; color: #D4AF37;"></i>
+                Editar Tarea
+            </div>
+            <input type="hidden" id="editTaskId">
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
+                <input class="modal-input glass-panel" id="editTaskName" type="text" placeholder="Nombre del producto *"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <div style="display: flex; gap: 10px;">
+                    <input class="modal-input glass-panel" id="editTaskQty" type="number" min="1" placeholder="Cantidad"
+                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
+                    <input class="modal-input glass-panel" id="editTaskUnit" type="text" placeholder="Uds, Kg..."
+                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
+                </div>
+                <input class="modal-input glass-panel" id="editTaskSchedule" type="text" placeholder="Programación (ej: Lunes a Viernes)"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <input class="modal-input glass-panel" id="editTaskClient" type="text" placeholder="Cliente"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <input class="modal-input glass-panel" id="editTaskPhone" type="tel" placeholder="Teléfono cliente"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <input class="modal-input glass-panel" id="editTaskNotes" type="text" placeholder="Notas (opcional)"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn glass-panel" onclick="closeEditModal()"
+                    style="flex: 1; padding: 16px; border: 1px solid var(--border); font-size: 14px;">Cancelar</button>
+                <button class="btn glass-panel" onclick="saveEditTask()"
+                    style="flex: 2; padding: 16px; background: #D4AF37; color: #fff; font-weight: 600; font-size: 14px; border: none;">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
 
-            <!-- Selector tipo -->
-            <div class="modal-type-tabs">
-                <button class="modal-type-btn active" data-ctype="proveedor">
-                    <i data-lucide="truck"></i>
+    <!-- Modal Añadir Contacto [GLASS VERSION] -->
+    <div class="modal-overlay" id="contactModal">
+        <div class="modal-sheet glass-panel"
+            style="padding: 32px; border-top: 1px solid var(--border); border-radius: 32px 32px 0 0;">
+            <div class="modal-handle" style="background: rgba(255,255,255,0.1);"></div>
+            <div class="modal-title" style="font-size: 22px; font-weight: 500; margin-bottom: 24px;">Nuevo Contacto
+            </div>
+            <div class="modal-type-tabs glass-panel"
+                style="padding: 6px; display: inline-flex; margin-bottom: 32px; background: rgba(255,255,255,0.03);">
+                <button class="modal-type-btn active" data-ctype="proveedor"
+                    style="padding: 10px 24px; border-radius: 16px;">
+                    <i data-lucide="truck" style="width: 16px; margin-right: 8px;"></i>
                     Proveedor
                 </button>
-                <button class="modal-type-btn" data-ctype="cliente">
-                    <i data-lucide="shopping-bag"></i>
+                <button class="modal-type-btn" data-ctype="cliente" style="padding: 10px 24px; border-radius: 16px;">
+                    <i data-lucide="shopping-bag" style="width: 16px; margin-right: 8px;"></i>
                     Cliente
                 </button>
             </div>
-
-            <!-- Campos -->
-            <div style="display: flex; flex-direction: column; margin-bottom: 28px;">
-                <input class="modal-input" id="cNombre" type="text" placeholder="Nombre o empresa *">
-                <input class="modal-input" id="cTelefono" type="tel" placeholder="Teléfono">
-                <input class="modal-input" id="cEmail" type="email" placeholder="Email">
-                <input class="modal-input" id="cCategoria" type="text" placeholder="Categoría (ej: Harina, Café, Reparto...)">
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
+                <input class="modal-input glass-panel" id="cNombre" type="text" placeholder="Nombre o empresa *"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
+                <input class="modal-input glass-panel" id="cTelefono" type="tel" placeholder="Teléfono"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
+                <input class="modal-input glass-panel" id="cEmail" type="email" placeholder="Email"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
+                <input class="modal-input glass-panel" id="cCategoria" type="text"
+                    placeholder="Categoría (ej: Harina, Café, Reparto...)"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
             </div>
-
-            <!-- Botones de Acción -->
-            <div style="display:flex; gap:12px;">
-                <button class="btn" id="closeModal"
-                    style="flex:1; padding:16px; border:1px solid var(--border); background: var(--warm-100); color: var(--text-secondary); border-radius: 16px; font-size:14px; font-weight:600;">Regresar</button>
-                <button class="btn" id="saveContact"
-                    style="flex:2; padding:16px; background: var(--gold); color: #000; font-weight:800; border:none; border-radius:16px; font-size:14px; box-shadow: 0 4px 12px rgba(212,175,55,0.25);">Guardar Contacto</button>
+            <div style="display:flex;gap:12px;">
+                <button class="btn glass-panel" id="closeModal"
+                    style="flex: 1; padding: 16px; border: 1px solid var(--border);">Cancelar</button>
+                <button class="btn glass-panel" id="saveContact"
+                    style="flex: 2; padding: 16px; background: var(--rose); color: #fff; font-weight: 500;">Guardar
+                    Contacto</button>
             </div>
         </div>
     </div>
@@ -3723,85 +3629,129 @@
     <!-- [MODAL POPUP (PREMIUM) RESTAURADO - GLASS VERSION] -->
     <div id="detalles-contacto-modal" onclick="if(event.target === this) window.cerrarVistaCliente()">
         <div class="det-modal-content">
-            <!-- Drag handle -->
-            <div class="det-drag-handle"></div>
-
-            <!-- Botón eliminar -->
-            <div class="det-modal-close" style="right: 60px; color: #ef4444; background: rgba(239,68,68,0.08);"
+            <div class="det-modal-close" style="right: 60px; color: #ef4444;"
                 onclick="window.confirmarEliminarContacto()">
-                <i data-lucide="trash-2" style="width: 16px;"></i>
+                <i data-lucide="trash-2" style="width: 20px;"></i>
             </div>
-            <!-- Botón cerrar -->
             <div class="det-modal-close" onclick="window.cerrarVistaCliente()">
-                <i data-lucide="x" style="width: 16px;"></i>
+                <i data-lucide="x" style="width: 20px;"></i>
             </div>
 
-            <!-- Header: avatar + nombre + tipo -->
             <div class="det-header">
-                <div class="det-initials-circle det-initials-proveedor" id="det-initials">–</div>
+                <div class="det-initials-circle" id="det-initials">IM</div>
                 <div class="det-header-text">
                     <h2 class="det-name" id="det-name">Contacto</h2>
-                    <span class="det-tipo-badge det-tipo-proveedor" id="det-tipo-badge">Proveedor</span>
+                    <div class="det-status">
+                        <div class="status-dot" id="det-status-dot"></div>
+                        <span id="det-category-text">Sin Registros</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Info de contacto (teléfono + email) -->
-            <div class="det-contact-info" id="det-contact-info-box">
-                <div class="det-contact-row" id="det-phone-row" style="display:none;">
-                    <i data-lucide="phone" style="width:14px;height:14px;"></i>
-                    <span id="det-phone">—</span>
-                </div>
-                <div class="det-contact-row" id="det-email-row" style="display:none;">
-                    <i data-lucide="mail" style="width:14px;height:14px;"></i>
-                    <span id="det-email">—</span>
-                </div>
-                <div class="det-contact-row" id="det-categoria-row" style="display:none;">
-                    <i data-lucide="tag" style="width:14px;height:14px;"></i>
-                    <span id="det-category-text">—</span>
-                </div>
-            </div>
-
-            <!-- Acciones rápidas -->
             <div class="det-actions-grid">
                 <div class="det-action-btn" onclick="ejecutarLlamada()">
-                    <i data-lucide="phone" style="width: 20px;"></i>
+                    <i data-lucide="phone" style="width: 22px;"></i>
                     <span>Llamar</span>
                 </div>
                 <div class="det-action-btn" onclick="ejecutarWhatsApp()">
-                    <i data-lucide="message-circle" style="width: 20px;"></i>
+                    <i data-lucide="message-square" style="width: 22px;"></i>
                     <span>WhatsApp</span>
                 </div>
                 <div class="det-action-btn" onclick="ejecutarHistorial()">
-                    <i data-lucide="file-text" style="width: 20px;"></i>
+                    <i data-lucide="bar-chart-3" style="width: 22px;"></i>
                     <span>Historial</span>
                 </div>
-                <div class="det-action-btn" onclick="ejecutarEmail()">
-                    <i data-lucide="mail" style="width: 20px;"></i>
-                    <span>Email</span>
+                <div class="det-action-btn" onclick="ejecutarNota()">
+                    <i data-lucide="bell" style="width: 22px;"></i>
+                    <span>Nota</span>
                 </div>
             </div>
 
-            <!-- Resumen financiero -->
             <div class="det-resumen-box">
-                <div class="det-resumen-title">Resumen Financiero</div>
+                <div class="det-resumen-title">RESUMEN FINANCIERO RÁPIDO</div>
                 <div class="det-resumen-grid">
                     <div class="res-col">
-                        <span class="res-label">Total acumulado</span>
-                        <span class="res-value" id="det-saldo">—</span>
+                        <span class="res-label">Saldo Pend.</span>
+                        <span class="res-value" id="det-saldo">0.00 €</span>
                     </div>
                     <div class="res-col">
-                        <span class="res-label">Ticket medio</span>
-                        <span class="res-value" id="det-ticket">—</span>
+                        <span class="res-label">Ticket Medio</span>
+                        <span class="res-value" id="det-ticket">0.00 €</span>
                     </div>
                     <div class="res-col">
-                        <span class="res-label">Último doc.</span>
-                        <span class="res-value" id="det-ultima">—</span>
+                        <span class="res-label">Última Acc.</span>
+                        <span class="res-value" id="det-ultima">--</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script>
+    // ===== API CLIENT — DULCE Y JALEO (inlined) =====
+    const API_BASE = 'https://dulce-y-jaleo-backend.xm1sa3.easypanel.host';
+
+    const DulceAPI = {
+        async fetchAllRecords() {
+            const res = await fetch(`${API_BASE}/api/records`);
+            if (!res.ok) throw new Error(`Error del servidor (${res.status})`);
+            return res.json();
+        },
+        async fetchTable(tableName) {
+            const res = await fetch(`${API_BASE}/api/records/${tableName}`);
+            if (!res.ok) throw new Error(`Error cargando ${tableName}: ${res.status}`);
+            return res.json();
+        },
+        async createRecord(tableName, fields) {
+            const res = await fetch(`${API_BASE}/api/records/${tableName}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fields })
+            });
+            if (!res.ok) throw new Error(`Error guardando en ${tableName}: ${res.status}`);
+            return res.json();
+        },
+        async checkConfig() {
+            const res = await fetch(`${API_BASE}/api/config`);
+            if (!res.ok) return { baseConfigured: false };
+            return res.json();
+        },
+        async scanInvoice(base64Image, mimeType = 'image/jpeg') {
+            const res = await fetch(`${API_BASE}/webhook/scan-invoice`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: base64Image, mimeType })
+            });
+            if (!res.ok) {
+                const err = await res.text();
+                throw new Error(`Error escaneando (${res.status}): ${err.substring(0, 250)}`);
+            }
+            return res.json();
+        },
+        async scanInvoiceFormData(file) {
+            const formData = new FormData();
+            formData.append('data', file);
+            const res = await fetch(`${API_BASE}/webhook/lovable-webhook`, {
+                method: 'POST',
+                body: formData
+            });
+            if (!res.ok) {
+                const err = await res.text();
+                throw new Error(`Error servidor (${res.status}): ${err.substring(0, 250)}`);
+            }
+            return res.json();
+        },
+        async health() {
+            try {
+                const res = await fetch(`${API_BASE}/health`);
+                return res.ok;
+            } catch {
+                return false;
+            }
+        }
+    };
+    window.DulceAPI = DulceAPI;
+    </script>
     <script>
         // RED DE SEGURIDAD ABSOLUTA: Si en 3 segundos no ha entrado, forzamos entrada
         setTimeout(() => {
@@ -3869,7 +3819,7 @@
                 cfg = { webhookUrl: FIXED_WEBHOOK, airtableToken: '' };
             }
             document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl;
-            if (document.getElementById('cfgAirtableToken')) {
+            if(document.getElementById('cfgAirtableToken')) {
                 document.getElementById('cfgAirtableToken').value = cfg.airtableToken || '';
             }
             return cfg;
@@ -3877,7 +3827,7 @@
 
         function saveConfig() {
             let aToken = '';
-            if (document.getElementById('cfgAirtableToken')) {
+            if(document.getElementById('cfgAirtableToken')) {
                 aToken = document.getElementById('cfgAirtableToken').value.trim();
             }
             const cfg = {
@@ -3980,6 +3930,53 @@
             if (dashAlbaranes) dashAlbaranes.textContent = globalStats.countAlbaranes;
 
             renderDashboardActivity();
+            renderDashMiniChart();
+        }
+
+        function renderDashMiniChart() {
+            const container = document.getElementById('dashMiniChart');
+            const barChart = document.getElementById('dashBarChart');
+            const chartTotal = document.getElementById('dashChartTotal');
+            if (!container || !barChart) return;
+
+            const mes = globalStats.mesActual;
+            const delMes = globalStats.recordsMes || [];
+            if (delMes.length === 0) { container.style.display = 'none'; return; }
+
+            container.style.display = 'block';
+
+            const facturas = delMes.filter(r => r.categoria === 'FACTURA');
+            const albaranes = delMes.filter(r => r.categoria === 'ALBARAN');
+            const gastos = delMes.filter(r => r.categoria === 'GASTOS_VARIOS');
+
+            const sumF = facturas.reduce((s, r) => s + (r.total || 0), 0);
+            const sumA = albaranes.reduce((s, r) => s + (r.total || 0), 0);
+            const sumG = gastos.reduce((s, r) => s + (r.total || 0), 0);
+            const maxVal = Math.max(sumF, sumA, sumG, 1);
+            const total = sumF + sumA + sumG;
+
+            if (chartTotal) chartTotal.textContent = total.toFixed(2) + '€';
+
+            const categories = [
+                { name: 'Facturas', count: facturas.length, sum: sumF, color: '#D4AF37', bg: 'rgba(212,175,55,0.15)' },
+                { name: 'Albaranes', count: albaranes.length, sum: sumA, color: '#10b981', bg: 'rgba(16,185,129,0.15)' },
+                { name: 'Gastos Varios', count: gastos.length, sum: sumG, color: '#f59e0b', bg: 'rgba(245,158,11,0.15)' }
+            ];
+
+            barChart.innerHTML = categories.map(c => {
+                const pct = maxVal > 0 ? Math.max((c.sum / maxVal) * 100, c.sum > 0 ? 8 : 0) : 0;
+                return `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 72px; font-size: 10px; font-weight: 600; color: var(--text-muted); white-space: nowrap;">${c.name}</div>
+                        <div style="flex: 1; height: 22px; background: ${c.bg}; border-radius: 8px; overflow: hidden; position: relative;">
+                            <div style="height: 100%; width: ${pct}%; background: ${c.color}; border-radius: 8px; transition: width 0.8s ease;"></div>
+                        </div>
+                        <div style="min-width: 60px; text-align: right; font-size: 11px; font-weight: 800; color: var(--text-primary);">${c.sum.toFixed(0)}€ <span style="font-weight: 400; color: var(--text-muted); font-size: 9px;">(${c.count})</span></div>
+                    </div>
+                `;
+            }).join('');
+
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
         function renderDashboardActivity() {
@@ -4085,8 +4082,11 @@
             }
 
             if (tabId === 'inicio') {
-                console.log('Inicio cargado');
-                // Aquí podrías cargar widgets de dashboard más adelante
+                try { updateDashRuta(); } catch(e) { console.error(e); }
+                // Cargar datos para el dashboard si aún no están cargados
+                if (!globalStats.loaded) {
+                    fetchGlobalData().catch(e => console.error('Dashboard data load error:', e));
+                }
             }
         }
 
@@ -4140,7 +4140,8 @@
             reader.onload = ev => {
                 const img = new Image();
                 img.onload = () => {
-                    const MAX_W = 1024; 
+                    // Imagen pequeña = envío rápido = OCR rápido
+                    const MAX_W = 640;
                     let w = img.width, h = img.height;
                     if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
                     const canvas = document.createElement('canvas');
@@ -4150,10 +4151,13 @@
                     ctx.fillRect(0, 0, w, h);
                     ctx.drawImage(img, 0, 0, w, h);
 
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.55);
                     selectedFile = dataURLtoFile(dataUrl, 'ticket_luxury.jpg');
                     showPreviewDirectly(dataUrl);
                     canvas.width = 0; canvas.height = 0;
+
+                    // AUTO-ESCANEO: lanzar procesamiento inmediatamente
+                    sendImage();
                 };
                 img.src = ev.target.result;
             };
@@ -4197,11 +4201,11 @@
 
         async function sendImage() {
             if (!selectedFile) return;
-            
-            // UI Feedback
+
+            // UI Feedback — pasos progresivos rápidos
             sendBtn.disabled = true;
-            sendBtn.innerHTML = '<span class="loading-spin"></span> Analizando documento...';
-            if (scanLine) scanLine.style.animationDuration = '0.8s';
+            sendBtn.innerHTML = '<span class="loading-spin"></span> Comprimiendo...';
+            if (scanLine) scanLine.style.animationDuration = '0.4s';
 
             try {
                 const reader = new FileReader();
@@ -4211,12 +4215,17 @@
                 });
                 const b64Clean = b64.split(',')[1];
 
+                sendBtn.innerHTML = '<span class="loading-spin"></span> Leyendo documento...';
+
                 // Escaneo vía backend seguro (sin tokens en el navegador)
+                const scanStart = performance.now();
                 const finalData = await DulceAPI.scanInvoice(b64Clean, selectedFile.type || 'image/jpeg');
+                const scanMs = Math.round(performance.now() - scanStart);
+
+                sendBtn.innerHTML = `✅ Listo en ${scanMs < 1000 ? scanMs + 'ms' : (scanMs/1000).toFixed(1) + 's'}`;
 
                 showResult(finalData);
-                resetScanner();
-                hideGlobalScanner();
+                // El usuario cierra el resultado manualmente
             } catch (err) {
                 alert('No se pudo procesar la imagen: ' + err.message);
                 sendBtn.disabled = false;
@@ -4345,9 +4354,9 @@
             if(document.getElementById('statGastos')) document.getElementById('statGastos').textContent = globalStats.countGastos;
 
             // ✨ DASHBOARD PREMIUM v2.0 (NUEVOS IDS) ✨
-            const totalEuros = globalStats.sumGastos || 0;
-            const docCount = globalStats.countTotal || 0;
-            
+            const totalEuros = globalStats.totalGastosMes || 0;
+            const docCount = globalStats.countTotalMes || 0;
+
             if (document.getElementById('dash-total-gastos')) {
                 document.getElementById('dash-total-gastos').textContent = totalEuros.toFixed(2) + '€';
             }
@@ -4539,27 +4548,21 @@
                 return;
             }
 
-            list.innerHTML = filtered.map((c) => {
+            // REGLA CLAVE: Fuerza Bruta con onclick en línea + CSS anticapas invisibles
+            list.innerHTML = filtered.map((c, i) => {
                 const initials = c.nombre.split(' ').slice(0, 2).map(w => w[0] || '').join('').toUpperCase();
                 const avatarClass = c.tipo === 'proveedor' ? 'avatar-proveedor' : 'avatar-cliente';
-                // Badge solo visible en vista "Todos" (evita redundancia al filtrar por tipo)
-                const badgeHTML = `<span class="${c.tipo === 'proveedor' ? 'badge-tipo-proveedor' : 'badge-tipo-cliente'}">${c.tipo === 'proveedor' ? 'Proveedor' : 'Cliente'}</span>`;
-                const metaItems = [
-                    c.telefono ? `<span style="display:flex;align-items:center;gap:3px;"><i data-lucide="phone" style="width:11px;height:11px;"></i>${c.telefono}</span>` : '',
-                    c.email ? `<span style="display:flex;align-items:center;gap:3px;"><i data-lucide="mail" style="width:11px;height:11px;"></i>${c.email}</span>` : '',
-                    c.categoria ? `<span>${c.categoria}</span>` : ''
-                ].filter(Boolean).join('<span style="opacity:0.3;margin:0 2px;">·</span>');
                 return `
-                <div class="contact-card" onclick="window.forzarAperturaCliente('${c.id}')" style="cursor:pointer;position:relative;z-index:50;pointer-events:auto;">
+                <div class="contact-card" onclick="window.forzarAperturaCliente('${c.id}')" style="cursor: pointer; position: relative; z-index: 50; pointer-events: auto;">
                     <div class="contact-avatar ${avatarClass}">${initials}</div>
                     <div class="contact-info">
-                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
-                            <div class="contact-name" style="margin:0;">${c.nombre}</div>
-                            ${badgeHTML}
+                        <div class="contact-name">${c.nombre}</div>
+                        <div class="contact-meta">
+                            ${c.telefono ? '📞 ' + c.telefono : ''}
+                            ${c.categoria ? ' · ' + c.categoria : ''}
                         </div>
-                        <div class="contact-meta">${metaItems || '<span style="opacity:0.4;">Sin datos de contacto</span>'}</div>
                     </div>
-                    <i data-lucide="chevron-right" style="width:18px;height:18px;opacity:0.25;flex-shrink:0;"></i>
+                    <span class="contact-arrow">›</span>
                 </div>`;
             }).join('');
         }
@@ -4583,21 +4586,16 @@
             agSearch.addEventListener('input', renderAgenda);
         }
 
-        // Botón inline "Añadir" en el header de Agenda
-        function openContactModal() {
-            const cMod = document.getElementById('contactModal');
-            if (cMod) cMod.classList.add('open');
-            setTimeout(() => {
+        // Modal
+        const fabAddC = document.getElementById('fabAddContact');
+        if (fabAddC) {
+            fabAddC.addEventListener('click', () => {
+                const cMod = document.getElementById('contactModal');
+                if (cMod) cMod.classList.add('open');
                 const cNom = document.getElementById('cNombre');
                 if (cNom) cNom.focus();
-                if (typeof lucide !== 'undefined') lucide.createIcons();
-            }, 50);
+            });
         }
-        const agendaAddBtn = document.getElementById('agendaAddBtn');
-        if (agendaAddBtn) agendaAddBtn.addEventListener('click', openContactModal);
-        // FAB legacy (oculto, por si acaso)
-        const fabAddC = document.getElementById('fabAddContact');
-        if (fabAddC) fabAddC.addEventListener('click', openContactModal);
 
         const clMod = document.getElementById('closeModal');
         if (clMod) {
@@ -4814,98 +4812,18 @@
             }
         };
 
-        function calcularDatosHistorial(nombre) {
-            const fuente = globalStats.loaded ? globalStats.allRecords : allFacturas;
-            const docs = fuente.filter(f => normalize(f.proveedor || '').includes(normalize(nombre)));
-            const total = docs.reduce((s, d) => s + (d.total || 0), 0);
-            const count = docs.length;
-            // Compras frecuentes: top 3 categorías por frecuencia
-            const cats = {};
-            docs.forEach(d => {
-                const cat = d.categoria || 'Sin categoría';
-                cats[cat] = (cats[cat] || 0) + 1;
-            });
-            const topCats = Object.entries(cats)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 3)
-                .map(([cat, n]) => `${cat} (×${n})`)
-                .join(' · ');
-            return { docs, count, total, topCats };
-        }
-
         window.ejecutarHistorial = function () {
             if (!window.contactSelected) return;
-            const c = window.contactSelected;
-            const { count, total, topCats } = calcularDatosHistorial(c.nombre);
-
-            // Salud del cliente basada en volumen de documentos
-            let saludLabel, saludPct;
-            if (count === 0)      { saludLabel = 'Nuevo (Sin datos)'; saludPct = 5;  }
-            else if (count <= 2)  { saludLabel = 'En desarrollo';     saludPct = 25; }
-            else if (count <= 6)  { saludLabel = 'Media';             saludPct = 55; }
-            else if (count <= 12) { saludLabel = 'Buena';             saludPct = 78; }
-            else                  { saludLabel = 'Excelente';         saludPct = 95; }
-
-            // Poblar campos
-            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-            set('hist-contacto-nombre', c.nombre + (c.categoria ? ' (' + c.categoria + ')' : ''));
-            set('hist-salud-label',     '– ' + saludLabel);
-            set('hist-incid-label',     'Inexistente');
-            set('hist-pedidos-ok',      count);
-            set('hist-docs',            count);
-            set('hist-incidencias',     '0');
-            set('hist-deudas',          '0');
-            set('hist-total',           total.toFixed(2));
-            set('hist-compras',         topCats || 'Sin datos de compra');
-
-            // Animar marcadores de barras (pequeño delay para que la transición CSS sea visible)
-            setTimeout(() => {
-                const sm = document.getElementById('hist-salud-marker');
-                const im = document.getElementById('hist-incid-marker');
-                if (sm) sm.style.left = saludPct + '%';
-                if (im) im.style.left = '95%';
-            }, 80);
-
-            // Abrir modal
-            const modal = document.getElementById('historial-modal');
-            if (modal) {
-                modal.classList.add('active');
-                setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 60);
-            }
-        };
-
-        window.cerrarHistorial = function () {
-            const modal = document.getElementById('historial-modal');
-            if (modal) modal.classList.remove('active');
-        };
-
-        window.verDocumentosContacto = function () {
-            if (!window.contactSelected) return;
-            const nombre = window.contactSelected.nombre;
-            window.cerrarHistorial();
+            // Cargar en la pestaña de facturas filtrando por este proveedor
             activateTab('facturas');
-            currentFilter = 'all';
-            setTimeout(() => {
-                const fuente = globalStats.loaded ? globalStats.allRecords : allFacturas;
-                const results = fuente.filter(f => normalize(f.proveedor || '').includes(normalize(nombre)));
-                updateListWithCustomData(results, 'Historial: ' + nombre);
-                if (typeof lucide !== 'undefined') lucide.createIcons();
-            }, 150);
-        };
+            currentFilter = 'all'; // Reset filter to see all from this contact
 
-        window.ejecutarEmail = function () {
-            if (window.contactSelected && window.contactSelected.email) {
-                window.open('mailto:' + window.contactSelected.email, '_blank', 'noopener,noreferrer');
-            } else {
-                // Feedback visual en lugar de alert
-                const btn = document.querySelector('.det-action-btn:last-child');
-                if (btn) {
-                    const original = btn.innerHTML;
-                    btn.innerHTML = '<i data-lucide="x-circle" style="width:20px;"></i><span>Sin email</span>';
-                    if (typeof lucide !== 'undefined') lucide.createIcons();
-                    setTimeout(() => { btn.innerHTML = original; if (typeof lucide !== 'undefined') lucide.createIcons(); }, 1500);
-                }
-            }
+            // Simular búsqueda para filtrar lista
+            setTimeout(() => {
+                const results = allFacturas.filter(f => normalize(f.proveedor).includes(normalize(window.contactSelected.nombre)));
+                updateListWithCustomData(results, `Historial: ${window.contactSelected.nombre}`);
+                // Si llegamos de la vista contacto, mostramos el tab facturas sin hacer más
+            }, 100);
         };
 
         function updateListWithCustomData(data, title) {
@@ -4950,20 +4868,48 @@
             }).join('');
         }
 
-        // Alias requerido por closeConfirmModal
-        window.verDetalleCliente = function (id) {
-            window.forzarAperturaCliente(id);
+        window.ejecutarNota = function () {
+            alert('En desarrollo: ' + (window.contactSelected && window.contactSelected.email ? window.contactSelected.email : 'Sin nota.'));
         };
 
         // ===== HOJA DE RUTA - GESTOR OPERATIVO =====
 
+        // Helper: parsea texto español de programación → array de días JS (0=Dom, 6=Sáb)
+        function parseScheduleDays(schedule) {
+            if (!schedule) return [0,1,2,3,4,5,6];
+            var dayMap = {lunes:1, martes:2, miercoles:3, miércoles:3, jueves:4, viernes:5, sabado:6, sábado:6, domingo:0};
+            var s = schedule.toLowerCase().trim();
+            // Patrón "X a Y" (rango)
+            var rangeMatch = s.match(/^(\w+)\s+a\s+(\w+)$/);
+            if (rangeMatch) {
+                var start = dayMap[rangeMatch[1]];
+                var end = dayMap[rangeMatch[2]];
+                if (start !== undefined && end !== undefined) {
+                    var result = [];
+                    if (start <= end) {
+                        for (var d = start; d <= end; d++) result.push(d);
+                    } else {
+                        for (var d = start; d <= 6; d++) result.push(d);
+                        for (var d = 0; d <= end; d++) result.push(d);
+                    }
+                    return result;
+                }
+            }
+            // Patrón lista: "X, Y y Z" o "X y Y"
+            var parts = s.replace(/\s*y\s*/g, ',').split(',').map(function(p) { return p.trim(); });
+            var days = [];
+            parts.forEach(function(p) {
+                if (dayMap[p] !== undefined) days.push(dayMap[p]);
+            });
+            return days.length > 0 ? days : [0,1,2,3,4,5,6];
+        }
 
         const RUTA_SEED = {
-            version: 1,
+            version: 2,
             date: new Date().toISOString().slice(0, 10),
             orders: [
-                { id: 'rec-1', type: 'recurrent', product: 'Bollería Fin de Semana', quantity: 150, unit: 'Uds', schedule: 'Viernes, Sábado y Domingo', icon: 'coffee', completed: false, completedAt: null },
-                { id: 'rec-2', type: 'recurrent', product: 'Pan de Masa Madre (Bar)', quantity: 30, unit: 'Hogazas', schedule: 'Lunes a Viernes', icon: 'shopping-bag', completed: false, completedAt: null },
+                { id: 'rec-1', type: 'recurrent', product: 'Bollería Fin de Semana', quantity: 150, unit: 'Uds', schedule: 'Viernes, Sábado y Domingo', days: [5, 6, 0], icon: 'coffee', completed: false, completedAt: null },
+                { id: 'rec-2', type: 'recurrent', product: 'Pan de Masa Madre (Bar)', quantity: 30, unit: 'Hogazas', schedule: 'Lunes a Viernes', days: [1, 2, 3, 4, 5], icon: 'shopping-bag', completed: false, completedAt: null },
                 { id: 'dyn-1', type: 'dynamic', source: 'whatsapp', product: 'Tarta de Zanahoria (8 rac.)', quantity: 8, unit: 'rac.', client: 'María J.', clientPhone: '34612345678', note: 'Sin nueces, recoger el viernes a las 18:00.', completed: false, completedAt: null },
                 { id: 'dyn-2', type: 'dynamic', source: 'n8n', product: 'Caja Surtida (12 Mini Dulces)', quantity: 12, unit: 'Uds', client: 'Eventos XYZ', clientPhone: '', note: 'Hoy, 14:00.', completed: false, completedAt: null }
             ]
@@ -4976,12 +4922,22 @@
                 return JSON.parse(JSON.stringify(RUTA_SEED));
             }
             const data = JSON.parse(raw);
-            // Reset diario para recurrentes
+            // Migración a v2: añadir days a recurrentes existentes
+            if (!data.version || data.version < 2) {
+                data.orders.forEach(function(o) {
+                    if (o.type === 'recurrent' && !o.days) o.days = parseScheduleDays(o.schedule);
+                });
+                data.version = 2;
+                saveRutaData(data);
+            }
+            // Reset diario inteligente para recurrentes
             const today = new Date().toISOString().slice(0, 10);
+            const todayDay = new Date().getDay();
             if (data.date !== today) {
                 data.date = today;
                 data.orders.forEach(function(o) {
                     if (o.type === 'recurrent') {
+                        if (o.days && o.days.indexOf(todayDay) === -1) return; // no toca hoy
                         o.completed = false;
                         o.completedAt = null;
                     }
@@ -4999,10 +4955,19 @@
         function renderRuta() {
             const data = getRutaData();
             const orders = data.orders;
-            const pending = orders.filter(function(o) { return !o.completed; });
-            const done = orders.filter(function(o) { return o.completed; });
+            const todayDay = new Date().getDay();
 
-            renderRutaProgress(orders);
+            // Filtrar recurrentes que no tocan hoy
+            function isTodayTask(o) {
+                if (o.days && o.days.indexOf(todayDay) === -1) return false;
+                return true;
+            }
+
+            const todayOrders = orders.filter(isTodayTask);
+            const pending = todayOrders.filter(function(o) { return !o.completed; });
+            const done = todayOrders.filter(function(o) { return o.completed; });
+
+            renderRutaProgress(todayOrders);
             renderRutaHornada(pending);
             renderRutaRecurrentes(pending.filter(function(o) { return o.type === 'recurrent'; }));
             renderRutaDinamicos(pending.filter(function(o) { return o.type === 'dynamic'; }));
@@ -5026,20 +4991,39 @@
             if (txt) txt.textContent = done + ' de ' + total + ' tareas';
             if (pctEl) pctEl.textContent = pct + '%';
             if (bar) bar.style.width = pct + '%';
+
+            // Also update dashboard widget
+            var dashEl = document.getElementById('dash-ruta-prog');
+            if (dashEl) dashEl.textContent = done + '/' + total;
         }
 
-        // --- Resumen de Hornada (Batching) ---
+        // Update dashboard ruta widget (called from inicio tab)
+        function updateDashRuta() {
+            var data = getRutaData();
+            var todayDay = new Date().getDay();
+            var todayOrders = data.orders.filter(function(o) {
+                if (o.days && o.days.indexOf(todayDay) === -1) return false;
+                return true;
+            });
+            var total = todayOrders.length;
+            var done = todayOrders.filter(function(o) { return o.completed; }).length;
+            var dashEl = document.getElementById('dash-ruta-prog');
+            if (dashEl) dashEl.textContent = done + '/' + total;
+        }
+
+        // --- Resumen de Hornada (Batching) con +/- editables ---
         function renderRutaHornada(pendingOrders) {
             var section = document.getElementById('ruta-hornada-section');
             if (!section) return;
 
-            // Agrupar cantidades por producto
+            // Agrupar cantidades por producto, guardar IDs para editar
             var groups = {};
             pendingOrders.forEach(function(o) {
                 if (o.quantity && o.quantity > 0) {
                     var key = o.product;
-                    if (!groups[key]) groups[key] = { quantity: 0, unit: o.unit || 'Uds' };
+                    if (!groups[key]) groups[key] = { quantity: 0, unit: o.unit || 'Uds', orderIds: [] };
                     groups[key].quantity += o.quantity;
+                    groups[key].orderIds.push(o.id);
                 }
             });
 
@@ -5051,9 +5035,15 @@
 
             var itemsHtml = '';
             keys.forEach(function(k) {
+                var g = groups[k];
+                var firstId = g.orderIds[0];
                 itemsHtml += '<div class="ruta-hornada-item">' +
                     '<span>' + k + '</span>' +
-                    '<span class="ruta-hornada-qty">' + groups[k].quantity + ' ' + groups[k].unit + '</span>' +
+                    '<div class="ruta-hornada-qty-wrap">' +
+                        '<button class="ruta-hornada-qty-btn" onclick="adjustHornadaQty(\'' + firstId + '\', -1)">−</button>' +
+                        '<span class="ruta-hornada-qty">' + g.quantity + ' ' + g.unit + '</span>' +
+                        '<button class="ruta-hornada-qty-btn" onclick="adjustHornadaQty(\'' + firstId + '\', 1)">+</button>' +
+                    '</div>' +
                     '</div>';
             });
 
@@ -5063,6 +5053,17 @@
                 '</div>' +
                 '<div class="ruta-hornada-card">' + itemsHtml + '</div>';
         }
+
+        // Ajustar cantidad en hornada
+        window.adjustHornadaQty = function(orderId, delta) {
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (order) {
+                order.quantity = Math.max(1, (order.quantity || 0) + delta);
+                saveRutaData(data);
+                renderRuta();
+            }
+        };
 
         // --- Pedidos Recurrentes ---
         function renderRutaRecurrentes(items) {
@@ -5087,6 +5088,9 @@
                     '<div style="padding: 5px 10px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-size: 11px; font-weight: 700; white-space: nowrap;">' +
                         'x' + o.quantity + ' ' + o.unit +
                     '</div>' +
+                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
+                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
+                    '</button>' +
                     '<button class="ruta-btn ruta-btn-complete" onclick="completeRutaOrder(\'' + o.id + '\')">' +
                         '<i data-lucide="check" style="width: 14px;"></i>' +
                     '</button>' +
@@ -5238,7 +5242,10 @@
                 }
             }
             renderMiniChart('miniChartGastos', dataGastos, colorGastos, '€');
-            
+            // Mostrar contenedor de gráficos
+            const dualCharts = document.getElementById('dashChartsDual');
+            if (dualCharts) dualCharts.style.display = 'flex';
+
             // Render Gráfico 2: Volumen de Actividad
             let dataVolumen = [5, 12, 8, 15, 10, 22, 18];
             if (globalStats && globalStats.countAlbaranes > 0) {
@@ -5290,6 +5297,9 @@
                         '</div>' +
                     '</div>' +
                     '<div style="margin-top: 14px; display: flex; justify-content: flex-end; gap: 8px;">' +
+                        '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
+                            '<i data-lucide="pencil" style="width: 14px;"></i>' +
+                        '</button>' +
                         (o.clientPhone ? '<button class="ruta-btn ruta-btn-whatsapp" onclick="sendWhatsAppRuta(\'' + o.id + '\')">' +
                             '<i data-lucide="message-circle" style="width: 14px;"></i> Avisar' +
                         '</button>' : '') +
@@ -5316,6 +5326,9 @@
                 '<div style="display: flex; flex-direction: column; gap: 12px;">';
 
             items.forEach(function(o) {
+                var qtyBadge = (o.quantity && o.quantity > 0) ?
+                    '<div style="padding: 5px 10px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-size: 11px; font-weight: 700; white-space: nowrap;">x' + o.quantity + ' ' + (o.unit || 'Uds') + '</div>' : '';
+
                 html += '<div class="dashboard-widget glass-panel ruta-card" data-ruta-id="' + o.id + '" style="padding: 16px; border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; gap: 14px;">' +
                     '<div style="width: 40px; height: 40px; background: rgba(212, 175, 55, 0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center;">' +
                         '<i data-lucide="clipboard-check" style="width: 20px; color: #D4AF37;"></i>' +
@@ -5324,6 +5337,10 @@
                         '<div class="ruta-product-name" style="font-size: 14px; font-weight: 600; color: var(--text-primary);">' + o.product + '</div>' +
                         (o.note ? '<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">' + o.note + '</div>' : '') +
                     '</div>' +
+                    qtyBadge +
+                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
+                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
+                    '</button>' +
                     '<button class="ruta-btn ruta-btn-delete" onclick="deleteRutaTask(\'' + o.id + '\')" title="Eliminar">' +
                         '<i data-lucide="trash-2" style="width: 14px;"></i>' +
                     '</button>' +
@@ -5359,6 +5376,12 @@
                     '<div style="flex: 1; min-width: 0;">' +
                         '<div class="ruta-product-name" style="font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: line-through;">' + o.product + '</div>' +
                     '</div>' +
+                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
+                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
+                    '</button>' +
+                    '<button class="ruta-btn ruta-btn-restore" onclick="restoreRutaOrder(\'' + o.id + '\')" title="Restaurar">' +
+                        '<i data-lucide="undo-2" style="width: 14px;"></i>' +
+                    '</button>' +
                 '</div>';
             });
 
@@ -5391,6 +5414,80 @@
             renderRuta();
         };
 
+        window.restoreRutaOrder = function(orderId) {
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (order) { order.completed = false; order.completedAt = null; }
+            saveRutaData(data);
+            renderRuta();
+        };
+
+        // --- Modal Editar Tarea ---
+        window.openEditModal = function(orderId) {
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (!order) return;
+
+            document.getElementById('editTaskId').value = orderId;
+            document.getElementById('editTaskName').value = order.product || '';
+            document.getElementById('editTaskQty').value = order.quantity || '';
+            document.getElementById('editTaskUnit').value = order.unit || '';
+            document.getElementById('editTaskSchedule').value = order.schedule || '';
+            document.getElementById('editTaskClient').value = order.client || '';
+            document.getElementById('editTaskPhone').value = order.clientPhone || '';
+            document.getElementById('editTaskNotes').value = order.note || '';
+
+            // Mostrar/ocultar campos según tipo
+            var scheduleField = document.getElementById('editTaskSchedule');
+            var clientField = document.getElementById('editTaskClient');
+            var phoneField = document.getElementById('editTaskPhone');
+            scheduleField.style.display = (order.type === 'recurrent') ? '' : 'none';
+            clientField.style.display = (order.type === 'dynamic') ? '' : 'none';
+            phoneField.style.display = (order.type === 'dynamic') ? '' : 'none';
+
+            var modal = document.getElementById('editTaskModal');
+            if (modal) modal.classList.add('open');
+            setTimeout(function() {
+                if (typeof lucide !== 'undefined') lucide.createIcons({ attrs: { 'stroke-width': 1.8, 'stroke': 'currentColor' } });
+            }, 50);
+        };
+
+        window.closeEditModal = function() {
+            var modal = document.getElementById('editTaskModal');
+            if (modal) modal.classList.remove('open');
+        };
+
+        window.saveEditTask = function() {
+            var orderId = document.getElementById('editTaskId').value;
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (!order) return;
+
+            var newName = document.getElementById('editTaskName').value.trim();
+            if (!newName) { alert('El nombre no puede estar vacío.'); return; }
+
+            order.product = newName;
+            order.quantity = parseInt(document.getElementById('editTaskQty').value) || order.quantity || 0;
+            order.unit = document.getElementById('editTaskUnit').value.trim() || order.unit || '';
+            order.note = document.getElementById('editTaskNotes').value.trim();
+
+            if (order.type === 'recurrent') {
+                var newSchedule = document.getElementById('editTaskSchedule').value.trim();
+                if (newSchedule && newSchedule !== order.schedule) {
+                    order.schedule = newSchedule;
+                    order.days = parseScheduleDays(newSchedule);
+                }
+            }
+            if (order.type === 'dynamic') {
+                order.client = document.getElementById('editTaskClient').value.trim();
+                order.clientPhone = document.getElementById('editTaskPhone').value.trim();
+            }
+
+            saveRutaData(data);
+            closeEditModal();
+            renderRuta();
+        };
+
         window.sendWhatsAppRuta = function(orderId) {
             var data = getRutaData();
             var order = data.orders.find(function(o) { return o.id === orderId; });
@@ -5414,6 +5511,16 @@
                 if (nameInput) { nameInput.value = ''; nameInput.focus(); }
                 var notesInput = document.getElementById('taskNotes');
                 if (notesInput) notesInput.value = '';
+                var qtyInput = document.getElementById('taskQty');
+                if (qtyInput) qtyInput.value = '';
+                var unitInput = document.getElementById('taskUnit');
+                if (unitInput) unitInput.value = '';
+                // Reset day chips — mark today as active by default
+                var chips = document.querySelectorAll('#taskDayChips .ruta-day-chip');
+                var todayD = new Date().getDay();
+                chips.forEach(function(c) {
+                    c.classList.toggle('active', parseInt(c.dataset.day) === todayD);
+                });
             }
         };
 
@@ -5425,14 +5532,30 @@
         window.saveNewTask = function() {
             var nameInput = document.getElementById('taskName');
             var notesInput = document.getElementById('taskNotes');
+            var qtyInput = document.getElementById('taskQty');
+            var unitInput = document.getElementById('taskUnit');
             var name = nameInput ? nameInput.value.trim() : '';
             if (!name) { alert('Escribe un nombre para la tarea.'); return; }
+
+            var qty = qtyInput ? parseInt(qtyInput.value) || 0 : 0;
+            var unit = unitInput ? unitInput.value.trim() : '';
+
+            // Collect selected days
+            var selectedDays = [];
+            document.querySelectorAll('#taskDayChips .ruta-day-chip.active').forEach(function(c) {
+                selectedDays.push(parseInt(c.dataset.day));
+            });
+            // If none selected → all days
+            if (selectedDays.length === 0) selectedDays = [0,1,2,3,4,5,6];
 
             var data = getRutaData();
             data.orders.push({
                 id: 'man-' + Date.now(),
                 type: 'manual',
                 product: name,
+                quantity: qty,
+                unit: unit,
+                days: selectedDays,
                 note: notesInput ? notesInput.value.trim() : '',
                 completed: false,
                 completedAt: null
@@ -5441,6 +5564,11 @@
             closeTaskModal();
             renderRuta();
         };
+
+        // Day chip toggle
+        document.querySelectorAll('#taskDayChips .ruta-day-chip').forEach(function(chip) {
+            chip.addEventListener('click', function() { chip.classList.toggle('active'); });
+        });
 
         // FAB Tarea -> abrir modal
         (function() {
@@ -5452,6 +5580,14 @@
             if (modal) {
                 modal.addEventListener('click', function(e) {
                     if (e.target === modal) closeTaskModal();
+                });
+            }
+
+            // Cerrar modal editar al hacer click en overlay
+            var editModal = document.getElementById('editTaskModal');
+            if (editModal) {
+                editModal.addEventListener('click', function(e) {
+                    if (e.target === editModal) closeEditModal();
                 });
             }
         })();
@@ -5475,7 +5611,6 @@
             }
         }
     </script>
-    <script src="/js/api.js"></script>
     <script src="agenda.js"></script>
     <script>
         // ===== PUNTO ÚNICO DE INICIALIZACIÓN =====
