@@ -3347,7 +3347,14 @@
                 Ajustes Técnicos
             </h2>
             <p class="config-modal-desc" style="margin-bottom:20px;color:var(--text-muted);font-size:13px;">
-                Configuración de integraciones — solo para administrador</p>
+                Configuración unificada</p>
+
+            <div class="config-field">
+                <label class="config-label">🔑 Airtable Personal Access Token</label>
+                <input class="config-input" id="cfgAirtableToken" type="password" placeholder="Para pruebas de entorno local (opcional)"
+                    required>
+                <div class="config-help">No compartas este token. El backend lo maneja automáticamente. Úsalo aquí solo para pruebas locales (override).</div>
+            </div>
 
             <div class="config-field">
                 <label class="config-label">🔗 Webhook URL (n8n)</label>
@@ -3809,15 +3816,23 @@
                 // Siempre sobreescribir la URL con la correcta
                 cfg.webhookUrl = FIXED_WEBHOOK;
             } else {
-                cfg = { webhookUrl: FIXED_WEBHOOK };
+                cfg = { webhookUrl: FIXED_WEBHOOK, airtableToken: '' };
             }
             document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl;
+            if(document.getElementById('cfgAirtableToken')) {
+                document.getElementById('cfgAirtableToken').value = cfg.airtableToken || '';
+            }
             return cfg;
         }
 
         function saveConfig() {
+            let aToken = '';
+            if(document.getElementById('cfgAirtableToken')) {
+                aToken = document.getElementById('cfgAirtableToken').value.trim();
+            }
             const cfg = {
-                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim()
+                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim(),
+                airtableToken: aToken
             };
             localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
             config = cfg;
