@@ -38,6 +38,14 @@
             --text-secondary: #5f6368;
             --text-muted: #8e8e93;
             
+            /* Dulce Jaleo Official Gold/Amber */
+            --gold: #D4AF37;
+            --amber: #f59e0b;
+            --amber-dark: #b45309;
+            --warm-50: #fafaf9;
+            --warm-100: #f5f5f4;
+            --warm-200: #e7e5e4;
+            
             /* Glass & Depth */
             --glass-bg: rgba(255, 255, 255, 0.85);
             --glass-blur: blur(20px);
@@ -59,9 +67,13 @@
         body.dark-theme {
             --bg-page: #0a0a0a;
             --bg-card: #151515;
+            --white: #1c1c1e;
             --text-primary: #ffffff;
             --text-secondary: #aaaaaa;
             --text-muted: #666666;
+            --warm-50: rgba(255, 255, 255, 0.03);
+            --warm-100: rgba(255, 255, 255, 0.06);
+            --warm-200: rgba(255, 255, 255, 0.1);
             --glass-bg: rgba(20, 20, 20, 0.8);
             --border: rgba(255, 255, 255, 0.08);
             --border-soft: rgba(255, 255, 255, 0.03);
@@ -1452,25 +1464,39 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* Tarjeta de contacto */
+        /* Tarjeta de contacto Luxury */
         .contact-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 14px 16px;
-            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 14px;
-            transition: all 0.2s;
+            gap: 16px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .contact-card:hover {
-            border-color: var(--rose-light);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            border-color: var(--gold);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.15);
+        }
+
+        body.dark-theme .contact-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        body.dark-theme .contact-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.3);
         }
 
         .contact-avatar {
@@ -1501,12 +1527,38 @@
         }
 
         .contact-name {
-            font-size: 15px;
-            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
             color: var(--text-primary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            letter-spacing: -0.01em;
+        }
+
+        body.dark-theme .contact-name {
+            color: #fff;
+        }
+
+        /* Badges de tipo en lista */
+        .badge-tipo-proveedor {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--amber-dark);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            font-size: 10px; font-weight: 700;
+            padding: 2px 8px; border-radius: 50px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            flex-shrink: 0;
+            display: inline-flex;
+        }
+
+        .badge-tipo-cliente {
+            background: rgba(59, 130, 246, 0.1);
+            color: #1d4ed8;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            font-size: 10px; font-weight: 700;
+            padding: 2px 8px; border-radius: 50px;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            flex-shrink: 0;
+            display: inline-flex;
         }
 
         .factura-date {
@@ -1559,27 +1611,20 @@
             opacity: 0.5;
         }
 
-        /* ===== NUEVO POPUP AGENDA (PERFECTO) ===== */
+        /* ===== POPUP DETALLES CONTACTO Luxury ===== */
         #detalles-contacto-modal {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.45);
             backdrop-filter: blur(12px);
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 10, 15, 0.95);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 10000;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(8px);
-            padding: 24px;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         #detalles-contacto-modal.active {
@@ -1588,231 +1633,384 @@
         }
 
         .det-modal-content {
-            background: #111111;
-            /* Negro Profundo */
-            border: 1px solid #ebae1c;
-            /* Borde amarillo neón (Gold) */
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 32px 32px 0 0;
             width: 100%;
-            max-width: 380px;
-            padding: 30px 24px;
+            max-width: 520px;
+            padding: 16px 24px 40px;
+            padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
             position: relative;
-            box-shadow: 0 0 40px rgba(235, 174, 28, 0.15);
-            /* Resplandor dorado */
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 88vh;
+            overflow-y: auto;
+        }
+
+        body.dark-theme .det-modal-content {
+            background: rgba(40, 40, 40, 0.75);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.4);
         }
 
         #detalles-contacto-modal.active .det-modal-content {
-            transform: scale(1) translateY(0);
+            transform: translateY(0);
+        }
+
+        .det-drag-handle {
+            width: 36px;
+            height: 4px;
+            background: var(--border);
+            border-radius: 4px;
+            margin: 0 auto 20px;
         }
 
         .det-modal-close {
             position: absolute;
             top: 20px;
             right: 20px;
-            color: #888;
-            font-size: 20px;
+            color: var(--text-muted);
             cursor: pointer;
             width: 32px;
             height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: color 0.2s;
+            background: var(--warm-100);
+            border-radius: 50%;
+            transition: all 0.2s;
         }
 
         .det-modal-close:hover {
-            color: #fff;
+            background: var(--gold);
+            color: #000;
         }
 
         .det-header {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 28px;
             gap: 16px;
-            text-align: left;
+            margin-bottom: 24px;
         }
 
         .det-initials-circle {
-            width: 66px;
-            height: 66px;
-            background: #ebae1c;
-            color: #000;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 800;
             font-family: 'Outfit', sans-serif;
-            box-shadow: 0 0 20px rgba(235, 174, 28, 0.5);
-            /* Glowing dot */
+        }
+
+        .det-initials-proveedor {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+        }
+
+        .det-initials-cliente {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35);
         }
 
         .det-header-text {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            min-width: 0;
         }
 
         .det-name {
             font-family: 'Outfit', sans-serif;
             font-size: 20px;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-primary);
             margin: 0 0 4px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .det-status {
-            font-size: 13px;
-            color: #aaa;
+        .det-tipo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 3px 10px;
+            border-radius: 50px;
+        }
+
+        .det-tipo-proveedor {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--amber-dark);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }
+
+        .det-tipo-cliente {
+            background: rgba(59, 130, 246, 0.1);
+            color: #1d4ed8;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+
+
+        .det-contact-info, .det-resumen-box {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 18px;
+            backdrop-filter: blur(5px);
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .det-contact-row {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .det-contact-row:last-child {
+            margin-bottom: 0;
         }
 
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #FFEA00;
-            box-shadow: 0 0 8px rgba(255, 234, 0, 0.5);
+        body.dark-theme .det-contact-info, body.dark-theme .det-resumen-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.06);
         }
 
+        .det-contact-info:hover, .det-resumen-box:hover {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: var(--gold);
+        }
+
+        /* Cuadrícula de Botones de Acción (4 columnas) */
         .det-actions-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 24px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
+        /* Ajuste de botones de acción en cristal */
         .det-action-btn {
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
-            border-radius: 12px;
-            padding: 14px 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 12px 4px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--text-primary);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            color: #eee;
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            text-align: center;
         }
 
         .det-action-btn:hover {
-            background: #222;
-            border-color: #ebae1c;
-            color: #ebae1c;
+            background: rgba(255, 255, 255, 0.6);
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.15);
         }
 
-        .det-btn-icon {
-            font-size: 20px;
+        /* Botón de WhatsApp destacado */
+        .det-action-btn[onclick*="whatsapp"], .det-action-btn[onclick*="WhatsApp"] {
+            border-color: rgba(212, 175, 55, 0.5);
+            background: rgba(212, 175, 55, 0.05);
         }
 
-        .det-resumen-box {
-            background: #181818;
-            border: 1px solid #282828;
-            border-radius: 16px;
-            padding: 20px;
-        }
-
+        /* Cuadrícula Resumen Financiero */
         .det-resumen-title {
-            font-size: 11px;
-            color: #888;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 20px;
         }
-
         .det-resumen-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            gap: 16px;
         }
-
         .res-col {
             display: flex;
             flex-direction: column;
             gap: 6px;
-            text-align: center;
         }
-
         .res-label {
             font-size: 11px;
-            color: #888;
             font-weight: 500;
+            color: var(--text-muted);
         }
-
         .res-value {
             font-size: 16px;
             font-weight: 700;
-            color: #fff;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
         }
 
-        /* ===== MODAL CONTACTO: MODO CLARO (DEFAULT) ===== */
-        /* NOTA: Los estilos claros ya son los valores base de las clases.
-           Solo necesitamos override para modo oscuro. */
-        body.dark-theme #detalles-contacto-modal {
-            background: rgba(0, 0, 0, 0.6);
-        }
+        /* Soporte Dark Mode Unificado para Modal Cristal */
         body.dark-theme .det-modal-content {
-            background: #1a1a1a;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-        }
-        body.dark-theme .det-modal-close {
-            color: #888;
-        }
-        body.dark-theme .det-modal-close:hover {
-            color: #fff;
-        }
-        body.dark-theme .det-initials-circle {
-            background: #D4AF37;
-            color: #000;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-        }
-        body.dark-theme .det-name {
-            color: #fff;
-        }
-        body.dark-theme .det-status {
-            color: #888;
-        }
-        body.dark-theme .det-action-btn {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #ccc;
-        }
-        body.dark-theme .det-action-btn:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: #D4AF37;
-            color: #D4AF37;
-        }
-        body.dark-theme .det-resumen-box {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-        body.dark-theme .det-resumen-title {
-            color: #888;
-        }
-        body.dark-theme .res-label {
-            color: #666;
-        }
-        body.dark-theme .res-value {
-            color: #fff;
+            background: rgba(20, 20, 20, 0.85);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
         }
 
-        .text-white {
-            color: #fff !important;
+        body.dark-theme .det-contact-info, body.dark-theme .det-resumen-box {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
         }
+
+        body.dark-theme .det-action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #ddd;
+        }
+
+        body.dark-theme .det-action-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        body.dark-theme .det-drag-handle { background: rgba(255,255,255,0.15); }
+        body.dark-theme .det-modal-close { background: rgba(255,255,255,0.1); color: #fff; }
+        body.dark-theme .det-name { color: #fff; }
+        body.dark-theme .det-contact-row { color: #aaa; }
+        body.dark-theme .res-label { color: rgba(255,255,255,0.4); }
+        body.dark-theme .res-value { color: #fff; font-weight: 600; }
+        body.dark-theme .det-resumen-title { color: var(--gold); opacity: 0.8; }
+
+        .text-white { color: #fff !important; }
+
+        /* ===== HISTORIAL MODAL ===== */
+        #historial-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 10001;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #historial-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .historial-sheet {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 28px 28px 0 0;
+            width: 100%;
+            max-width: 520px;
+            padding: 12px 24px;
+            padding-bottom: calc(36px + env(safe-area-inset-bottom, 0px));
+            box-shadow: 0 -8px 48px rgba(0,0,0,0.10);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            max-height: 88vh;
+            overflow-y: auto;
+        }
+        #historial-modal.active .historial-sheet {
+            transform: translateY(0);
+        }
+        .hist-bar-track {
+            height: 8px;
+            border-radius: 50px;
+            background: linear-gradient(to right, #ef4444, #eab308, #22c55e);
+            position: relative;
+            margin: 8px 0 6px;
+        }
+        .hist-bar-marker {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: var(--white);
+            border: 2.5px solid var(--text-primary);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .hist-bar-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .hist-stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .hist-stat-card {
+            background: var(--warm-50);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 14px 16px;
+        }
+        .hist-stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .hist-stat-value {
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.02em;
+        }
+        .hist-stat-wide { grid-column: span 2; }
+        .hist-total-value {
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.03em;
+            text-align: center;
+        }
+        /* Dark mode */
+        body.dark-theme #historial-modal { background: rgba(0,0,0,0.65); }
+        body.dark-theme .historial-sheet { background: #1c1c1e; border-color: rgba(255,255,255,0.08); }
+        body.dark-theme .hist-stat-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.07); }
+        body.dark-theme .hist-bar-marker { background: #1c1c1e; border-color: rgba(255,255,255,0.7); }
 
         /* FAB Añadir Contacto */
         .fab-add {
@@ -1842,73 +2040,82 @@
             transform: scale(1.12) rotate(45deg);
         }
 
-        /* Modal Añadir Contacto */
+        /* Modal Añadir Contacto & Genéricos */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
             display: none;
             align-items: flex-end;
-            backdrop-filter: blur(6px);
+            opacity: 0;
+            transition: all 0.3s ease;
         }
 
         .modal-overlay.open {
             display: flex;
+            opacity: 1;
         }
 
         .modal-sheet {
-            background: var(--cream-dark);
-            border-radius: 24px 24px 0 0;
-            padding: 20px 20px 40px;
+            background: var(--bg-card);
+            border-radius: 32px 32px 0 0;
+            padding: 16px 24px 40px;
+            padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
             width: 100%;
-            max-width: 480px;
+            max-width: 500px;
             margin: 0 auto;
-            animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
         }
 
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        .modal-overlay.open .modal-sheet {
+            transform: translateY(0);
         }
 
         .modal-handle {
-            width: 40px;
+            width: 36px;
             height: 4px;
-            background: var(--border);
-            border-radius: 2px;
+            background: var(--warm-200);
+            border-radius: 10px;
             margin: 0 auto 20px;
         }
 
         .modal-title {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Manrope', sans-serif;
             font-size: 20px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text-primary);
-            margin-bottom: 20px;
-            text-align: center;
+            margin-bottom: 24px;
+            text-align: left;
+            letter-spacing: -0.02em;
         }
 
         .modal-type-tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 18px;
+            background: var(--warm-100);
+            border-radius: 16px;
+            padding: 4px;
+            gap: 4px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
         }
 
         .modal-type-btn {
             flex: 1;
-            padding: 10px;
-            border-radius: var(--radius-sm);
-            border: 1.5px solid var(--border);
-            background: var(--white);
-            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 8px;
+            border-radius: 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted); /* Gris suave de base */
             font-family: inherit;
             font-size: 13px;
             font-weight: 600;
@@ -1916,32 +2123,52 @@
             transition: all 0.2s;
         }
 
+        .modal-type-btn i {
+            opacity: 0.6; /* Icono visible pero inactivo */
+        }
+
         .modal-type-btn.active {
-            border-color: var(--rose);
-            color: var(--rose);
-            background: rgba(245, 158, 11, 0.08);
+            background: var(--bg-card);
+            color: var(--gold);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .modal-type-btn.active i {
+            opacity: 1;
+        }
+
+        body.dark-theme .modal-type-btn {
+            color: rgba(255, 255, 255, 0.5); /* Mejor visibilidad en dark inactivo */
+        }
+
+        body.dark-theme .modal-type-btn.active {
+            color: var(--gold);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .modal-input {
             width: 100%;
-            padding: 13px 14px;
-            background: var(--white);
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-sm);
+            padding: 16px;
+            background: var(--warm-50);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             color: var(--text-primary);
             font-family: inherit;
-            font-size: 14px;
-            margin-bottom: 10px;
-            transition: border-color 0.2s;
-        }
-
-        .modal-input::placeholder {
-            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
         }
 
         .modal-input:focus {
             outline: none;
-            border-color: var(--rose);
+            border-color: var(--amber);
+            background: var(--bg-card);
+            box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.1);
+        }
+
+        body.dark-theme .modal-type-btn.active {
+            color: var(--amber);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         /* ===== BOTTOM NAVIGATION (DOCK PREMIUM APPLE PILL) ===== */
@@ -2331,13 +2558,10 @@
         /* 💎 PREMIUM DASHBOARD v2.0 (BENTO & GLASS) 💎 */
         :root {
             --bento-gap: 16px;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-blur: blur(25px) saturate(160%);
+            /* NO sobreescribir --glass-bg ni --glass-blur aquí para no romper los modales */
         }
 
         body.dark-theme {
-            --glass-bg: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
 
@@ -3047,13 +3271,17 @@
         <!-- ===== TAB: AGENDA / CONTACTOS ===== -->
         <div id="tab-agenda" class="tab-content">
             <div id="contenedor-lista-agenda">
-                <div class="agenda-header-row"
-                    style="flex-direction: column; align-items: center; text-align: center; margin-bottom: 24px;">
+                <!-- Header con botón + integrado -->
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 20px;">
                     <div>
-                        <div class="section-title">Agenda</div>
-                        <div class="section-subtitle">Proveedores y clientes</div>
+                        <div class="section-title" style="text-align:left; margin-bottom:2px;">Agenda</div>
+                        <div class="agenda-count" id="agendaCount" style="font-size:12px; color:var(--text-muted);">0 contactos</div>
                     </div>
-                    <div class="agenda-count" id="agendaCount" style="margin-top: 8px; opacity: 0.5;">0 contactos</div>
+                    <button id="agendaAddBtn"
+                        style="display:flex; align-items:center; gap:7px; padding:10px 18px; background:var(--gold); color:#000; border:none; border-radius:50px; font-size:13px; font-weight:800; cursor:pointer; box-shadow:0 4px 14px rgba(212,175,55,0.3); transition: all 0.2s;">
+                        <i data-lucide="plus" style="width:16px;height:16px; stroke-width: 3.5px;"></i>
+                        Añadir
+                    </button>
                 </div>
 
                 <!-- Buscador -->
@@ -3061,7 +3289,7 @@
                     style="margin: 0 auto 24px; max-width: 400px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--border);">
                     <i data-lucide="search" style="width: 18px; opacity: 0.5;"></i>
                     <input class="search-input" id="agendaSearch" type="text" placeholder="Nombre, teléfono o email..."
-                        style="background: none; border: none; color: #fff; width: 100%; outline: none; font-family: 'Montserrat', sans-serif;">
+                        style="background: none; border: none; color: var(--text-primary); width: 100%; outline: none; font-family: 'Montserrat', sans-serif;">
                 </div>
 
                 <!-- Sub-tabs -->
@@ -3196,7 +3424,13 @@
                 Ajustes Técnicos
             </h2>
             <p class="config-modal-desc" style="margin-bottom:20px;color:var(--text-muted);font-size:13px;">
-                Configuración de integraciones — solo para administrador</p>
+                Configuración unificada</p>
+
+            <div class="config-field">
+                <label class="config-label">🔑 Airtable Personal Access Token</label>
+                <input class="config-input" id="cfgAirtableToken" type="password" placeholder="Para pruebas de entorno local (opcional)">
+                <div class="config-help">No compartas este token. El backend lo maneja automáticamente. Úsalo aquí solo para pruebas locales (override).</div>
+            </div>
 
             <div class="config-field">
                 <label class="config-label">🔗 Webhook URL (n8n)</label>
@@ -3244,8 +3478,89 @@
         </div>
     </div>
 
-    <!-- FAB Añadir Contacto -->
-    <button class="fab-add" id="fabAddContact" title="Añadir contacto">➕</button>
+    <!-- ===== HISTORIAL CONTACTO ===== -->
+    <div id="historial-modal" onclick="if(event.target===this) window.cerrarHistorial()">
+        <div class="historial-sheet">
+            <div class="det-drag-handle"></div>
+            <div class="det-modal-close" onclick="window.cerrarHistorial()">
+                <i data-lucide="x" style="width:16px;"></i>
+            </div>
+
+            <!-- Header -->
+            <div style="margin-bottom:22px; padding-right:40px;">
+                <div style="font-size:22px;font-weight:800;font-family:'Outfit',sans-serif;color:var(--text-primary);margin-bottom:3px;">Historial</div>
+                <div style="font-size:13px;color:var(--text-muted);font-weight:500;" id="hist-contacto-nombre">—</div>
+            </div>
+
+            <!-- Salud del cliente -->
+            <div style="margin-bottom:2px;">
+                <div style="font-size:13px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                    Salud del cliente
+                    <span style="font-size:11px;font-weight:500;color:var(--text-muted);" id="hist-salud-label">– Nuevo (Sin datos)</span>
+                </div>
+                <div class="hist-bar-track">
+                    <div class="hist-bar-marker" id="hist-salud-marker" style="left:5%;"></div>
+                </div>
+                <div class="hist-bar-labels">
+                    <span>Mala</span><span>Media</span><span>Buena</span>
+                </div>
+            </div>
+
+            <!-- Tasa de incidencias -->
+            <div>
+                <div style="font-size:13px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                    Tasa de incidencias
+                    <span style="font-size:11px;font-weight:500;color:var(--text-muted);" id="hist-incid-label">Inexistente</span>
+                </div>
+                <div class="hist-bar-track">
+                    <div class="hist-bar-marker" id="hist-incid-marker" style="left:95%;"></div>
+                </div>
+                <div class="hist-bar-labels">
+                    <span>Elevada</span><span>Moderada</span><span>Inexistente</span>
+                </div>
+            </div>
+
+            <!-- Stats grid -->
+            <div class="hist-stats-grid">
+                <div class="hist-stat-card">
+                    <div class="hist-stat-label"><i data-lucide="package-check" style="width:13px;height:13px;"></i> Pedidos OK</div>
+                    <div class="hist-stat-value" id="hist-pedidos-ok">0</div>
+                </div>
+                <div class="hist-stat-card">
+                    <div class="hist-stat-label"><i data-lucide="file-check" style="width:13px;height:13px;"></i> Documentos</div>
+                    <div class="hist-stat-value" id="hist-docs">0</div>
+                </div>
+                <div class="hist-stat-card">
+                    <div class="hist-stat-label"><i data-lucide="alert-circle" style="width:13px;height:13px;"></i> Incidencias</div>
+                    <div class="hist-stat-value" id="hist-incidencias">0</div>
+                </div>
+                <div class="hist-stat-card">
+                    <div class="hist-stat-label"><i data-lucide="clock" style="width:13px;height:13px;"></i> Deudas Pen.</div>
+                    <div class="hist-stat-value" id="hist-deudas">0</div>
+                </div>
+                <!-- Total facturado -->
+                <div class="hist-stat-card hist-stat-wide" style="text-align:center; padding:18px;">
+                    <div class="hist-stat-label" style="justify-content:center;"><i data-lucide="banknote" style="width:13px;height:13px;"></i> Total facturado €</div>
+                    <div class="hist-total-value" id="hist-total">0.00</div>
+                </div>
+                <!-- Compras frecuentes -->
+                <div class="hist-stat-card hist-stat-wide">
+                    <div class="hist-stat-label"><i data-lucide="star" style="width:13px;height:13px;color:#f59e0b;"></i> Compras frecuentes</div>
+                    <div style="font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.5;" id="hist-compras">Sin datos de compra</div>
+                </div>
+            </div>
+
+            <!-- Ver todos los documentos -->
+            <button onclick="window.verDocumentosContacto()"
+                style="width:100%;padding:15px;background:var(--amber);color:#fff;border:none;border-radius:16px;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;">
+                <i data-lucide="file-text" style="width:16px;height:16px;"></i>
+                Ver todos los documentos
+            </button>
+        </div>
+    </div>
+
+    <!-- FAB Añadir Contacto (oculto — reemplazado por botón inline en header) -->
+    <button class="fab-add" id="fabAddContact" title="Añadir contacto" style="display:none;">➕</button>
 
     <!-- FAB Añadir Tarea (Hoja de Ruta) -->
     <button class="fab-add" id="fabAddTask" title="Añadir tarea"
@@ -3277,42 +3592,38 @@
         </div>
     </div>
 
-    <!-- Modal Añadir Contacto [GLASS VERSION] -->
+    <!-- Modal Añadir Contacto -->
     <div class="modal-overlay" id="contactModal">
-        <div class="modal-sheet glass-panel"
-            style="padding: 32px; border-top: 1px solid var(--border); border-radius: 32px 32px 0 0;">
-            <div class="modal-handle" style="background: rgba(255,255,255,0.1);"></div>
-            <div class="modal-title" style="font-size: 22px; font-weight: 500; margin-bottom: 24px;">Nuevo Contacto
-            </div>
-            <div class="modal-type-tabs glass-panel"
-                style="padding: 6px; display: inline-flex; margin-bottom: 32px; background: rgba(255,255,255,0.03);">
-                <button class="modal-type-btn active" data-ctype="proveedor"
-                    style="padding: 10px 24px; border-radius: 16px;">
-                    <i data-lucide="truck" style="width: 16px; margin-right: 8px;"></i>
+        <div class="modal-sheet">
+            <div class="modal-handle"></div>
+            <div class="modal-title">Nuevo Contacto</div>
+
+            <!-- Selector tipo -->
+            <div class="modal-type-tabs">
+                <button class="modal-type-btn active" data-ctype="proveedor">
+                    <i data-lucide="truck"></i>
                     Proveedor
                 </button>
-                <button class="modal-type-btn" data-ctype="cliente" style="padding: 10px 24px; border-radius: 16px;">
-                    <i data-lucide="shopping-bag" style="width: 16px; margin-right: 8px;"></i>
+                <button class="modal-type-btn" data-ctype="cliente">
+                    <i data-lucide="shopping-bag"></i>
                     Cliente
                 </button>
             </div>
-            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
-                <input class="modal-input glass-panel" id="cNombre" type="text" placeholder="Nombre o empresa *"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
-                <input class="modal-input glass-panel" id="cTelefono" type="tel" placeholder="Teléfono"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
-                <input class="modal-input glass-panel" id="cEmail" type="email" placeholder="Email"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
-                <input class="modal-input glass-panel" id="cCategoria" type="text"
-                    placeholder="Categoría (ej: Harina, Café, Reparto...)"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif;">
+
+            <!-- Campos -->
+            <div style="display: flex; flex-direction: column; margin-bottom: 28px;">
+                <input class="modal-input" id="cNombre" type="text" placeholder="Nombre o empresa *">
+                <input class="modal-input" id="cTelefono" type="tel" placeholder="Teléfono">
+                <input class="modal-input" id="cEmail" type="email" placeholder="Email">
+                <input class="modal-input" id="cCategoria" type="text" placeholder="Categoría (ej: Harina, Café, Reparto...)">
             </div>
-            <div style="display:flex;gap:12px;">
-                <button class="btn glass-panel" id="closeModal"
-                    style="flex: 1; padding: 16px; border: 1px solid var(--border);">Cancelar</button>
-                <button class="btn glass-panel" id="saveContact"
-                    style="flex: 2; padding: 16px; background: var(--rose); color: #fff; font-weight: 500;">Guardar
-                    Contacto</button>
+
+            <!-- Botones de Acción -->
+            <div style="display:flex; gap:12px;">
+                <button class="btn" id="closeModal"
+                    style="flex:1; padding:16px; border:1px solid var(--border); background: var(--warm-100); color: var(--text-secondary); border-radius: 16px; font-size:14px; font-weight:600;">Regresar</button>
+                <button class="btn" id="saveContact"
+                    style="flex:2; padding:16px; background: var(--gold); color: #000; font-weight:800; border:none; border-radius:16px; font-size:14px; box-shadow: 0 4px 12px rgba(212,175,55,0.25);">Guardar Contacto</button>
             </div>
         </div>
     </div>
@@ -3412,58 +3723,79 @@
     <!-- [MODAL POPUP (PREMIUM) RESTAURADO - GLASS VERSION] -->
     <div id="detalles-contacto-modal" onclick="if(event.target === this) window.cerrarVistaCliente()">
         <div class="det-modal-content">
-            <div class="det-modal-close" style="right: 60px; color: #ef4444;"
+            <!-- Drag handle -->
+            <div class="det-drag-handle"></div>
+
+            <!-- Botón eliminar -->
+            <div class="det-modal-close" style="right: 60px; color: #ef4444; background: rgba(239,68,68,0.08);"
                 onclick="window.confirmarEliminarContacto()">
-                <i data-lucide="trash-2" style="width: 20px;"></i>
+                <i data-lucide="trash-2" style="width: 16px;"></i>
             </div>
+            <!-- Botón cerrar -->
             <div class="det-modal-close" onclick="window.cerrarVistaCliente()">
-                <i data-lucide="x" style="width: 20px;"></i>
+                <i data-lucide="x" style="width: 16px;"></i>
             </div>
 
+            <!-- Header: avatar + nombre + tipo -->
             <div class="det-header">
-                <div class="det-initials-circle" id="det-initials">IM</div>
+                <div class="det-initials-circle det-initials-proveedor" id="det-initials">–</div>
                 <div class="det-header-text">
                     <h2 class="det-name" id="det-name">Contacto</h2>
-                    <div class="det-status">
-                        <div class="status-dot" id="det-status-dot"></div>
-                        <span id="det-category-text">Sin Registros</span>
-                    </div>
+                    <span class="det-tipo-badge det-tipo-proveedor" id="det-tipo-badge">Proveedor</span>
                 </div>
             </div>
 
+            <!-- Info de contacto (teléfono + email) -->
+            <div class="det-contact-info" id="det-contact-info-box">
+                <div class="det-contact-row" id="det-phone-row" style="display:none;">
+                    <i data-lucide="phone" style="width:14px;height:14px;"></i>
+                    <span id="det-phone">—</span>
+                </div>
+                <div class="det-contact-row" id="det-email-row" style="display:none;">
+                    <i data-lucide="mail" style="width:14px;height:14px;"></i>
+                    <span id="det-email">—</span>
+                </div>
+                <div class="det-contact-row" id="det-categoria-row" style="display:none;">
+                    <i data-lucide="tag" style="width:14px;height:14px;"></i>
+                    <span id="det-category-text">—</span>
+                </div>
+            </div>
+
+            <!-- Acciones rápidas -->
             <div class="det-actions-grid">
                 <div class="det-action-btn" onclick="ejecutarLlamada()">
-                    <i data-lucide="phone" style="width: 22px;"></i>
+                    <i data-lucide="phone" style="width: 20px;"></i>
                     <span>Llamar</span>
                 </div>
                 <div class="det-action-btn" onclick="ejecutarWhatsApp()">
-                    <i data-lucide="message-square" style="width: 22px;"></i>
+                    <i data-lucide="message-circle" style="width: 20px;"></i>
                     <span>WhatsApp</span>
                 </div>
                 <div class="det-action-btn" onclick="ejecutarHistorial()">
-                    <i data-lucide="bar-chart-3" style="width: 22px;"></i>
+                    <i data-lucide="file-text" style="width: 20px;"></i>
                     <span>Historial</span>
                 </div>
-                <div class="det-action-btn" onclick="ejecutarNota()">
-                    <i data-lucide="bell" style="width: 22px;"></i>
-                    <span>Nota</span>
+                <div class="det-action-btn" onclick="ejecutarEmail()">
+                    <i data-lucide="mail" style="width: 20px;"></i>
+                    <span>Email</span>
                 </div>
             </div>
 
+            <!-- Resumen financiero -->
             <div class="det-resumen-box">
-                <div class="det-resumen-title">RESUMEN FINANCIERO RÁPIDO</div>
+                <div class="det-resumen-title">Resumen Financiero</div>
                 <div class="det-resumen-grid">
                     <div class="res-col">
-                        <span class="res-label">Saldo Pend.</span>
-                        <span class="res-value" id="det-saldo">0.00 €</span>
+                        <span class="res-label">Total acumulado</span>
+                        <span class="res-value" id="det-saldo">—</span>
                     </div>
                     <div class="res-col">
-                        <span class="res-label">Ticket Medio</span>
-                        <span class="res-value" id="det-ticket">0.00 €</span>
+                        <span class="res-label">Ticket medio</span>
+                        <span class="res-value" id="det-ticket">—</span>
                     </div>
                     <div class="res-col">
-                        <span class="res-label">Última Acc.</span>
-                        <span class="res-value" id="det-ultima">--</span>
+                        <span class="res-label">Último doc.</span>
+                        <span class="res-value" id="det-ultima">—</span>
                     </div>
                 </div>
             </div>
@@ -3534,15 +3866,23 @@
                 // Siempre sobreescribir la URL con la correcta
                 cfg.webhookUrl = FIXED_WEBHOOK;
             } else {
-                cfg = { webhookUrl: FIXED_WEBHOOK };
+                cfg = { webhookUrl: FIXED_WEBHOOK, airtableToken: '' };
             }
             document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl;
+            if (document.getElementById('cfgAirtableToken')) {
+                document.getElementById('cfgAirtableToken').value = cfg.airtableToken || '';
+            }
             return cfg;
         }
 
         function saveConfig() {
+            let aToken = '';
+            if (document.getElementById('cfgAirtableToken')) {
+                aToken = document.getElementById('cfgAirtableToken').value.trim();
+            }
             const cfg = {
-                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim()
+                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim(),
+                airtableToken: aToken
             };
             localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
             config = cfg;
@@ -4199,21 +4539,27 @@
                 return;
             }
 
-            // REGLA CLAVE: Fuerza Bruta con onclick en línea + CSS anticapas invisibles
-            list.innerHTML = filtered.map((c, i) => {
+            list.innerHTML = filtered.map((c) => {
                 const initials = c.nombre.split(' ').slice(0, 2).map(w => w[0] || '').join('').toUpperCase();
                 const avatarClass = c.tipo === 'proveedor' ? 'avatar-proveedor' : 'avatar-cliente';
+                // Badge solo visible en vista "Todos" (evita redundancia al filtrar por tipo)
+                const badgeHTML = `<span class="${c.tipo === 'proveedor' ? 'badge-tipo-proveedor' : 'badge-tipo-cliente'}">${c.tipo === 'proveedor' ? 'Proveedor' : 'Cliente'}</span>`;
+                const metaItems = [
+                    c.telefono ? `<span style="display:flex;align-items:center;gap:3px;"><i data-lucide="phone" style="width:11px;height:11px;"></i>${c.telefono}</span>` : '',
+                    c.email ? `<span style="display:flex;align-items:center;gap:3px;"><i data-lucide="mail" style="width:11px;height:11px;"></i>${c.email}</span>` : '',
+                    c.categoria ? `<span>${c.categoria}</span>` : ''
+                ].filter(Boolean).join('<span style="opacity:0.3;margin:0 2px;">·</span>');
                 return `
-                <div class="contact-card" onclick="window.forzarAperturaCliente('${c.id}')" style="cursor: pointer; position: relative; z-index: 50; pointer-events: auto;">
+                <div class="contact-card" onclick="window.forzarAperturaCliente('${c.id}')" style="cursor:pointer;position:relative;z-index:50;pointer-events:auto;">
                     <div class="contact-avatar ${avatarClass}">${initials}</div>
                     <div class="contact-info">
-                        <div class="contact-name">${c.nombre}</div>
-                        <div class="contact-meta">
-                            ${c.telefono ? '📞 ' + c.telefono : ''}
-                            ${c.categoria ? ' · ' + c.categoria : ''}
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
+                            <div class="contact-name" style="margin:0;">${c.nombre}</div>
+                            ${badgeHTML}
                         </div>
+                        <div class="contact-meta">${metaItems || '<span style="opacity:0.4;">Sin datos de contacto</span>'}</div>
                     </div>
-                    <span class="contact-arrow">›</span>
+                    <i data-lucide="chevron-right" style="width:18px;height:18px;opacity:0.25;flex-shrink:0;"></i>
                 </div>`;
             }).join('');
         }
@@ -4237,16 +4583,21 @@
             agSearch.addEventListener('input', renderAgenda);
         }
 
-        // Modal
-        const fabAddC = document.getElementById('fabAddContact');
-        if (fabAddC) {
-            fabAddC.addEventListener('click', () => {
-                const cMod = document.getElementById('contactModal');
-                if (cMod) cMod.classList.add('open');
+        // Botón inline "Añadir" en el header de Agenda
+        function openContactModal() {
+            const cMod = document.getElementById('contactModal');
+            if (cMod) cMod.classList.add('open');
+            setTimeout(() => {
                 const cNom = document.getElementById('cNombre');
                 if (cNom) cNom.focus();
-            });
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }, 50);
         }
+        const agendaAddBtn = document.getElementById('agendaAddBtn');
+        if (agendaAddBtn) agendaAddBtn.addEventListener('click', openContactModal);
+        // FAB legacy (oculto, por si acaso)
+        const fabAddC = document.getElementById('fabAddContact');
+        if (fabAddC) fabAddC.addEventListener('click', openContactModal);
 
         const clMod = document.getElementById('closeModal');
         if (clMod) {
@@ -4463,18 +4814,98 @@
             }
         };
 
+        function calcularDatosHistorial(nombre) {
+            const fuente = globalStats.loaded ? globalStats.allRecords : allFacturas;
+            const docs = fuente.filter(f => normalize(f.proveedor || '').includes(normalize(nombre)));
+            const total = docs.reduce((s, d) => s + (d.total || 0), 0);
+            const count = docs.length;
+            // Compras frecuentes: top 3 categorías por frecuencia
+            const cats = {};
+            docs.forEach(d => {
+                const cat = d.categoria || 'Sin categoría';
+                cats[cat] = (cats[cat] || 0) + 1;
+            });
+            const topCats = Object.entries(cats)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([cat, n]) => `${cat} (×${n})`)
+                .join(' · ');
+            return { docs, count, total, topCats };
+        }
+
         window.ejecutarHistorial = function () {
             if (!window.contactSelected) return;
-            // Cargar en la pestaña de facturas filtrando por este proveedor
-            activateTab('facturas');
-            currentFilter = 'all'; // Reset filter to see all from this contact
+            const c = window.contactSelected;
+            const { count, total, topCats } = calcularDatosHistorial(c.nombre);
 
-            // Simular búsqueda para filtrar lista
+            // Salud del cliente basada en volumen de documentos
+            let saludLabel, saludPct;
+            if (count === 0)      { saludLabel = 'Nuevo (Sin datos)'; saludPct = 5;  }
+            else if (count <= 2)  { saludLabel = 'En desarrollo';     saludPct = 25; }
+            else if (count <= 6)  { saludLabel = 'Media';             saludPct = 55; }
+            else if (count <= 12) { saludLabel = 'Buena';             saludPct = 78; }
+            else                  { saludLabel = 'Excelente';         saludPct = 95; }
+
+            // Poblar campos
+            const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+            set('hist-contacto-nombre', c.nombre + (c.categoria ? ' (' + c.categoria + ')' : ''));
+            set('hist-salud-label',     '– ' + saludLabel);
+            set('hist-incid-label',     'Inexistente');
+            set('hist-pedidos-ok',      count);
+            set('hist-docs',            count);
+            set('hist-incidencias',     '0');
+            set('hist-deudas',          '0');
+            set('hist-total',           total.toFixed(2));
+            set('hist-compras',         topCats || 'Sin datos de compra');
+
+            // Animar marcadores de barras (pequeño delay para que la transición CSS sea visible)
             setTimeout(() => {
-                const results = allFacturas.filter(f => normalize(f.proveedor).includes(normalize(window.contactSelected.nombre)));
-                updateListWithCustomData(results, `Historial: ${window.contactSelected.nombre}`);
-                // Si llegamos de la vista contacto, mostramos el tab facturas sin hacer más
-            }, 100);
+                const sm = document.getElementById('hist-salud-marker');
+                const im = document.getElementById('hist-incid-marker');
+                if (sm) sm.style.left = saludPct + '%';
+                if (im) im.style.left = '95%';
+            }, 80);
+
+            // Abrir modal
+            const modal = document.getElementById('historial-modal');
+            if (modal) {
+                modal.classList.add('active');
+                setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 60);
+            }
+        };
+
+        window.cerrarHistorial = function () {
+            const modal = document.getElementById('historial-modal');
+            if (modal) modal.classList.remove('active');
+        };
+
+        window.verDocumentosContacto = function () {
+            if (!window.contactSelected) return;
+            const nombre = window.contactSelected.nombre;
+            window.cerrarHistorial();
+            activateTab('facturas');
+            currentFilter = 'all';
+            setTimeout(() => {
+                const fuente = globalStats.loaded ? globalStats.allRecords : allFacturas;
+                const results = fuente.filter(f => normalize(f.proveedor || '').includes(normalize(nombre)));
+                updateListWithCustomData(results, 'Historial: ' + nombre);
+                if (typeof lucide !== 'undefined') lucide.createIcons();
+            }, 150);
+        };
+
+        window.ejecutarEmail = function () {
+            if (window.contactSelected && window.contactSelected.email) {
+                window.open('mailto:' + window.contactSelected.email, '_blank', 'noopener,noreferrer');
+            } else {
+                // Feedback visual en lugar de alert
+                const btn = document.querySelector('.det-action-btn:last-child');
+                if (btn) {
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '<i data-lucide="x-circle" style="width:20px;"></i><span>Sin email</span>';
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
+                    setTimeout(() => { btn.innerHTML = original; if (typeof lucide !== 'undefined') lucide.createIcons(); }, 1500);
+                }
+            }
         };
 
         function updateListWithCustomData(data, title) {
@@ -4519,8 +4950,9 @@
             }).join('');
         }
 
-        window.ejecutarNota = function () {
-            alert('En desarrollo: ' + (window.contactSelected && window.contactSelected.email ? window.contactSelected.email : 'Sin nota.'));
+        // Alias requerido por closeConfirmModal
+        window.verDetalleCliente = function (id) {
+            window.forzarAperturaCliente(id);
         };
 
         // ===== HOJA DE RUTA - GESTOR OPERATIVO =====
