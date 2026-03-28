@@ -23,38 +23,32 @@ const TABLES = {
 // ─────────────────────────────────────────────
 router.post('/scan-invoice', async (req, res) => {
     try {
+        const startTime = Date.now();
         const { image, mimeType } = req.body;
 
         if (!image) {
             return res.status(400).json({ error: 'Falta el campo "image" (base64)' });
         }
 
-        // 1. Enviar a Gemini para extracción de datos
+        // 1. Enviar a Gemini 2.0 Flash — con JSON mode forzado
         const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`;
 
         const geminiPayload = {
             contents: [{
                 parts: [
                     {
-                        text: `Analiza esta imagen de un documento comercial (factura, ticket, albarán o gasto).
-Extrae los siguientes datos en formato JSON estricto:
-{
-  "tabla_destino": "FACTURAS" | "ALBARANES" | "GASTOS_VARIOS",
-  "PROVEDOR/TITULO": "nombre del proveedor o emisor",
-  "TOTAL": numero_decimal,
-  "FECHA": "YYYY-MM-DD",
-  "NUMERO DE DOC": "número de documento si existe",
-  "BASE IMPONIBLE": numero_decimal,
-  "IVA": numero_decimal,
-  "CIF": "CIF/NIF del proveedor si aparece",
-  "MONEDA": "EUR",
-  "DETALLES DOC": "resumen de conceptos/líneas del documento"
-}
-Reglas:
-- Si tiene CIF/NIF e IVA desglosado → tabla_destino = "FACTURAS"
-- Si solo lista productos sin fiscal → tabla_destino = "ALBARANES"
-- Si es un ticket de caja o gasto menor → tabla_destino = "GASTOS_VARIOS"
-- Devuelve SOLO el JSON, sin markdown ni explicación.`
+                        text: `Analiza esta imagen de documento/ticket/factura y extrae los datos en JSON.
+Responde ÚNICAMENTE con un objeto JSON válido, sin texto adicional, sin markdown, sin backticks.
+Campos requeridos:
+- tabla_destino: "FACTURAS" si tiene CIF e IVA desglosado, "ALBARANES" si es lista de productos sin IVA, "GASTOS_VARIOS" si es ticket o gasto menor
+- "PROVEDOR/TITULO": nombre del proveedor o comercio
+- "TOTAL": número total (ejemplo: 38.99)
+- "FECHA": fecha en formato YYYY-MM-DD
+- "NUMERO DE DOC": número de documento si existe
+- "BASE IMPONIBLE": base imponible si existe, 0 si no
+- "IVA": importe de IVA si existe, 0 si no
+- "CIF": CIF/NIF si existe
+- "DETALLES DOC": resumen breve de los productos/conceptos`
                     },
                     {
                         inline_data: {
@@ -63,7 +57,13 @@ Reglas:
                         }
                     }
                 ]
-            }]
+            }],
+            generationConfig: {
+                maxOutputTokens: 8192,
+                temperature: 0.1,
+                responseMimeType: 'application/json',
+                thinkingConfig: { thinkingBudget: 0 }
+            }
         };
 
         const geminiRes = await fetch(geminiUrl, {
@@ -80,15 +80,23 @@ Reglas:
         const geminiData = await geminiRes.json();
         const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
-        // Limpiar markdown si Gemini lo envuelve en ```json ... ```
-        const cleanJson = rawText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+        // Limpieza robusta: eliminar markdown code fences y extraer JSON
+        let cleanText = rawText.replace(/```json\s*/gi, '').replace(/```\s*/g, '').trim();
+        const fb = cleanText.indexOf('{');
+        const lb = cleanText.lastIndexOf('}');
+        if (fb < 0 || lb <= fb) {
+            throw new Error(`Gemini no devolvió JSON válido: ${rawText.substring(0, 200)}`);
+        }
+        const cleanJson = cleanText.substring(fb, lb + 1);
+        console.log('[SCANNER] Raw Gemini response:', rawText.substring(0, 300));
+        console.log('[SCANNER] Clean JSON:', cleanJson.substring(0, 300));
         const extracted = JSON.parse(cleanJson);
 
         // 2. Determinar tabla destino
         const destino = (extracted.tabla_destino || 'GASTOS_VARIOS').toUpperCase();
         const tableId = TABLES[destino] || TABLES.GASTOS_VARIOS;
 
-        // 3. Preparar campos (ahora todas las tablas tienen TOTAL, IVA, BASE IMPONIBLE, DETALLES DOC)
+        // 3. Preparar campos
         const fields = {
             'PROVEDOR/TITULO': extracted['PROVEDOR/TITULO'] || extracted['PROVEDOR/ TITULO'] || 'Desconocido',
             'FECHA': extracted['FECHA'] || extracted['Fecha'] || new Date().toISOString().slice(0, 10),
@@ -100,24 +108,10 @@ Reglas:
             'DETALLES DOC': extracted['DETALLES DOC'] || ''
         };
 
-        // 4. Guardar en Airtable
-        const airtableRes = await fetch(`${AIRTABLE_API}/${BASE_ID}/${tableId}`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${TOKEN}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ records: [{ fields }] })
-        });
+        const ocrTime = Date.now() - startTime;
+        console.log(`[SCANNER] OCR completado en ${ocrTime}ms — ${destino}`);
 
-        if (!airtableRes.ok) {
-            const errText = await airtableRes.text();
-            throw new Error(`Airtable error (${airtableRes.status}): ${errText.substring(0, 300)}`);
-        }
-
-        const saved = await airtableRes.json();
-
-        // 5. Devolver resultado al frontend (datos completos de Gemini + lo guardado en Airtable)
+        // 4. Responder al frontend INMEDIATAMENTE — no esperar a Airtable
         res.json({
             success: true,
             tabla_destino: destino,
@@ -129,7 +123,25 @@ Reglas:
                 'IVA': parseFloat(extracted['IVA']) || 0,
                 'DETALLES DOC': extracted['DETALLES DOC'] || ''
             },
-            airtable_record: saved.records?.[0] || null
+            ocr_ms: ocrTime
+        });
+
+        // 5. Guardar en Airtable EN BACKGROUND (no bloquea la respuesta)
+        fetch(`${AIRTABLE_API}/${BASE_ID}/${tableId}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${TOKEN}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ records: [{ fields }] })
+        }).then(airtableRes => {
+            if (!airtableRes.ok) {
+                airtableRes.text().then(t => console.error(`[SCANNER] Airtable save failed: ${t.substring(0, 200)}`));
+            } else {
+                console.log(`[SCANNER] Guardado en Airtable (${destino}) — total: ${Date.now() - startTime}ms`);
+            }
+        }).catch(err => {
+            console.error(`[SCANNER] Airtable save error: ${err.message}`);
         });
 
     } catch (err) {

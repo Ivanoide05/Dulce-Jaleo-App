@@ -138,8 +138,8 @@
         }
 
         .main {
-            padding-top: calc(65px + env(safe-area-inset-top, 0px));
-            padding-bottom: 100px;
+            padding-top: calc(85px + env(safe-area-inset-top, 0px));
+            padding-bottom: 120px;
             transition: padding-top 0.3s ease;
         }
 
@@ -251,10 +251,6 @@
             justify-content: space-between;
             z-index: 950;
             transition: var(--transition);
-            pointer-events: none; /* Permite scroll a través del header */
-        }
-        .premium-header > * {
-            pointer-events: auto; /* Restaura interacción para botones y perfil */
         }
 
         body.dark-theme .premium-header {
@@ -400,8 +396,7 @@
         .main {
             max-width: 480px;
             margin: 0 auto;
-            min-height: 100vh; /* Asegura área de scroll */
-            padding: calc(115px + env(safe-area-inset-top, 0px)) 16px 140px; /* Padding ajustado v.Final */
+            padding: 96px 16px 120px; /* Padding superior ampliado para compensar Top AppBar fijo */
         }
 
         .tab-content {
@@ -474,105 +469,54 @@
         }
 
         .scanner-area {
-            position: relative;
-            background: var(--bg-card);
+            background: var(--white);
             border: 2px dashed var(--border);
-            border-radius: var(--radius-card);
-            padding: 40px 20px;
+            border-radius: 20px;
+            padding: 42px 20px;
             text-align: center;
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
-            min-height: 280px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        }
+
+        .scanner-area::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 100%, var(--rose-glow), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .scanner-area:hover,
+        .scanner-area.drag-over {
+            border-color: var(--rose);
+            background: var(--warm-100);
+        }
+
+        .scanner-area:hover::before,
+        .scanner-area.drag-over::before {
+            opacity: 1;
         }
 
         .scanner-area.has-image {
             border-style: solid;
-            border-color: var(--premium-red);
-            padding: 10px;
+            border-color: var(--rose);
+            padding: 0;
         }
 
-        .preview-img {
-            max-width: 100%;
-            max-height: 350px;
+        .scanner-icon-wrap {
+            width: 72px;
+            height: 72px;
+            background: linear-gradient(135deg, var(--warm-100), var(--warm-200));
             border-radius: 20px;
-            object-fit: contain;
-            display: none;
-        }
-
-        .clear-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(228, 0, 0, 0.9);
-            color: white;
-            border: none;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            backdrop-filter: blur(4px);
-            transition: var(--transition);
-        }
-
-        .clear-btn:hover {
-            transform: scale(1.1);
-            background: #ff0000;
-        }
-
-        .scanner-placeholder {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .scanner-icon {
-            font-size: 40px;
-            margin-bottom: 8px;
-        }
-
-        .scanner-placeholder p {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-
-        /* ═══ RESULTADO DE ESCANEO ═══ */
-        .result-item {
-            background: var(--bg-card);
+            font-size: 34px;
+            margin: 0 auto 16px;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 12px 14px;
-        }
-        .result-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-        .result-value {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .result-value.amount {
-            font-family: 'Outfit', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: #D4AF37;
         }
 
         .scanner-title {
@@ -596,9 +540,9 @@
         }
 
         .btn-scan {
-            background: var(--bg-card);
-            border: 1.5px solid rgba(0,0,0,0.12);
-            color: var(--text-primary);
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            color: var(--text-secondary);
             padding: 9px 18px;
             border-radius: 50px;
             font-size: 13px;
@@ -617,9 +561,6 @@
             border-color: var(--rose);
             color: var(--rose);
             background: var(--warm-100);
-        }
-        body.dark-theme .btn-scan {
-            border-color: rgba(255,255,255,0.15);
         }
 
         .preview-img {
@@ -1491,11 +1432,11 @@
         }
 
         .avatar-proveedor {
-            background: linear-gradient(135deg, #d4af37, #b8942e);
+            background: linear-gradient(135deg, #f59e0b, #d97706);
         }
 
         .avatar-cliente {
-            background: linear-gradient(135deg, #c9a84c, #a68b3a);
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
         }
 
         .contact-info {
@@ -1824,16 +1765,15 @@
             right: 20px;
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, #ebae1c, #D4AF37);
+            background: linear-gradient(135deg, var(--rose-light), var(--rose));
             border-radius: 50%;
             border: none;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            color: #fff;
+            font-size: 26px;
             cursor: pointer;
-            box-shadow: 0 6px 24px rgba(212, 175, 55, 0.45);
+            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.45);
             z-index: 150;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -1943,37 +1883,6 @@
             color: var(--text-muted);
         }
 
-        /* Placeholder legibility fix for ruta modals */
-        .ruta-modal-overlay .modal-input.glass-panel {
-            background: rgba(255,255,255,0.07) !important;
-        }
-        .ruta-modal-overlay .modal-input.glass-panel::placeholder {
-            color: rgba(180, 175, 165, 0.7) !important;
-        }
-        body:not(.dark-theme) .ruta-modal-overlay .modal-input.glass-panel {
-            background: rgba(0,0,0,0.04) !important;
-        }
-        body:not(.dark-theme) .ruta-modal-overlay .modal-input.glass-panel::placeholder {
-            color: rgba(80, 70, 60, 0.55) !important;
-        }
-
-        /* Day selector chips */
-        .ruta-day-chips { display: flex; gap: 6px; flex-wrap: wrap; }
-        .ruta-day-chip {
-            width: 38px; height: 38px; border-radius: 12px;
-            border: 1px solid var(--border); background: rgba(255,255,255,0.04);
-            color: var(--text-muted); font-size: 13px; font-weight: 600;
-            font-family: inherit; cursor: pointer; display: flex;
-            align-items: center; justify-content: center; transition: all 0.2s;
-        }
-        .ruta-day-chip.active {
-            background: rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.5);
-            color: #D4AF37;
-        }
-        .ruta-day-chip:hover { border-color: rgba(212,175,55,0.3); }
-        body:not(.dark-theme) .ruta-day-chip { background: rgba(0,0,0,0.03); }
-        body:not(.dark-theme) .ruta-day-chip.active { background: rgba(212,175,55,0.12); }
-
         .modal-input:focus {
             outline: none;
             border-color: var(--rose);
@@ -1997,9 +1906,9 @@
             align-items: center;
             width: 100%;
             max-width: 420px;
-            background-color: rgba(255, 255, 255, 0.6); /* 🔑 Glassmorphism translúcido */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: #FFFFFF; /* MODO CLARO DEFAULT: Píldora blanca */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 50px;
             padding: 8px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
@@ -2008,22 +1917,22 @@
 
         /* En modo oscuro: Glassmorphism nocturno */
         body.dark-theme .navbar-container {
-            background-color: rgba(10, 10, 10, 0.55);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            background: rgba(10, 10, 10, 0.75);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .nav-btn {
-            flex: 1;
+            flex: 1; /* Distribuye espacio uniforme */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             gap: 4px;
-            padding: 12px 0;
+            padding: 12px 0; /* Padding vertical central generoso */
             background: transparent;
             border: none;
-            color: #757575; /* Gris oscuro neutro elegante */
+            color: #666666; /* Gris oscuro neutro */
             cursor: pointer;
             border-radius: 50px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2032,22 +1941,21 @@
 
         /* EL ELEMENTO ACTIVO: Sub-píldora Exacta */
         .nav-btn.active {
-            background: rgba(241, 241, 241, 0.9); /* Gris sutil con opacidad */
+            background: #F5F5F5; /* Modo claro: gris suave */
             color: #ebae1c; /* Color de marca exacto */
         }
         body.dark-theme .nav-btn.active {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.1); /* Modo oscuro: glass */
         }
 
         .nav-icon i {
             width: 20px;
             height: 20px;
-            stroke-width: 1.8; /* Trazo fino elegante */
+            stroke-width: 2;
             transition: transform 0.3s ease;
         }
 
         .nav-btn.active .nav-icon i {
-            stroke-width: 2.2; /* Ligeramente más grueso cuando activo */
             transform: scale(1.1) translateY(-1px);
         }
 
@@ -2216,694 +2124,6 @@
             opacity: 1;
             transform: rotate(45deg);
         }
-
-        /* ===== HOJA DE RUTA - PREMIUM OPERATIVO ===== */
-
-        /* Barra de progreso */
-        .ruta-progress-track {
-            background: rgba(0, 0, 0, 0.05);
-            border-radius: 8px;
-            height: 12px;
-            overflow: hidden;
-        }
-        body.dark-theme .ruta-progress-track {
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .ruta-progress-fill {
-            height: 100%;
-            border-radius: 8px;
-            background: linear-gradient(90deg, #D4AF37, #ebae1c);
-            transition: width 0.8s ease;
-        }
-
-        /* Hornada summary */
-        .ruta-hornada-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 16px;
-            padding: 16px 20px;
-            box-shadow: var(--shadow-sm);
-        }
-        body.dark-theme .ruta-hornada-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(212, 175, 55, 0.15);
-        }
-        .ruta-hornada-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 6px 0;
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-        .ruta-hornada-item + .ruta-hornada-item {
-            border-top: 1px solid var(--border);
-        }
-        .ruta-hornada-qty {
-            font-weight: 700;
-            color: #D4AF37;
-            font-size: 13px;
-        }
-
-        /* Card de tarea/pedido */
-        .ruta-card {
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .ruta-card.ruta-completing {
-            opacity: 0.4;
-            transform: scale(0.96);
-        }
-        .ruta-card.ruta-done {
-            background: rgba(16, 185, 129, 0.06) !important;
-            border-color: rgba(16, 185, 129, 0.18) !important;
-            opacity: 0.65;
-        }
-        body.dark-theme .ruta-card.ruta-done {
-            background: rgba(16, 185, 129, 0.08) !important;
-        }
-        .ruta-card.ruta-done .ruta-product-name {
-            text-decoration: line-through;
-            color: var(--text-muted);
-        }
-
-        /* Botones de acción ruta */
-        .ruta-btn {
-            padding: 7px 14px;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-family: inherit;
-        }
-        .ruta-btn-complete {
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            background: rgba(212, 175, 55, 0.06);
-            color: #D4AF37;
-        }
-        .ruta-btn-complete:hover {
-            background: rgba(212, 175, 55, 0.15);
-        }
-        .ruta-btn-whatsapp {
-            border: 1px solid rgba(37, 211, 102, 0.3);
-            background: rgba(37, 211, 102, 0.06);
-            color: #25D366;
-        }
-        .ruta-btn-whatsapp:hover {
-            background: rgba(37, 211, 102, 0.15);
-        }
-        .ruta-btn-delete {
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            background: rgba(239, 68, 68, 0.05);
-            color: #ef4444;
-            padding: 7px 10px;
-        }
-        .ruta-btn-delete:hover {
-            background: rgba(239, 68, 68, 0.12);
-        }
-
-        /* Sección finalizadas */
-        .ruta-finalizadas-wrap {
-            background: rgba(16, 185, 129, 0.04);
-            border: 1px solid rgba(16, 185, 129, 0.1);
-            border-radius: 16px;
-            padding: 16px;
-        }
-        body.dark-theme .ruta-finalizadas-wrap {
-            background: rgba(16, 185, 129, 0.06);
-            border-color: rgba(16, 185, 129, 0.12);
-        }
-
-        /* Modal tarea */
-        .ruta-modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(40, 30, 15, 0.3);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 9000;
-            display: none;
-            align-items: flex-end;
-            justify-content: center;
-        }
-        .ruta-modal-overlay.open {
-            display: flex;
-        }
-
-        /* Sección header ruta */
-        .ruta-section-header {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Hornada editable - botones +/- */
-        .ruta-hornada-qty-wrap { display: inline-flex; align-items: center; gap: 6px; }
-        .ruta-hornada-qty-btn {
-            width: 26px; height: 26px; border-radius: 8px;
-            border: 1px solid rgba(212,175,55,0.25); background: rgba(212,175,55,0.06);
-            color: #D4AF37; font-size: 16px; font-weight: 700; cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            font-family: inherit; padding: 0; transition: all 0.2s;
-        }
-        .ruta-hornada-qty-btn:hover { background: rgba(212,175,55,0.15); }
-        .ruta-hornada-qty-btn:active { transform: scale(0.92); }
-
-        /* Botones restaurar/editar en finalizadas */
-        .ruta-btn-restore {
-            border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.06); color: #10b981; padding: 7px 10px;
-        }
-        .ruta-btn-restore:hover { background: rgba(16,185,129,0.15); }
-        .ruta-btn-edit {
-            border: 1px solid rgba(212,175,55,0.25); background: rgba(212,175,55,0.06); color: #D4AF37; padding: 7px 10px;
-        }
-        .ruta-btn-edit:hover { background: rgba(212,175,55,0.12); }
-
-        /* Secciones vacías colapsan */
-        #ruta-hornada-section:empty, #ruta-recurrentes-section:empty,
-        #ruta-dinamicos-section:empty, #ruta-manuales-section:empty,
-        #ruta-finalizadas-section:empty { margin: 0 !important; padding: 0; }
-
-        /* 💎 PREMIUM DASHBOARD v2.0 (BENTO & GLASS) 💎 */
-        :root {
-            --bento-gap: 16px;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-blur: blur(25px) saturate(160%);
-        }
-
-        body.dark-theme {
-            --glass-bg: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        .bento-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-auto-rows: auto;
-            gap: var(--bento-gap);
-            padding: 0 var(--gutter) 40px;
-        }
-
-        .bento-item {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 22px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 135px;
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
-        }
-
-        .bento-item-large {
-            grid-column: span 2;
-        }
-
-        .bento-label {
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bento-value {
-            font-size: 32px;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.03em;
-            font-family: 'Outfit', sans-serif !important;
-        }
-
-        .bento-trend {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 5px 10px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 700;
-            margin-top: 4px;
-        }
-
-        .trend-up { background: rgba(16, 185, 129, 0.1); color: #10b981; }
-        .trend-down { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
-
-        .bento-chart-mini {
-            height: 40px;
-            width: 100%;
-            margin-top: 16px;
-        }
-
-        .analytics-layout {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            gap: 24px;
-        }
-
-        @media (max-width: 600px) {
-            .analytics-layout {
-                flex-direction: column;
-                gap: 16px;
-            }
-        }
-
-        .analytics-visual {
-            flex: 1.2;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        @media (max-width: 600px) {
-            .analytics-visual {
-                gap: 8px; /* Menos espacio entre valor y gráfico en móvil */
-            }
-        }
-
-        .analytics-insights {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding-top: 0;
-            border-top: none;
-        }
-
-        @media (max-width: 600px) {
-            .analytics-insights {
-                margin-top: 10px; /* Separación moderada del gráfico */
-                gap: 8px;
-            }
-        }
-
-        .insight-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            padding: 16px;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .insight-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .insight-value {
-            font-size: 18px;
-            font-weight: 800;
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif !important;
-        }
-
-        .ai-recommendation {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            padding: 14px;
-            border-radius: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 0;
-            height: auto; /* IMPORTANTE: No fijar altura en móvil */
-        }
-
-        .ai-recommendation i {
-            color: var(--gold);
-            filter: drop-shadow(0 0 5px var(--gold));
-            width: 18px;
-            height: 18px;
-        }
-
-        .ai-recommendation p {
-            font-size: 11px;
-            line-height: 1.4;
-            color: var(--text-primary);
-            font-weight: 500;
-            margin: 0;
-            font-family: 'Outfit', sans-serif !important;
-        }
-
-        .ai-smart-metrics {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Dos columnas en móvil para ahorrar espacio vertical */
-            gap: 8px;
-            margin-top: 5px;
-        }
-
-        @media (max-width: 400px) {
-            .ai-smart-metrics {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .smart-metric-pill {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            padding: 8px 12px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .smart-metric-label {
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .smart-metric-value {
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--gold);
-        }
-
-        .ai-smart-legend {
-            background: rgba(212, 175, 55, 0.03);
-            border-radius: 16px;
-            padding: 12px;
-            margin-top: 10px;
-        }
-
-        .small-metric-pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            padding: 4px 10px;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-            min-width: 60px;
-        }
-
-        /* Control Horario Widget */
-        .horario-widget {
-            margin-top: 8px;
-            padding-top: 10px;
-            border-top: 1px dashed rgba(212,175,55,0.1);
-        }
-        .horario-widget-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 8px;
-        }
-        .horario-widget-header .hw-title {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 9px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--gold);
-        }
-        .horario-widget-header .hw-link {
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--gold);
-            cursor: pointer;
-            opacity: 0.7;
-        }
-        .horario-widget-header .hw-link:hover { opacity: 1; }
-        .horario-list {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .horario-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 5px 8px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(212,175,55,0.06);
-        }
-        body:not(.dark-theme) .horario-row {
-            background: rgba(0,0,0,0.02);
-            border-color: rgba(0,0,0,0.06);
-        }
-        .horario-row .hw-name {
-            font-size: 10.5px;
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .horario-row .hw-name .hw-dot {
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-        .hw-status {
-            font-size: 9px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 6px;
-            white-space: nowrap;
-        }
-        .hw-status-puntual { background: rgba(16,185,129,0.12); color: #10b981; }
-        .hw-status-retraso { background: rgba(245,158,11,0.12); color: #f59e0b; }
-        .hw-status-tarde { background: rgba(239,68,68,0.12); color: #ef4444; }
-        .hw-status-falta { background: rgba(107,114,128,0.12); color: #6b7280; }
-
-        @media (max-width: 600px) {
-            .analytics-integrated-flow {
-                display: flex;
-                flex-direction: column;
-            }
-            .bento-chart-mini {
-                height: 120px !important; /* Más altura en móvil al ser una sola columna */
-            }
-        }
-
-        /* Hero Scanner Rediseñado */
-        .premium-scanner-card {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 100%);
-            border: 1px solid rgba(212, 175, 55, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 24px;
-            border-radius: 30px;
-            margin: 0 var(--gutter) 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .premium-scanner-card:hover {
-            border-color: var(--gold);
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .scanner-text h3 {
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 2px;
-            color: var(--text-primary);
-        }
-
-        .scanner-text p {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-
-        .scanner-btn-circle {
-            width: 48px;
-            height: 48px;
-            background: #d4af37;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 16px rgba(212, 175, 55, 0.3);
-        }
-        /* ✨ ESCÁNER LUXURY v3.0 (Adaptativo) ✨ */
-        .scanner-area {
-            position: relative;
-            background: var(--warm-100);
-            border: 2px dashed var(--gold);
-            border-radius: 24px;
-            min-height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            margin: 20px 0;
-            opacity: 0.8;
-        }
-
-        body.dark-theme .scanner-area {
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(212, 175, 55, 0.3);
-        }
-
-        .scanner-area.has-image {
-            border-style: solid;
-            border-color: var(--gold);
-            background: var(--bg-page);
-            opacity: 1;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.1);
-        }
-
-        body.dark-theme .scanner-area.has-image {
-            background: rgba(0,0,0,0.4);
-            box-shadow: inset 0 0 60px rgba(0,0,0,0.6);
-        }
-
-        .lux-scan-pill {
-            background: var(--bg-page);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 16px 24px;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        body.dark-theme .lux-scan-pill {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-
-        .lux-scan-pill:active {
-            transform: scale(0.95);
-            background: var(--warm-200);
-        }
-        
-        body.dark-theme .lux-scan-pill:active {
-            background: rgba(212, 175, 55, 0.2);
-        }
-
-        .scan-help-text {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 10px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        .lux-send-btn {
-            background: var(--gold) !important;
-            color: white !important;
-            box-shadow: 0 4px 15px var(--gold-glow);
-            border: none;
-            transition: var(--transition);
-        }
-
-        .lux-send-btn:disabled {
-            background: var(--warm-200) !important;
-            color: var(--text-muted) !important;
-            box-shadow: none;
-            opacity: 0.6;
-        }
-
-        body.dark-theme .lux-send-btn:disabled {
-            background: rgba(255, 255, 255, 0.05) !important;
-        }
-
-        .btn-luxury-outline {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            padding: 14px;
-            border-radius: 16px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: var(--transition);
-        }
-
-        .btn-luxury-outline:active {
-            background: var(--warm-100);
-            border-color: var(--gold);
-        }
-
-        body.dark-theme .btn-luxury-outline:active {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .lux-scan-pill i {
-            color: var(--gold);
-            width: 20px;
-        }
-
-        /* Efecto de Escaneo (Animación) */
-        .scan-line {
-            display: none;
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            box-shadow: 0 0 15px var(--gold);
-            z-index: 5;
-            animation: scanAnim 2s linear infinite;
-        }
-
-        @keyframes scanAnim {
-            0% { top: 0; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        .preview-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 12px;
-            animation: fadeIn 0.5s ease;
-        }
-        .ai-recommendation p {
-            font-size: 10px;
-            line-height: 1.4;
-            color: var(--text-primary);
-            font-weight: 500;
-            margin: 0;
-        }
-
-        @media (max-width: 480px) {
-            .analytics-layout { flex-direction: column; gap: 20px; }
-            .analytics-insights { padding-left: 0; border-left: none; border-top: 1px solid var(--glass-border); padding-top: 16px; }
-        }
     </style>
 </head>
 
@@ -2945,113 +2165,60 @@
     <!-- MAIN CONTENT -->
     <main class="main">
 
-        <!-- ===== TAB 1: INICIO (Dashboard Premium v2.0) ===== -->
+        <!-- ===== TAB 1: INICIO (Dashboard Premium) ===== -->
         <div id="tab-inicio" class="tab-content active" style="padding-bottom: 40px;">
             <div class="section-title">Visión General</div>
-            <div class="section-subtitle">Inteligencia operativa en tiempo real</div>
+            <div class="section-subtitle">Tu negocio al alcance de un vistazo</div>
 
-            <!-- ACTION: Escáner Compacto Premium -->
-            <div class="premium-scanner-card" onclick="showGlobalScanner()">
-                <div class="scanner-text">
-                    <h3>Escanear Ticket</h3>
-                    <p>IA automática para facturas y albaranes</p>
-                </div>
-                <div class="scanner-btn-circle">
-                    <i data-lucide="scan-line"></i>
-                </div>
-            </div>
-
-            <!-- MINI CHART: Desglose mensual -->
-            <div id="dashMiniChart" class="glass-panel" style="margin: 0 var(--gutter) 16px; padding: 16px 20px; border-radius: 20px; border: 1px solid var(--border); display: none;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold); display: flex; align-items: center; gap: 6px;">
-                        <i data-lucide="bar-chart-3" style="width: 13px;"></i>
-                        Desglose del Mes
-                    </div>
-                    <div id="dashChartTotal" style="font-size: 11px; color: var(--text-muted); font-weight: 600;">0.00€</div>
-                </div>
-                <div id="dashBarChart" style="display: flex; flex-direction: column; gap: 8px;"></div>
-            </div>
-
-            <!-- BENTO GRID PRINCIPAL -->
-            <div class="bento-grid">
-                <!-- Widget Gastos (Large - Lateral Analytics v3.0) -->
-                <div class="bento-item bento-item-large" onclick="activateTab('facturas')">
-                    <div class="analytics-integrated-flow">
-                        <div class="bento-label">
-                            <i data-lucide="trending-up" style="width: 14px; color: var(--gold);"></i>
-                            GASTOS DEL MES
-                        </div>
-                        
-                        <div style="display: flex; align-items: baseline; justify-content: space-between; margin-top: 5px;">
-                            <div id="dash-total-gastos" class="bento-value">0.00€</div>
-                            <div class="bento-trend trend-up">
-                                <i data-lucide="arrow-up-right" style="width: 12px;"></i>
-                                <span>+4.2% vs mes anterior</span>
-                            </div>
-                        </div>
-
-                        <!-- Gráfico Dual: Gastos | Volumen (oculto si vacío) -->
-                        <div id="dashChartsDual" style="display: none; gap: 15px; margin-top: 12px; margin-bottom: 0;">
-                            <div style="flex: 1; min-width: 0;">
-                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="bar-chart-2" style="width: 10px;"></i>Tendencia</div>
-                                <div id="miniChartGastos" class="bento-chart-mini" style="height: 45px; margin-top: 0;"></div>
-                            </div>
-                            <div style="flex: 1; min-width: 0;">
-                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="activity" style="width: 10px;"></i>Actividad</div>
-                                <div id="miniChartVolumen" class="bento-chart-mini" style="height: 45px; margin-top: 0;"></div>
-                            </div>
-                        </div>
-
-                        <!-- Widget Control Horario -->
-                        <div class="horario-widget">
-                            <div class="horario-widget-header">
-                                <div class="hw-title">
-                                    <i data-lucide="clock" style="width: 12px;"></i>
-                                    Control de Horario
-                                </div>
-                                <div class="hw-link" onclick="event.stopPropagation();">Ver todo →</div>
-                            </div>
-                            <div class="horario-list">
-                                <div class="horario-row">
-                                    <div class="hw-name"><span class="hw-dot" style="background:#10b981;"></span>María G.</div>
-                                    <span class="hw-status hw-status-puntual">Puntual</span>
-                                </div>
-                                <div class="horario-row">
-                                    <div class="hw-name"><span class="hw-dot" style="background:#f59e0b;"></span>Carlos R.</div>
-                                    <span class="hw-status hw-status-retraso">Retraso 12min</span>
-                                </div>
-                                <div class="horario-row">
-                                    <div class="hw-name"><span class="hw-dot" style="background:#10b981;"></span>Ana P.</div>
-                                    <span class="hw-status hw-status-puntual">Puntual</span>
-                                </div>
-                                <div class="horario-row">
-                                    <div class="hw-name"><span class="hw-dot" style="background:#6b7280;"></span>Pedro L.</div>
-                                    <span class="hw-status hw-status-falta">Falta · Pte. justificar</span>
-                                </div>
-                            </div>
-                        </div>
+            <!-- HERO: Botón Maestro de Escaneo (Acción Global) -->
+            <div class="hero-scanner-card glass-panel" 
+                 onclick="showGlobalScanner()"
+                 style="margin: 0 var(--gutter) 24px; padding: 32px 24px; text-align: center; border-radius: 32px; cursor: pointer; border: 1px solid var(--border);">
+                <div class="scanner-icon-main" style="margin-bottom: 20px;">
+                    <div style="width: 64px; height: 64px; background: rgba(212, 175, 55, 0.1); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 0 auto; border: 1px solid var(--border);">
+                        <i data-lucide="scan-line" style="width: 32px; height: 32px; color: var(--gold);"></i>
                     </div>
                 </div>
+                <h2 style="font-size: 20px; font-weight: 700; margin-bottom: 6px; color: var(--text-primary);">Escanear Nuevo Ticket</h2>
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 0;">Presiona para subir albarán o factura</p>
+            </div>
 
-                <!-- Widget Albaranes (Medium) -->
-                <div class="bento-item" onclick="activateTab('facturas')">
-                    <div class="bento-label">
+            <!-- GRID PRINCIPAL DE KPIs -->
+            <div class="dashboard-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 var(--gutter) 24px;">
+                <!-- Widget Gastos Mensuales -->
+                <div class="dash-widget glass-panel" style="padding: 20px; border-radius: 24px; position: relative; overflow: hidden; border: 1px solid var(--border);">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; opacity: 0.7;">
+                        <i data-lucide="shopping-cart" style="width: 14px; color: var(--gold);"></i>
+                        <span style="font-size: 11px; font-weight: 700; text-transform: uppercase;">Gastos Mes</span>
+                    </div>
+                    <div id="dash-total-gastos" style="font-size: 24px; font-weight: 700; color: var(--text-primary);">0.00€</div>
+                    <div id="dash-gastos-sub" style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">-- facturas procesadas</div>
+                </div>
+
+                <!-- Widget Albaranes Pendientes -->
+                <div class="dash-widget glass-panel" style="padding: 20px; border-radius: 24px; position: relative; overflow: hidden; border: 1px solid var(--border);">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px; opacity: 0.7;">
                         <i data-lucide="package" style="width: 14px; color: var(--gold);"></i>
-                        Albaranes
+                        <span style="font-size: 11px; font-weight: 700; text-transform: uppercase;">Albaranes</span>
                     </div>
-                    <div id="dash-count-albaranes" class="bento-value">0</div>
-                    <p style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Pendientes de validar</p>
+                    <div id="dash-count-albaranes" style="font-size: 24px; font-weight: 700; color: var(--text-primary);">0</div>
+                    <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Pendientes de factura</div>
                 </div>
+            </div>
 
-                <!-- Widget Ruta (Medium) -->
-                <div class="bento-item" onclick="activateTab('ruta')">
-                    <div class="bento-label">
-                        <i data-lucide="map" style="width: 14px; color: var(--gold);"></i>
-                        Hoja Ruta
-                    </div>
-                    <div id="dash-ruta-prog" class="bento-value">0/0</div>
-                    <p style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Tareas hoy</p>
+            <!-- ACCESO RÁPIDO A ACCIONES -->
+            <div class="quick-actions" style="margin: 0 var(--gutter) 24px; display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none;">
+                <div onclick="activateTab('agenda')" class="glass-panel" style="flex: 0 0 120px; padding: 16px; text-align: center; border-radius: 20px; cursor: pointer;">
+                    <i data-lucide="users" style="width: 20px; color: var(--gold); margin-bottom: 8px;"></i>
+                    <div style="font-size: 11px; font-weight: 600;">Mis Proveedores</div>
+                </div>
+                <div onclick="activateTab('margenes')" class="glass-panel" style="flex: 0 0 120px; padding: 16px; text-align: center; border-radius: 20px; cursor: pointer;">
+                    <i data-lucide="pie-chart" style="width: 20px; color: var(--gold); margin-bottom: 8px;"></i>
+                    <div style="font-size: 11px; font-weight: 600;">Ver Márgenes</div>
+                </div>
+                <div onclick="activateTab('alertas')" class="glass-panel" style="flex: 0 0 120px; padding: 16px; text-align: center; border-radius: 20px; cursor: pointer;">
+                    <i data-lucide="bell" style="width: 20px; color: var(--gold); margin-bottom: 8px;"></i>
+                    <div style="font-size: 11px; font-weight: 600;">Alertas Inteligentes</div>
                 </div>
             </div>
 
@@ -3061,6 +2228,7 @@
                     <div onclick="activateTab('facturas')" style="font-size: 12px; color: var(--gold); font-weight: 600; cursor: pointer;">Ver todo</div>
                 </div>
                 <div id="inicioRecentList" style="display: flex; flex-direction: column; gap: 10px;">
+                    <!-- Activity items will be injected here -->
                     <div style="text-align: center; padding: 40px 20px; background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px dashed rgba(255,255,255,0.05);">
                         <i data-lucide="clock" style="width: 24px; opacity: 0.2; margin-bottom: 12px;"></i>
                         <div style="opacity: 0.4; font-size: 13px;">Sincronizando con Airtable...</div>
@@ -3069,61 +2237,30 @@
             </div>
         </div>
 
-        <!-- ===== SECCIÓN GLOBAL: ESCÁNER LUXURY v3.0 ===== -->
-        <div id="global-scanner-overlay" class="tab-content" style="display:none; padding-bottom: 140px;">
-            <div class="section-title">Escanear Documento</div>
-            <div class="section-subtitle" style="text-align: center; margin-bottom: 24px;">Captura facturas o albaranes con IA</div>
-
-            <div class="scanner-area" id="scannerArea" style="margin: 0 16px;">
-                <!-- Efecto de línea de escaneo -->
-                <div class="scan-line" id="scanLine"></div>
-
-                <div id="scannerPlaceholder" style="width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;">
-                    <div class="scan-options" style="display: flex; flex-direction: column; gap: 16px; width: 80%; max-width: 280px;">
-                        <div class="lux-scan-pill" id="btnCamera">
-                            <i data-lucide="camera"></i>
-                            <span>Usar Cámara</span>
-                        </div>
-                        <div class="lux-scan-pill" id="btnGallery">
-                            <i data-lucide="image"></i>
-                            <span>Abrir Galería</span>
-                        </div>
+        <!-- ===== SECCIÓN GLOBAL: ESCÁNER (Oculto hasta invocación) ===== -->
+        <div id="global-scanner-overlay" class="tab-content" style="display:none; padding-bottom: 120px;">
+            <div class="section-title">Escanear</div>
+            <div class="scanner-area glass-panel" id="scannerArea"
+                style="margin: var(--gutter); padding: calc(var(--gutter) * 1.5); text-align: center;">
+                <div id="scannerPlaceholder">
+                    <div class="scan-options" style="display: flex; gap: 16px; justify-content: center;">
+                        <button class="btn-scan glass-panel" id="btnCamera" style="padding: 14px 28px;">
+                            <i data-lucide="camera"></i> Cámara
+                        </button>
+                        <button class="btn-scan glass-panel" id="btnGallery" style="padding: 14px 28px;">
+                            <i data-lucide="image"></i> Galería
+                        </button>
                     </div>
-                    <p class="scan-help-text">Formatos soportados: JPG, PNG, HEIC</p>
                 </div>
-
-                <img id="previewImg" class="preview-img" style="display:none;" alt="Vista previa" />
-                
-                <!-- Botón de limpieza premium -->
-                <button id="clearBtn" class="clear-btn" style="display:none; position: absolute; top: 16px; right: 16px; background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 50%; width: 40px; height: 40px; color: #ef4444; z-index: 10;">
-                    <i data-lucide="x"></i>
-                </button>
+                <img id="previewImg" class="preview-img" style="display:none" alt="Vista previa">
             </div>
+             <!-- Inputs ocultos preservados -->
              <input type="file" id="fileInputCamera" accept="image/*" capture="environment" style="display:none">
              <input type="file" id="fileInputGallery" accept="image/*" style="display:none">
              
-             <div class="btn-group" style="padding: 0 16px; margin-top: 24px;">
-                <button class="btn btn-primary lux-send-btn" id="sendBtn" disabled style="width: 100%; padding: 18px; border-radius: 20px; font-weight: 800; letter-spacing: 0.5px;">
-                    🚀 PROCESAR DOCUMENTO
-                </button>
-                <button class="btn-luxury-outline" onclick="hideGlobalScanner()" style="width: 100%; margin-top: 12px;">
-                    Volver a Inicio
-                </button>
-            </div>
-
-            <!-- ═══ RESULTADO DEL ESCANEO ═══ -->
-            <div id="resultArea" style="display:none; padding: var(--gutter); margin-top: 16px;">
-                <div class="glass-panel" style="padding: 24px; border-radius: 20px; border: 1px solid rgba(212,175,55,0.3);">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-                        <div style="width: 40px; height: 40px; background: rgba(16,185,129,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px;">✅</div>
-                        <div>
-                            <div style="font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary);">Factura Procesada</div>
-                            <div id="resultCategoria" style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">Categoría: -</div>
-                        </div>
-                    </div>
-                    <div id="resultGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
-                    <button onclick="document.getElementById('resultArea').style.display='none'; resetScanner(); hideGlobalScanner();" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Cerrar y Volver</button>
-                </div>
+             <div class="btn-group" style="padding: 0 var(--gutter);">
+                <button class="btn btn-primary" id="sendBtn" disabled>🚀 Procesar y Guardar</button>
+                <button class="btn btn-secondary" onclick="hideGlobalScanner()" style="margin-top: 12px;">Volver a Inicio</button>
             </div>
         </div>
 
@@ -3302,38 +2439,20 @@
                 Estimación basada en gastos reales de Airtable + venta media configurada. Los márgenes reales dependen
                 también de la merma diaria.
             </p>
-        </div>
-
-        <!-- ===== TAB: HOJA DE RUTA ===== -->
-        <div id="tab-ruta" class="tab-content">
-            <div class="section-title">Hoja de Ruta</div>
-            <div class="section-subtitle" style="text-align: center;">Pedidos recurrentes y elaboraciones</div>
-
-            <!-- Barra de Progreso -->
-            <div id="ruta-progress-section" style="margin: 16px var(--gutter) 0; width: calc(100% - 48px);">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <span id="ruta-progress-text" style="font-size: 13px; font-weight: 600; color: var(--text-secondary);">0 de 0 tareas</span>
-                    <span id="ruta-progress-pct" style="font-size: 13px; font-weight: 700; color: #D4AF37;">0%</span>
-                </div>
-                <div class="ruta-progress-track">
-                    <div id="ruta-progress-bar" class="ruta-progress-fill" style="width: 0%;"></div>
+            <!-- ===== TAB: ALERTAS ===== -->
+            <div id="tab-alertas" class="tab-content">
+                <div class="section-title">Alertas</div>
+                <div class="section-subtitle">Avisos de tu negocio</div>
+                <div class="empty-state">
+                    <div class="empty-icon"
+                        style="background: rgba(212, 175, 55, 0.1); padding: 20px; border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                        <i data-lucide="bell" style="width: 32px; height: 32px; color: #D4AF37;"></i>
+                    </div>
+                    <div class="empty-title">Sin alertas nuevas</div>
+                    <div class="empty-desc">Todo está en orden por ahora</div>
                 </div>
             </div>
 
-            <!-- Resumen Hornada -->
-            <div id="ruta-hornada-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
-
-            <!-- Pedidos Recurrentes -->
-            <div id="ruta-recurrentes-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
-
-            <!-- Pedidos Dinámicos -->
-            <div id="ruta-dinamicos-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
-
-            <!-- Tareas Manuales -->
-            <div id="ruta-manuales-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
-
-            <!-- Tareas Finalizadas -->
-            <div id="ruta-finalizadas-section" style="margin: 8px var(--gutter) 32px; width: calc(100% - 48px);"></div>
         </div>
 
     </main>
@@ -3355,8 +2474,15 @@
                     required>
             </div>
 
+            <div class="config-field">
+                <label class="config-label">🔑 Airtable Personal Access Token</label>
+                <input class="config-input" id="cfgAirtableToken" type="password" placeholder="pat0XXXXX.XXXXX..."
+                    required>
+                <div class="config-help">Créalo en <a href="https://airtable.com/create/tokens"
+                        target="_blank">airtable.com/create/tokens</a></div>
+            </div>
 
-<div class="config-actions" style="display:flex;gap:12px;margin-top:10px;">
+            <div class="config-actions" style="display:flex;gap:12px;margin-top:10px;">
                 <button class="btn btn-secondary" id="closeConfigModal" style="flex:1;">Cancelar</button>
                 <button class="btn btn-primary" id="saveConfigBtn"
                     style="flex:2;background:var(--amber);color:var(--amber-dark); display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -3396,96 +2522,7 @@
     </div>
 
     <!-- FAB Añadir Contacto -->
-    <button class="fab-add" id="fabAddContact" title="Añadir contacto"
-        style="background: linear-gradient(135deg, #ebae1c, #D4AF37); box-shadow: 0 6px 24px rgba(212,175,55,0.45); color: #fff;">
-        <i data-lucide="plus" style="width: 22px; height: 22px;"></i>
-    </button>
-
-    <!-- FAB Añadir Tarea (Hoja de Ruta) -->
-    <button class="fab-add" id="fabAddTask" title="Añadir tarea"
-        style="background: linear-gradient(135deg, #ebae1c, #D4AF37); box-shadow: 0 6px 24px rgba(212,175,55,0.45); color: #fff; font-size: 22px;">
-        <i data-lucide="plus" style="width: 22px; height: 22px;"></i>
-    </button>
-
-    <!-- Modal Nueva Tarea (Hoja de Ruta) -->
-    <div class="ruta-modal-overlay" id="taskModal">
-        <div class="modal-sheet glass-panel"
-            style="padding: 32px; border-top: 1px solid var(--border); border-radius: 32px 32px 0 0; width: 100%; max-width: 480px; animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
-            <div style="width: 36px; height: 4px; background: rgba(128,128,128,0.3); border-radius: 2px; margin: 0 auto 20px;"></div>
-            <div style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
-                <i data-lucide="clipboard-plus" style="width: 20px; color: #D4AF37;"></i>
-                Nueva Tarea
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
-                <input class="modal-input glass-panel" id="taskName" type="text" placeholder="Nombre de la tarea *"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
-                <div style="display: flex; gap: 10px;">
-                    <input class="modal-input glass-panel" id="taskQty" type="number" min="1" placeholder="Cantidad"
-                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
-                    <input class="modal-input glass-panel" id="taskUnit" type="text" placeholder="Uds, Kg..."
-                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
-                </div>
-                <input class="modal-input glass-panel" id="taskNotes" type="text" placeholder="Notas (opcional)"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
-                <div>
-                    <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">¿Para qué día?</div>
-                    <div class="ruta-day-chips" id="taskDayChips">
-                        <button type="button" class="ruta-day-chip" data-day="1">L</button>
-                        <button type="button" class="ruta-day-chip" data-day="2">M</button>
-                        <button type="button" class="ruta-day-chip" data-day="3">X</button>
-                        <button type="button" class="ruta-day-chip" data-day="4">J</button>
-                        <button type="button" class="ruta-day-chip" data-day="5">V</button>
-                        <button type="button" class="ruta-day-chip" data-day="6">S</button>
-                        <button type="button" class="ruta-day-chip" data-day="0">D</button>
-                    </div>
-                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Si no seleccionas ninguno, aparecerá todos los días</div>
-                </div>
-            </div>
-            <div style="display: flex; gap: 12px;">
-                <button class="btn glass-panel" onclick="closeTaskModal()"
-                    style="flex: 1; padding: 16px; border: 1px solid var(--border); font-size: 14px;">Cancelar</button>
-                <button class="btn glass-panel" onclick="saveNewTask()"
-                    style="flex: 2; padding: 16px; background: #D4AF37; color: #fff; font-weight: 600; font-size: 14px; border: none;">Guardar Tarea</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Editar Tarea (Hoja de Ruta) -->
-    <div class="ruta-modal-overlay" id="editTaskModal">
-        <div class="modal-sheet glass-panel"
-            style="padding: 32px; border-top: 1px solid var(--border); border-radius: 32px 32px 0 0; width: 100%; max-width: 480px; animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
-            <div style="width: 36px; height: 4px; background: rgba(128,128,128,0.3); border-radius: 2px; margin: 0 auto 20px;"></div>
-            <div style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
-                <i data-lucide="pencil" style="width: 20px; color: #D4AF37;"></i>
-                Editar Tarea
-            </div>
-            <input type="hidden" id="editTaskId">
-            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
-                <input class="modal-input glass-panel" id="editTaskName" type="text" placeholder="Nombre del producto *"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
-                <div style="display: flex; gap: 10px;">
-                    <input class="modal-input glass-panel" id="editTaskQty" type="number" min="1" placeholder="Cantidad"
-                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
-                    <input class="modal-input glass-panel" id="editTaskUnit" type="text" placeholder="Uds, Kg..."
-                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
-                </div>
-                <input class="modal-input glass-panel" id="editTaskSchedule" type="text" placeholder="Programación (ej: Lunes a Viernes)"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
-                <input class="modal-input glass-panel" id="editTaskClient" type="text" placeholder="Cliente"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
-                <input class="modal-input glass-panel" id="editTaskPhone" type="tel" placeholder="Teléfono cliente"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
-                <input class="modal-input glass-panel" id="editTaskNotes" type="text" placeholder="Notas (opcional)"
-                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
-            </div>
-            <div style="display: flex; gap: 12px;">
-                <button class="btn glass-panel" onclick="closeEditModal()"
-                    style="flex: 1; padding: 16px; border: 1px solid var(--border); font-size: 14px;">Cancelar</button>
-                <button class="btn glass-panel" onclick="saveEditTask()"
-                    style="flex: 2; padding: 16px; background: #D4AF37; color: #fff; font-weight: 600; font-size: 14px; border: none;">Guardar Cambios</button>
-            </div>
-        </div>
-    </div>
+    <button class="fab-add" id="fabAddContact" title="Añadir contacto">➕</button>
 
     <!-- Modal Añadir Contacto [GLASS VERSION] -->
     <div class="modal-overlay" id="contactModal">
@@ -3529,9 +2566,10 @@
 
     <!-- PROCESSING OVERLAY -->
     <div class="processing-overlay hidden" id="processingOverlay">
+        <div class="processing-bread">🍞</div>
         <div class="spinner-track"></div>
-        <div class="processing-text">Analizando con Gemini 1.5...</div>
-        <div class="processing-sub">Velocidad Flash Activada • Procesando JSON</div>
+        <div class="processing-text">Procesando documento...</div>
+        <div class="processing-sub">La IA está analizando tu factura</div>
     </div>
 
     <!-- ZONA BAJA (DOCK FLOATING PILL - ESTILO APPLE) -->
@@ -3561,10 +2599,10 @@
                 <span class="nav-label">MÁRGENES</span>
             </button>
 
-            <!-- Ruta -->
-            <button class="nav-btn" data-tab="ruta" onclick="activateTab('ruta')">
-                <span class="nav-icon"><i data-lucide="map"></i></span>
-                <span class="nav-label">HOJA RUTA</span>
+            <!-- Alertas -->
+            <button class="nav-btn" data-tab="alertas" onclick="activateTab('alertas')">
+                <span class="nav-icon"><i data-lucide="bell"></i></span>
+                <span class="nav-label">ALERTAS</span>
             </button>
         </div>
     </nav>
@@ -3681,71 +2719,6 @@
     </div>
 
     <script>
-    // ===== API CLIENT — DULCE Y JALEO (inlined) =====
-    const API_BASE = 'https://dulce-y-jaleo-backend.xm1sa3.easypanel.host';
-
-    const DulceAPI = {
-        async fetchAllRecords() {
-            const res = await fetch(`${API_BASE}/api/records`);
-            if (!res.ok) throw new Error(`Error del servidor (${res.status})`);
-            return res.json();
-        },
-        async fetchTable(tableName) {
-            const res = await fetch(`${API_BASE}/api/records/${tableName}`);
-            if (!res.ok) throw new Error(`Error cargando ${tableName}: ${res.status}`);
-            return res.json();
-        },
-        async createRecord(tableName, fields) {
-            const res = await fetch(`${API_BASE}/api/records/${tableName}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ fields })
-            });
-            if (!res.ok) throw new Error(`Error guardando en ${tableName}: ${res.status}`);
-            return res.json();
-        },
-        async checkConfig() {
-            const res = await fetch(`${API_BASE}/api/config`);
-            if (!res.ok) return { baseConfigured: false };
-            return res.json();
-        },
-        async scanInvoice(base64Image, mimeType = 'image/jpeg') {
-            const res = await fetch(`${API_BASE}/webhook/scan-invoice`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ image: base64Image, mimeType })
-            });
-            if (!res.ok) {
-                const err = await res.text();
-                throw new Error(`Error escaneando (${res.status}): ${err.substring(0, 250)}`);
-            }
-            return res.json();
-        },
-        async scanInvoiceFormData(file) {
-            const formData = new FormData();
-            formData.append('data', file);
-            const res = await fetch(`${API_BASE}/webhook/lovable-webhook`, {
-                method: 'POST',
-                body: formData
-            });
-            if (!res.ok) {
-                const err = await res.text();
-                throw new Error(`Error servidor (${res.status}): ${err.substring(0, 250)}`);
-            }
-            return res.json();
-        },
-        async health() {
-            try {
-                const res = await fetch(`${API_BASE}/health`);
-                return res.ok;
-            } catch {
-                return false;
-            }
-        }
-    };
-    window.DulceAPI = DulceAPI;
-    </script>
-    <script>
         // RED DE SEGURIDAD ABSOLUTA: Si en 3 segundos no ha entrado, forzamos entrada
         setTimeout(() => {
             const splash = document.querySelector('.splash-screen');
@@ -3754,12 +2727,6 @@
                 console.warn('Splash forzado por seguridad (3s)');
             }
         }, 3000);
-
-        // ===== CONSTANTES GLOBALES DE ALMACENAMIENTO =====
-        const CONFIG_KEY = 'dulce_jaleo_config';
-        const CONTACTS_KEY = 'dulce_jaleo_contactos';
-        const VENTA_KEY = 'dulce_jaleo_venta_semanal';
-        const RUTA_KEY = 'dulce_jaleo_ruta';
 
         // Catch-all para evitar cierres abruptos y diagnosticar errores
         window.onerror = function (msg, url, lineNo, columnNo, error) {
@@ -3798,26 +2765,34 @@
         });
 
         // ===== CONFIG =====
+        const CONFIG_KEY = 'dulce_jaleo_config';
+        const AIRTABLE_BASE = 'app7VJr4iHt5v1r5c';
+        const AIRTABLE_TABLES = {
+            FACTURAS: 'tblLC7oMOUQtRWkn7',
+            ALBARANES: 'tblX9EQUmwItNJCZI',
+            GASTOS_VARIOS: 'tblHzVIPEde7zWnUv'
+        };
 
         function loadConfig() {
-            // URL FIJA - NUNCA usar la de localStorage (causa Error 404)
-            const FIXED_WEBHOOK = 'https://dulce-y-jaleo-n8n.xm1sa3.easypanel.host/webhook/lovable-webhook-v7';
             const saved = localStorage.getItem(CONFIG_KEY);
-            let cfg;
             if (saved) {
-                cfg = JSON.parse(saved);
-                // Siempre sobreescribir la URL con la correcta
-                cfg.webhookUrl = FIXED_WEBHOOK;
-            } else {
-                cfg = { webhookUrl: FIXED_WEBHOOK };
+                const cfg = JSON.parse(saved);
+                document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl || '';
+                document.getElementById('cfgAirtableToken').value = cfg.airtableToken || '';
+                return cfg;
             }
-            document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl;
-            return cfg;
+            const defaults = {
+                webhookUrl: 'https://dulce-y-jaleo-n8n.xm1sa3.easypanel.host/webhook/lovable-webhook',
+                airtableToken: ''
+            };
+            document.getElementById('cfgWebhookUrl').value = defaults.webhookUrl;
+            return defaults;
         }
 
         function saveConfig() {
             const cfg = {
-                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim()
+                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim(),
+                airtableToken: document.getElementById('cfgAirtableToken').value.trim()
             };
             localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
             config = cfg;
@@ -3853,19 +2828,35 @@
         };
 
         async function fetchGlobalData() {
+            config = loadConfig();
+            if (!config.airtableToken) return false;
+
+            const headers = { 'Authorization': 'Bearer ' + config.airtableToken };
             const now = new Date();
             globalStats.mesActual = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
 
             try {
-                // Obtener las 3 tablas vía backend seguro (sin tokens en el navegador)
-                const data = await DulceAPI.fetchAllRecords();
-                // data = { facturas: [], albaranes: [], gastos: [] }
+                // Fetch las 3 tablas en paralelo
+                const [facturasRes, albaranesRes, gastosRes] = await Promise.all([
+                    fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLES.FACTURAS}`, { headers }),
+                    fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLES.ALBARANES}`, { headers }),
+                    fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLES.GASTOS_VARIOS}`, { headers })
+                ]);
+
+                if (facturasRes.status === 401) {
+                    console.warn('Airtable 401: Token no válido');
+                    return false;
+                }
+
+                const [facturasData, albaranesData, gastosData] = await Promise.all([
+                    facturasRes.json(), albaranesRes.json(), gastosRes.json()
+                ]);
 
                 // Normalizar TODOS los registros
                 globalStats.allRecords = [];
-                if (data.facturas) globalStats.allRecords.push(...data.facturas.map(r => normalizeRecord(r, 'FACTURA')));
-                if (data.albaranes) globalStats.allRecords.push(...data.albaranes.map(r => normalizeRecord(r, 'ALBARAN')));
-                if (data.gastos) globalStats.allRecords.push(...data.gastos.map(r => normalizeRecord(r, 'GASTOS_VARIOS')));
+                if (facturasData.records) globalStats.allRecords.push(...facturasData.records.map(r => normalizeRecord(r, 'FACTURA')));
+                if (albaranesData.records) globalStats.allRecords.push(...albaranesData.records.map(r => normalizeRecord(r, 'ALBARAN')));
+                if (gastosData.records) globalStats.allRecords.push(...gastosData.records.map(r => normalizeRecord(r, 'GASTOS_VARIOS')));
 
                 globalStats.allRecords.sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
                 calculateGlobalStats();
@@ -3915,53 +2906,6 @@
             if (dashAlbaranes) dashAlbaranes.textContent = globalStats.countAlbaranes;
 
             renderDashboardActivity();
-            renderDashMiniChart();
-        }
-
-        function renderDashMiniChart() {
-            const container = document.getElementById('dashMiniChart');
-            const barChart = document.getElementById('dashBarChart');
-            const chartTotal = document.getElementById('dashChartTotal');
-            if (!container || !barChart) return;
-
-            const mes = globalStats.mesActual;
-            const delMes = globalStats.recordsMes || [];
-            if (delMes.length === 0) { container.style.display = 'none'; return; }
-
-            container.style.display = 'block';
-
-            const facturas = delMes.filter(r => r.categoria === 'FACTURA');
-            const albaranes = delMes.filter(r => r.categoria === 'ALBARAN');
-            const gastos = delMes.filter(r => r.categoria === 'GASTOS_VARIOS');
-
-            const sumF = facturas.reduce((s, r) => s + (r.total || 0), 0);
-            const sumA = albaranes.reduce((s, r) => s + (r.total || 0), 0);
-            const sumG = gastos.reduce((s, r) => s + (r.total || 0), 0);
-            const maxVal = Math.max(sumF, sumA, sumG, 1);
-            const total = sumF + sumA + sumG;
-
-            if (chartTotal) chartTotal.textContent = total.toFixed(2) + '€';
-
-            const categories = [
-                { name: 'Facturas', count: facturas.length, sum: sumF, color: '#D4AF37', bg: 'rgba(212,175,55,0.15)' },
-                { name: 'Albaranes', count: albaranes.length, sum: sumA, color: '#10b981', bg: 'rgba(16,185,129,0.15)' },
-                { name: 'Gastos Varios', count: gastos.length, sum: sumG, color: '#f59e0b', bg: 'rgba(245,158,11,0.15)' }
-            ];
-
-            barChart.innerHTML = categories.map(c => {
-                const pct = maxVal > 0 ? Math.max((c.sum / maxVal) * 100, c.sum > 0 ? 8 : 0) : 0;
-                return `
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <div style="width: 72px; font-size: 10px; font-weight: 600; color: var(--text-muted); white-space: nowrap;">${c.name}</div>
-                        <div style="flex: 1; height: 22px; background: ${c.bg}; border-radius: 8px; overflow: hidden; position: relative;">
-                            <div style="height: 100%; width: ${pct}%; background: ${c.color}; border-radius: 8px; transition: width 0.8s ease;"></div>
-                        </div>
-                        <div style="min-width: 60px; text-align: right; font-size: 11px; font-weight: 800; color: var(--text-primary);">${c.sum.toFixed(0)}€ <span style="font-weight: 400; color: var(--text-muted); font-size: 9px;">(${c.count})</span></div>
-                    </div>
-                `;
-            }).join('');
-
-            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
         function renderDashboardActivity() {
@@ -3996,28 +2940,16 @@
 
 
         // Modal Config desde ⚙️ del header
-        const hGear = document.getElementById('headerGearBtn');
-        if (hGear) {
-            hGear.addEventListener('click', () => {
-                const cMod = document.getElementById('configModal');
-                if (cMod) cMod.classList.add('open');
-            });
-        }
-        
-        const clCMod = document.getElementById('closeConfigModal');
-        if (clCMod) {
-            clCMod.addEventListener('click', () => {
-                const cMod = document.getElementById('configModal');
-                if (cMod) cMod.classList.remove('open');
-            });
-        }
-
-        const cModOv2 = document.getElementById('configModal');
-        if (cModOv2) {
-            cModOv2.addEventListener('click', (e) => {
-                if (e.target === cModOv2) cModOv2.classList.remove('open');
-            });
-        }
+        document.getElementById('headerGearBtn').addEventListener('click', () => {
+            document.getElementById('configModal').classList.add('open');
+        });
+        document.getElementById('closeConfigModal').addEventListener('click', () => {
+            document.getElementById('configModal').classList.remove('open');
+        });
+        document.getElementById('configModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('configModal'))
+                document.getElementById('configModal').classList.remove('open');
+        });
 
         // ===== BOTTOM NAVIGATION =====
         function activateTab(tabId) {
@@ -4051,82 +2983,109 @@
                 }
             }
 
-            if (tabId === 'facturas') { try { loadFacturas(); } catch(e) { console.error(e); } }
-            if (tabId === 'agenda') { try { renderAgenda(); } catch(e) { console.error(e); } }
-            if (tabId === 'margenes') { try { loadMargenes(); } catch(e) { console.error(e); } }
-            if (tabId === 'ruta') { try { renderRuta(); } catch(e) { console.error(e); } }
-
-            // FAB Tarea: visible solo en pestaña Ruta
-            const fabTask = document.getElementById('fabAddTask');
-            if (fabTask) {
-                if (tabId === 'ruta') {
-                    fabTask.classList.add('visible');
-                } else {
-                    fabTask.classList.remove('visible');
-                }
-            }
-
+            if (tabId === 'facturas') loadFacturas();
+            if (tabId === 'agenda') renderAgenda();
+            if (tabId === 'margenes') loadMargenes();
             if (tabId === 'inicio') {
-                try { updateDashRuta(); } catch(e) { console.error(e); }
-                // Cargar datos para el dashboard si aún no están cargados
-                if (!globalStats.loaded) {
-                    fetchGlobalData().catch(e => console.error('Dashboard data load error:', e));
-                }
+                console.log('Inicio cargado');
+                // Aquí podrías cargar widgets de dashboard más adelante
             }
         }
 
         document.querySelectorAll('.nav-btn[data-tab]').forEach(btn => {
-            if (btn) btn.addEventListener('click', () => activateTab(btn.dataset.tab));
+            btn.addEventListener('click', () => activateTab(btn.dataset.tab));
         });
 
 
 
-        // Activar tab inicial se ha movido al final del script (window.load)
+        // Activar tab inicial
+        activateTab('inicio');
 
-        // ══════════════════════════════════════════════════════════════
-        // ✨ MOTOR DE ESCÁNER LUXURY v3.0 (Unified & Reliable) ✨
-        // ══════════════════════════════════════════════════════════════
-        
-        const scannerPlaceholder = document.getElementById('scannerPlaceholder');
-        const scanLine = document.getElementById('scanLine');
-        let selectedFile = null;
+        // ===== SCANNER =====
+        let selectedFile = null;   // Archivo File verdadero a enviar
+        const scannerArea = document.getElementById('scannerArea');
+        const fileInputCamera = document.getElementById('fileInputCamera');
+        const fileInputGallery = document.getElementById('fileInputGallery');
+        const btnCamera = document.getElementById('btnCamera');
+        const btnGallery = document.getElementById('btnGallery');
+        const previewImg = document.getElementById('previewImg');
+        const placeholder = document.getElementById('scannerPlaceholder');
+        const sendBtn = document.getElementById('sendBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultArea = document.getElementById('resultArea');
 
-        // 1. Inicialización de Eventos
-        if (btnCamera) btnCamera.addEventListener('click', () => fileInputCamera.click());
-        if (btnGallery) btnGallery.addEventListener('click', () => fileInputGallery.click());
+        if (btnCamera) btnCamera.addEventListener('click', e => { e.stopPropagation(); fileInputCamera.click(); });
+        if (btnGallery) btnGallery.addEventListener('click', e => { e.stopPropagation(); fileInputGallery.click(); });
+        if (scannerArea) scannerArea.addEventListener('click', () => { if (!selectedFile && fileInputGallery) fileInputGallery.click(); });
 
+        // Drag & Drop
         if (scannerArea) {
-            scannerArea.addEventListener('click', (e) => {
-                if (e.target === scannerArea || e.target === scannerPlaceholder) {
-                    if (!selectedFile) fileInputGallery.click();
-                }
-            });
-            scannerArea.addEventListener('dragover', e => { e.preventDefault(); scannerArea.classList.add('drag-over'); });
-            scannerArea.addEventListener('dragleave', () => scannerArea.classList.remove('drag-over'));
-            scannerArea.addEventListener('drop', e => {
-                e.preventDefault();
-                scannerArea.classList.remove('drag-over');
-                if (e.dataTransfer.files.length) processSelectedFile(e.dataTransfer.files[0], false);
-            });
-        }
+        scannerArea.addEventListener('dragover', e => { e.preventDefault(); scannerArea.classList.add('drag-over'); });
+        scannerArea.addEventListener('dragleave', () => scannerArea.classList.remove('drag-over'));
+        scannerArea.addEventListener('drop', e => {
+            e.preventDefault();
+            scannerArea.classList.remove('drag-over');
+            if (e.dataTransfer.files.length) processSelectedFile(e.dataTransfer.files[0], false);
+        });
+        } // cierre if (scannerArea)
 
         if (fileInputCamera) fileInputCamera.addEventListener('change', e => { if (e.target.files.length) processSelectedFile(e.target.files[0], true); });
         if (fileInputGallery) fileInputGallery.addEventListener('change', e => { if (e.target.files.length) processSelectedFile(e.target.files[0], false); });
 
-        if (clearBtn) clearBtn.addEventListener('click', (e) => { e.stopPropagation(); resetScanner(); });
+        function showPreviewDirectly(srcBase64) {
+            previewImg.src = srcBase64;
+            previewImg.style.display = 'block';
+            placeholder.style.display = 'none';
+            scannerArea.classList.add('has-image');
+            sendBtn.disabled = false;
+            clearBtn.style.display = 'block';
+            resultArea.style.display = 'none';
+        }
 
-        // 2. Procesamiento y Compresión
+        function dataURLtoFile(dataurl, filename) {
+            const arr = dataurl.split(',');
+            const mime = arr[0].match(/:(.*?);/)[1];
+            const bstr = atob(arr[1]);
+            let n = bstr.length;
+            const u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, { type: mime });
+        }
+
+
         function processSelectedFile(file, isCamera) {
-            const isImage = file.type && file.type.startsWith('image/');
-            const isHEIC = file.name && (file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif'));
-            if (!isImage && !isHEIC) { alert('Por favor selecciona una imagen válida'); return; }
+            if (file.type && !file.type.startsWith('image/')) {
+                alert('Por favor selecciona una imagen');
+                return;
+            }
 
+            // Paso A: Si es de galería, usamos el archivo original que funcionaba bien
+            if (!isCamera) {
+                selectedFile = file;
+                const reader = new FileReader();
+                reader.onload = ev => showPreviewDirectly(ev.target.result);
+                reader.readAsDataURL(file);
+                return;
+            }
+
+            // Paso B: Si es de la Cámara, procesamos DataURL y lo convertimos a File explícitamente
+            // Aceptar imagen aunque sea HEIC en iOS (el type puede ser vacío)
+            if (file.type && !file.type.startsWith('image/')) {
+                alert('Por favor selecciona una imagen');
+                return;
+            }
             const reader = new FileReader();
+            reader.onerror = () => alert('No se pudo leer el archivo de la cámara.');
             reader.onload = ev => {
                 const img = new Image();
+                img.onerror = () => {
+                    selectedFile = file; // Fallback extremo
+                    showPreviewDirectly(ev.target.result);
+                };
                 img.onload = () => {
-                    // Imagen pequeña = envío rápido = OCR rápido
-                    const MAX_W = 640;
+                    const MAX_W = 1200;
                     let w = img.width, h = img.height;
                     if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
                     const canvas = document.createElement('canvas');
@@ -4136,85 +3095,71 @@
                     ctx.fillRect(0, 0, w, h);
                     ctx.drawImage(img, 0, 0, w, h);
 
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.55);
-                    selectedFile = dataURLtoFile(dataUrl, 'ticket_luxury.jpg');
-                    showPreviewDirectly(dataUrl);
-                    canvas.width = 0; canvas.height = 0;
+                    try {
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                        selectedFile = dataURLtoFile(dataUrl, 'foto_camara.jpg');
+                        showPreviewDirectly(dataUrl);
+                    } catch (e) {
+                        alert('Error procesando imagen en memoria: ' + e.message);
+                        selectedFile = file;
+                        showPreviewDirectly(ev.target.result);
+                    }
 
-                    // AUTO-ESCANEO: lanzar procesamiento inmediatamente
-                    sendImage();
+                    canvas.width = 0; canvas.height = 0;
                 };
                 img.src = ev.target.result;
             };
             reader.readAsDataURL(file);
         }
 
-        function showPreviewDirectly(base64) {
-            previewImg.src = base64;
-            previewImg.style.display = 'block';
-            if (scannerPlaceholder) scannerPlaceholder.style.display = 'none';
-            if (scanLine) scanLine.style.display = 'block';
-            scannerArea.classList.add('has-image');
-            sendBtn.disabled = false;
-            if (clearBtn) clearBtn.style.display = 'flex';
-        }
+        if (clearBtn) clearBtn.addEventListener('click', e => { e.stopPropagation(); resetScanner(); });
 
         function resetScanner() {
             selectedFile = null;
-            previewImg.src = '';
             previewImg.style.display = 'none';
-            if (scannerPlaceholder) scannerPlaceholder.style.display = 'flex';
-            if (scanLine) scanLine.style.display = 'none';
+            previewImg.src = '';
+            placeholder.style.display = 'block';
             scannerArea.classList.remove('has-image');
             sendBtn.disabled = true;
-            sendBtn.innerHTML = '🚀 Procesar con IA Dulce Jaleo';
-            if (clearBtn) clearBtn.style.display = 'none';
+            clearBtn.style.display = 'none';
             fileInputCamera.value = '';
             fileInputGallery.value = '';
         }
 
-        function dataURLtoFile(dataurl, filename) {
-            const arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1];
-            const bstr = atob(arr[1]);
-            let n = bstr.length, u8arr = new Uint8Array(n);
-            while (n--) u8arr[n] = bstr.charCodeAt(n);
-            return new File([u8arr], filename, { type: mime });
-        }
-
-        // 3. Lógica de Envío Real (n8n Webhook)
         if (sendBtn) sendBtn.addEventListener('click', sendImage);
 
         async function sendImage() {
             if (!selectedFile) return;
+            config = loadConfig();
+            if (!config.webhookUrl) {
+                alert('⚠️ Configura la URL del Webhook primero en Ajustes ⚙️');
+                return;
+            }
 
-            // UI Feedback — pasos progresivos rápidos
-            sendBtn.disabled = true;
-            sendBtn.innerHTML = '<span class="loading-spin"></span> Comprimiendo...';
-            if (scanLine) scanLine.style.animationDuration = '0.4s';
+            const overlay = document.getElementById('processingOverlay');
+            overlay.classList.remove('hidden');
 
             try {
-                const reader = new FileReader();
-                const b64 = await new Promise((resolve) => {
-                    reader.readAsDataURL(selectedFile);
-                    reader.onload = () => resolve(reader.result);
+                const formData = new FormData();
+                formData.append('data', selectedFile);
+
+                const response = await fetch(config.webhookUrl, {
+                    method: 'POST',
+                    body: formData
                 });
-                const b64Clean = b64.split(',')[1];
 
-                sendBtn.innerHTML = '<span class="loading-spin"></span> Leyendo documento...';
+                if (!response.ok) {
+                    const errorMsg = await response.text();
+                    throw new Error(`Servidor n8n (HTTP ${response.status}):\n${errorMsg.substring(0, 250)}`);
+                }
 
-                // Escaneo vía backend seguro (sin tokens en el navegador)
-                const scanStart = performance.now();
-                const finalData = await DulceAPI.scanInvoice(b64Clean, selectedFile.type || 'image/jpeg');
-                const scanMs = Math.round(performance.now() - scanStart);
-
-                sendBtn.innerHTML = `✅ Listo en ${scanMs < 1000 ? scanMs + 'ms' : (scanMs/1000).toFixed(1) + 's'}`;
-
-                showResult(finalData);
-                // El usuario cierra el resultado manualmente
+                const result = await response.json();
+                showResult(result);
             } catch (err) {
-                alert('No se pudo procesar la imagen: ' + err.message);
-                sendBtn.disabled = false;
-                sendBtn.innerHTML = '🚀 Reintentar Procesado';
+                // Paso C: try/catch con alert() con el err.message exacto
+                alert('❌ ERROR FATAL O RECHAZO DEL SERVIDOR:\n\n' + err.message);
+            } finally {
+                overlay.classList.add('hidden');
             }
         }
 
@@ -4271,6 +3216,20 @@
         });
 
         async function loadFacturas() {
+            config = loadConfig();
+            if (!config.airtableToken) {
+                showError('Configura tu Airtable Token en la pestaña ⚙️ Ajustes');
+                document.getElementById('facturasList').innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon" style="background: rgba(239, 68, 68, 0.1); padding: 20px; border-radius: 50%; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                            <i data-lucide="key" style="width: 32px; height: 32px; color: #ef4444;"></i>
+                        </div>
+                        <div class="empty-title">Token no configurado</div>
+                        <div class="empty-desc">Ve a Ajustes ⚙️ e introduce<br>tu Airtable Personal Access Token</div>
+                    </div>`;
+                return;
+            }
+
             const list = document.getElementById('facturasList');
             list.innerHTML = `<div class="empty-state">
                 <div style="display:flex;justify-content:center;margin-bottom:12px;">
@@ -4294,7 +3253,7 @@
                     <div class="empty-state">
                         <div class="empty-icon">⚠️</div>
                         <div class="empty-title">Error de conexión</div>
-                        <div class="empty-desc">Verifica la conexión con el servidor</div>
+                        <div class="empty-desc">Verifica tu Airtable Token<br>en la pestaña ⚙️ Ajustes</div>
                     </div>`;
             }
         }
@@ -4332,60 +3291,11 @@
         }
 
         function updateStats() {
-            // Totales de la sección de Facturas (Antiguos)
-            if(document.getElementById('statTotal')) document.getElementById('statTotal').textContent = globalStats.countTotal;
-            if(document.getElementById('statFacturas')) document.getElementById('statFacturas').textContent = globalStats.countFacturas;
-            if(document.getElementById('statAlbaranes')) document.getElementById('statAlbaranes').textContent = globalStats.countAlbaranes;
-            if(document.getElementById('statGastos')) document.getElementById('statGastos').textContent = globalStats.countGastos;
-
-            // ✨ DASHBOARD PREMIUM v2.0 (NUEVOS IDS) ✨
-            const totalEuros = globalStats.totalGastosMes || 0;
-            const docCount = globalStats.countTotalMes || 0;
-
-            if (document.getElementById('dash-total-gastos')) {
-                document.getElementById('dash-total-gastos').textContent = totalEuros.toFixed(2) + '€';
-            }
-            if (document.getElementById('dash-count-albaranes')) {
-                document.getElementById('dash-count-albaranes').textContent = globalStats.countAlbaranes;
-            }
-
-            // ✨ INTELIGENCIA DE DATOS v2.1 (ANALYTICS SPLIT) ✨
-            const now = new Date();
-            const dayOfMonth = now.getDate();
-            const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-            
-            // Proyección: (Gasto actual / día actual) * días totales
-            const proyeccion = (totalEuros / dayOfMonth) * lastDayOfMonth;
-            const ticketMedio = docCount > 0 ? totalEuros / docCount : 0;
-
-            if (document.getElementById('dash-proyeccion')) {
-                document.getElementById('dash-proyeccion').textContent = (proyeccion || 0).toFixed(2) + '€';
-            }
-            if (document.getElementById('dash-ticket-medio')) {
-                document.getElementById('dash-ticket-medio').textContent = (ticketMedio || 0).toFixed(2) + '€';
-            }
-
-            // Insights Inteligentes (Simulados con lógica real de Airtable)
-            const insightEl = document.getElementById('dash-ai-insight');
-            if (insightEl) {
-                if (totalEuros === 0) {
-                    insightEl.textContent = 'Pendiente de escaneo para generar insights operativos.';
-                } else if (proyeccion > 2000) {
-                    insightEl.textContent = 'Tendencia de gasto alta. Revisa las facturas de proveedores esta semana.';
-                } else {
-                    insightEl.textContent = 'Flujo de caja estable. Tus gastos están dentro del rango mensual previsto.';
-                }
-            }
-
-            const dashRuta = document.getElementById('dash-ruta-prog');
-            if (dashRuta) {
-                const totalRuta = globalStats.rutaItems ? globalStats.rutaItems.length : 0;
-                const doneRuta = globalStats.rutaItems ? globalStats.rutaItems.filter(i => i.status === 'Done').length : 0;
-                dashRuta.textContent = doneRuta + '/' + totalRuta;
-            }
-
-            // Iniciar animaciones visuales (Charts)
-            updateDashboardPremium();
+            // TOTALES GLOBALES: cuenta y suma de TODOS los registros de Airtable
+            document.getElementById('statTotal').textContent = globalStats.countTotal;
+            document.getElementById('statFacturas').textContent = globalStats.countFacturas;
+            document.getElementById('statAlbaranes').textContent = globalStats.countAlbaranes;
+            document.getElementById('statGastos').textContent = globalStats.countGastos;
         }
 
         function renderFacturas() {
@@ -4475,7 +3385,7 @@
         }
 
         // ===== AGENDA / CONTACTOS =====
-
+        const CONTACTS_KEY = 'dulce_jaleo_contactos';
         let newContactType = 'proveedor';
         let agendaFilter = 'all';
 
@@ -4566,53 +3476,36 @@
         });
 
         // Búsqueda en tiempo real
-        const agSearch = document.getElementById('agendaSearch');
-        if (agSearch) {
-            agSearch.addEventListener('input', renderAgenda);
+        if (document.getElementById('agendaSearch')) {
+            document.getElementById('agendaSearch').addEventListener('input', renderAgenda);
         }
 
         // Modal
-        const fabAddC = document.getElementById('fabAddContact');
-        if (fabAddC) {
-            fabAddC.addEventListener('click', () => {
-                const cMod = document.getElementById('contactModal');
-                if (cMod) cMod.classList.add('open');
-                const cNom = document.getElementById('cNombre');
-                if (cNom) cNom.focus();
-            });
-        }
-
-        const clMod = document.getElementById('closeModal');
-        if (clMod) {
-            clMod.addEventListener('click', () => {
-                const cMod = document.getElementById('contactModal');
-                if (cMod) cMod.classList.remove('open');
-            });
-        }
-
-        const cModOv = document.getElementById('contactModal');
-        if (cModOv) {
-            cModOv.addEventListener('click', (e) => {
-                if (e.target === cModOv) cModOv.classList.remove('open');
-            });
-        }
-
-        document.querySelectorAll('.modal-type-btn').forEach(btn => {
-            if (btn) {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.modal-type-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    newContactType = btn.dataset.ctype;
-                });
-            }
+        document.getElementById('fabAddContact').addEventListener('click', () => {
+            document.getElementById('contactModal').classList.add('open');
+            document.getElementById('cNombre').focus();
         });
 
-        const sCont = document.getElementById('saveContact');
-        if (sCont) {
-            sCont.addEventListener('click', () => {
-                const cNom = document.getElementById('cNombre');
-                const nombre = cNom ? cNom.value.trim() : '';
-                if (!nombre) { if (cNom) cNom.focus(); return; }
+        document.getElementById('closeModal').addEventListener('click', () => {
+            document.getElementById('contactModal').classList.remove('open');
+        });
+
+        document.getElementById('contactModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('contactModal'))
+                document.getElementById('contactModal').classList.remove('open');
+        });
+
+        document.querySelectorAll('.modal-type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.modal-type-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                newContactType = btn.dataset.ctype;
+            });
+        });
+
+        document.getElementById('saveContact').addEventListener('click', () => {
+            const nombre = document.getElementById('cNombre').value.trim();
+            if (!nombre) { document.getElementById('cNombre').focus(); return; }
             const contacts = getContacts();
             contacts.push({
                 id: Date.now().toString(), // Asegurar ID string para data-id
@@ -4624,15 +3517,10 @@
                 creado: new Date().toISOString().slice(0, 10)
             });
             saveContacts(contacts);
-            ['cNombre', 'cTelefono', 'cEmail', 'cCategoria'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.value = '';
-            });
-            const cMod = document.getElementById('contactModal');
-            if (cMod) cMod.classList.remove('open');
+            ['cNombre', 'cTelefono', 'cEmail', 'cCategoria'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('contactModal').classList.remove('open');
             renderAgenda();
-            });
-        }
+        });
 
         // Borrado de contactos (REGLA DE ORO: Intercambio de Modales para evitar fallos de capa)
         window.confirmarEliminarContacto = function () {
@@ -4698,11 +3586,16 @@
         };
 
         // ===== MÁRGENES =====
-
+        const VENTA_KEY = 'dulce_jaleo_venta_semanal';
 
         async function loadMargenes() {
             const ventaGuardada = localStorage.getItem(VENTA_KEY);
             if (ventaGuardada) document.getElementById('ventaSemanalInput').value = ventaGuardada;
+
+            if (!config.airtableToken) {
+                document.getElementById('margenSub').textContent = '⚠️ Configura tu token de Airtable (⚙️)';
+                return;
+            }
 
             document.getElementById('margenSub').textContent = 'Leyendo gastos...';
 
@@ -4857,726 +3750,6 @@
             alert('En desarrollo: ' + (window.contactSelected && window.contactSelected.email ? window.contactSelected.email : 'Sin nota.'));
         };
 
-        // ===== HOJA DE RUTA - GESTOR OPERATIVO =====
-
-        // Helper: parsea texto español de programación → array de días JS (0=Dom, 6=Sáb)
-        function parseScheduleDays(schedule) {
-            if (!schedule) return [0,1,2,3,4,5,6];
-            var dayMap = {lunes:1, martes:2, miercoles:3, miércoles:3, jueves:4, viernes:5, sabado:6, sábado:6, domingo:0};
-            var s = schedule.toLowerCase().trim();
-            // Patrón "X a Y" (rango)
-            var rangeMatch = s.match(/^(\w+)\s+a\s+(\w+)$/);
-            if (rangeMatch) {
-                var start = dayMap[rangeMatch[1]];
-                var end = dayMap[rangeMatch[2]];
-                if (start !== undefined && end !== undefined) {
-                    var result = [];
-                    if (start <= end) {
-                        for (var d = start; d <= end; d++) result.push(d);
-                    } else {
-                        for (var d = start; d <= 6; d++) result.push(d);
-                        for (var d = 0; d <= end; d++) result.push(d);
-                    }
-                    return result;
-                }
-            }
-            // Patrón lista: "X, Y y Z" o "X y Y"
-            var parts = s.replace(/\s*y\s*/g, ',').split(',').map(function(p) { return p.trim(); });
-            var days = [];
-            parts.forEach(function(p) {
-                if (dayMap[p] !== undefined) days.push(dayMap[p]);
-            });
-            return days.length > 0 ? days : [0,1,2,3,4,5,6];
-        }
-
-        const RUTA_SEED = {
-            version: 2,
-            date: new Date().toISOString().slice(0, 10),
-            orders: [
-                { id: 'rec-1', type: 'recurrent', product: 'Bollería Fin de Semana', quantity: 150, unit: 'Uds', schedule: 'Viernes, Sábado y Domingo', days: [5, 6, 0], icon: 'coffee', completed: false, completedAt: null },
-                { id: 'rec-2', type: 'recurrent', product: 'Pan de Masa Madre (Bar)', quantity: 30, unit: 'Hogazas', schedule: 'Lunes a Viernes', days: [1, 2, 3, 4, 5], icon: 'shopping-bag', completed: false, completedAt: null },
-                { id: 'dyn-1', type: 'dynamic', source: 'whatsapp', product: 'Tarta de Zanahoria (8 rac.)', quantity: 8, unit: 'rac.', client: 'María J.', clientPhone: '34612345678', note: 'Sin nueces, recoger el viernes a las 18:00.', completed: false, completedAt: null },
-                { id: 'dyn-2', type: 'dynamic', source: 'n8n', product: 'Caja Surtida (12 Mini Dulces)', quantity: 12, unit: 'Uds', client: 'Eventos XYZ', clientPhone: '', note: 'Hoy, 14:00.', completed: false, completedAt: null }
-            ]
-        };
-
-        function getRutaData() {
-            const raw = localStorage.getItem(RUTA_KEY);
-            if (!raw) {
-                saveRutaData(RUTA_SEED);
-                return JSON.parse(JSON.stringify(RUTA_SEED));
-            }
-            const data = JSON.parse(raw);
-            // Migración a v2: añadir days a recurrentes existentes
-            if (!data.version || data.version < 2) {
-                data.orders.forEach(function(o) {
-                    if (o.type === 'recurrent' && !o.days) o.days = parseScheduleDays(o.schedule);
-                });
-                data.version = 2;
-                saveRutaData(data);
-            }
-            // Reset diario inteligente para recurrentes
-            const today = new Date().toISOString().slice(0, 10);
-            const todayDay = new Date().getDay();
-            if (data.date !== today) {
-                data.date = today;
-                data.orders.forEach(function(o) {
-                    if (o.type === 'recurrent') {
-                        if (o.days && o.days.indexOf(todayDay) === -1) return; // no toca hoy
-                        o.completed = false;
-                        o.completedAt = null;
-                    }
-                });
-                saveRutaData(data);
-            }
-            return data;
-        }
-
-        function saveRutaData(data) {
-            localStorage.setItem(RUTA_KEY, JSON.stringify(data));
-        }
-
-        // --- Renderizado principal ---
-        function renderRuta() {
-            const data = getRutaData();
-            const orders = data.orders;
-            const todayDay = new Date().getDay();
-
-            // Filtrar recurrentes que no tocan hoy
-            function isTodayTask(o) {
-                if (o.days && o.days.indexOf(todayDay) === -1) return false;
-                return true;
-            }
-
-            const todayOrders = orders.filter(isTodayTask);
-            const pending = todayOrders.filter(function(o) { return !o.completed; });
-            const done = todayOrders.filter(function(o) { return o.completed; });
-
-            renderRutaProgress(todayOrders);
-            renderRutaHornada(pending);
-            renderRutaRecurrentes(pending.filter(function(o) { return o.type === 'recurrent'; }));
-            renderRutaDinamicos(pending.filter(function(o) { return o.type === 'dynamic'; }));
-            renderRutaManuales(pending.filter(function(o) { return o.type === 'manual'; }));
-            renderRutaFinalizadas(done);
-
-            setTimeout(function() {
-                if (typeof lucide !== 'undefined') lucide.createIcons({ attrs: { 'stroke-width': 1.8, 'stroke': 'currentColor' } });
-            }, 50);
-        }
-
-        // --- Barra de progreso ---
-        function renderRutaProgress(orders) {
-            const total = orders.length;
-            const done = orders.filter(function(o) { return o.completed; }).length;
-            const pct = total > 0 ? Math.round((done / total) * 100) : 0;
-
-            var txt = document.getElementById('ruta-progress-text');
-            var pctEl = document.getElementById('ruta-progress-pct');
-            var bar = document.getElementById('ruta-progress-bar');
-            if (txt) txt.textContent = done + ' de ' + total + ' tareas';
-            if (pctEl) pctEl.textContent = pct + '%';
-            if (bar) bar.style.width = pct + '%';
-
-            // Also update dashboard widget
-            var dashEl = document.getElementById('dash-ruta-prog');
-            if (dashEl) dashEl.textContent = done + '/' + total;
-        }
-
-        // Update dashboard ruta widget (called from inicio tab)
-        function updateDashRuta() {
-            var data = getRutaData();
-            var todayDay = new Date().getDay();
-            var todayOrders = data.orders.filter(function(o) {
-                if (o.days && o.days.indexOf(todayDay) === -1) return false;
-                return true;
-            });
-            var total = todayOrders.length;
-            var done = todayOrders.filter(function(o) { return o.completed; }).length;
-            var dashEl = document.getElementById('dash-ruta-prog');
-            if (dashEl) dashEl.textContent = done + '/' + total;
-        }
-
-        // --- Resumen de Hornada (Batching) con +/- editables ---
-        function renderRutaHornada(pendingOrders) {
-            var section = document.getElementById('ruta-hornada-section');
-            if (!section) return;
-
-            // Agrupar cantidades por producto, guardar IDs para editar
-            var groups = {};
-            pendingOrders.forEach(function(o) {
-                if (o.quantity && o.quantity > 0) {
-                    var key = o.product;
-                    if (!groups[key]) groups[key] = { quantity: 0, unit: o.unit || 'Uds', orderIds: [] };
-                    groups[key].quantity += o.quantity;
-                    groups[key].orderIds.push(o.id);
-                }
-            });
-
-            var keys = Object.keys(groups);
-            if (keys.length === 0) {
-                section.innerHTML = '';
-                return;
-            }
-
-            var itemsHtml = '';
-            keys.forEach(function(k) {
-                var g = groups[k];
-                var firstId = g.orderIds[0];
-                itemsHtml += '<div class="ruta-hornada-item">' +
-                    '<span>' + k + '</span>' +
-                    '<div class="ruta-hornada-qty-wrap">' +
-                        '<button class="ruta-hornada-qty-btn" onclick="adjustHornadaQty(\'' + firstId + '\', -1)">−</button>' +
-                        '<span class="ruta-hornada-qty">' + g.quantity + ' ' + g.unit + '</span>' +
-                        '<button class="ruta-hornada-qty-btn" onclick="adjustHornadaQty(\'' + firstId + '\', 1)">+</button>' +
-                    '</div>' +
-                    '</div>';
-            });
-
-            section.innerHTML =
-                '<div class="ruta-section-header">' +
-                    '<i data-lucide="flame" style="width: 18px; color: #e78a22;"></i> Resumen de Hornada' +
-                '</div>' +
-                '<div class="ruta-hornada-card">' + itemsHtml + '</div>';
-        }
-
-        // Ajustar cantidad en hornada
-        window.adjustHornadaQty = function(orderId, delta) {
-            var data = getRutaData();
-            var order = data.orders.find(function(o) { return o.id === orderId; });
-            if (order) {
-                order.quantity = Math.max(1, (order.quantity || 0) + delta);
-                saveRutaData(data);
-                renderRuta();
-            }
-        };
-
-        // --- Pedidos Recurrentes ---
-        function renderRutaRecurrentes(items) {
-            var section = document.getElementById('ruta-recurrentes-section');
-            if (!section) return;
-            if (items.length === 0) { section.innerHTML = ''; return; }
-
-            var html = '<div class="ruta-section-header">' +
-                '<i data-lucide="calendar-check" style="width: 18px; color: #D4AF37;"></i> Fijos / Recurrentes' +
-                '</div>' +
-                '<div style="display: flex; flex-direction: column; gap: 12px;">';
-
-            items.forEach(function(o) {
-                html += '<div class="dashboard-widget glass-panel ruta-card" data-ruta-id="' + o.id + '" style="padding: 16px; border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; gap: 14px;">' +
-                    '<div style="width: 40px; height: 40px; background: rgba(212, 175, 55, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center;">' +
-                        '<i data-lucide="' + (o.icon || 'package') + '" style="width: 20px; color: #D4AF37;"></i>' +
-                    '</div>' +
-                    '<div style="flex: 1; min-width: 0;">' +
-                        '<div class="ruta-product-name" style="font-size: 14px; font-weight: 600; color: var(--text-primary);">' + o.product + '</div>' +
-                        '<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">' + (o.schedule || '') + '</div>' +
-                    '</div>' +
-                    '<div style="padding: 5px 10px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-size: 11px; font-weight: 700; white-space: nowrap;">' +
-                        'x' + o.quantity + ' ' + o.unit +
-                    '</div>' +
-                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
-                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
-                    '</button>' +
-                    '<button class="ruta-btn ruta-btn-complete" onclick="completeRutaOrder(\'' + o.id + '\')">' +
-                        '<i data-lucide="check" style="width: 14px;"></i>' +
-                    '</button>' +
-                '</div>';
-            });
-
-            html += '</div>';
-            section.innerHTML = html;
-        }
-
-        // --- ✨ LÓGICA PREMIUM DASHBOARD v2.0 ✨ ---
-        
-        /**
-         * Genera un Mini Chart SVG dinámico
-         * @param {string} elementId - ID del contenedor
-         * @param {number[]} data - Array de valores para la gráfica
-         * @param {string} color - Color del trazado (hex)
-         */
-        /**
-         * Renderiza un gráfico SVG profesional estilo Fintech v2.2
-         * @param {string} elementId - ID del contenedor
-         * @param {number[]} data - Serie de datos numéricos
-         * @param {string} color - Color principal del gráfico
-         */
-        function renderMiniChart(elementId, data, color = '#D4AF37', unit = '€') {
-            const container = document.getElementById(elementId);
-            if (!container) return;
-
-            const width = container.offsetWidth || 200;
-            // Altura adaptativa: más presencia en móvil
-            // Altura adaptativa leyendo el contenedor dictado por CSS
-            let height = container.offsetHeight;
-            if (height === 0 || isNaN(height)) {
-                height = isMobile ? 90 : 55;
-            }
-            const padding = 12;
-            const sidePadding = 0; // Eliminamos padding lateral para ir al borde
-            const labelsArea = 15;
-            const chartHeight = height - labelsArea;
-            
-            // Fallback con 7 días (L a D) para asegurar consistencia visual
-            if (!data || data.length < 2) data = [12, 28, 18, 42, 22, 55, 45];
-            const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-
-            const max = Math.max(...data);
-            const min = Math.min(...data);
-            const range = max - min || 1;
-            
-            // Línea de referencia (Grid) al 50% de la escala
-            const midVal = (max + min) / 2;
-            const midY = chartHeight - ((midVal - min) / range * (chartHeight - padding * 2) + padding);
-
-            let pathData = `M 0 ${chartHeight - ((data[0] - min) / range * (chartHeight - padding * 2) + padding)}`;
-            let labelsSVG = '';
-
-            data.forEach((val, i) => {
-                const x = (i / (data.length - 1)) * (width - sidePadding * 2) + sidePadding;
-                const y = chartHeight - ((val - min) / range * (chartHeight - padding * 2) + padding);
-                if (i > 0) pathData += ` L ${x} ${y}`;
-                
-                // Etiquetas Eje X (Días) - Con margen interno mini para legibilidad
-                if (days[i]) {
-                    let labelX = x;
-                    if (i === 0) labelX += 15;
-                    if (i === data.length - 1) labelX -= 15;
-                    labelsSVG += `<text x="${labelX}" y="${height - 2}" font-size="9" fill="var(--text-muted)" text-anchor="middle" font-weight="600" style="opacity:0.6">${days[i]}</text>`;
-                }
-            });
-
-            const avg = data.reduce((a, b) => a + b, 0) / data.length;
-            const avgY = chartHeight - ((avg - min) / range * (chartHeight - padding * 2) + padding);
-            const lastVal = data[data.length - 1];
-            const lastX = width;
-            const lastY = chartHeight - ((lastVal - min) / range * (chartHeight - padding * 2) + padding);
-
-            const svg = `
-                <svg width="100%" height="${height}" preserveAspectRatio="none" style="overflow: visible; filter: drop-shadow(0 4px 12px rgba(212,175,55,0.08)); font-family: 'Outfit', sans-serif;">
-                    <defs>
-                        <linearGradient id="gradient-${elementId}" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:${color};stop-opacity:0.3" />
-                            <stop offset="100%" style="stop-color:${color};stop-opacity:0" />
-                        </linearGradient>
-                    </defs>
-                    
-                    <!-- Línea de Promedio (Funcional) -->
-                    <line x1="0" y1="${avgY}" x2="${width}" y2="${avgY}" stroke="rgba(212,175,55,0.2)" stroke-width="1" stroke-dasharray="2,2" />
-                    <text x="5" y="${avgY - 4}" font-size="7" fill="var(--gold)" style="opacity:0.5; font-weight:700;">PROMEDIO</text>
-                    
-                    <!-- Relleno de Área Degradado -->
-                    <path d="${pathData} L ${width} ${chartHeight} L 0 ${chartHeight} Z" fill="url(#gradient-${elementId})" />
-                    
-                    <!-- Línea de Tendencia Principal (Luxury Stroke) -->
-                    <path d="${pathData}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                    
-                    <!-- Puntos Destacados -->
-                    ${data.map((val, i) => {
-                        const x = (i / (data.length - 1)) * width;
-                        const y = chartHeight - ((val - min) / range * (chartHeight - padding * 2) + padding);
-                        return `<circle cx="${x}" cy="${y}" r="2" fill="${color}" style="opacity:0.8" />`;
-                    }).join('')}
-
-                    <!-- Tooltip del último valor -->
-                    <g transform="translate(${lastX - 35}, ${lastY - 22})">
-                        <rect width="35" height="14" rx="4" fill="${color}" />
-                        <text x="17.5" y="10" font-size="8" fill="#000" text-anchor="middle" font-weight="900">${lastVal.toFixed(0)}${unit}</text>
-                    </g>
-                    
-                    <!-- Etiquetas Temporales -->
-                    ${labelsSVG}
-                </svg>
-            `;
-            
-            container.innerHTML = svg;
-            container.style.height = height + 'px';
-        }
-
-        /**
-         * Actualiza las tendencias y charts del Dashboard
-         */
-        function updateDashboardPremium() {
-            // Datos de Gastos: Prioriza reales, si no, usa Demo Luxury
-            let dataGastos = [150, 180, 240, 210, 350, 480, 420]; // Demo 7 días
-            let colorGastos = '#D4AF37';
-
-            if (globalStats) {
-                // Métricas Reales para el Centro de Control IA
-                const alertsEl = document.getElementById('smart-metric-alerts');
-                const savingsEl = document.getElementById('smart-metric-savings');
-                const insightEl = document.getElementById('dash-ai-insight');
-
-                if (alertsEl) alertsEl.textContent = globalStats.countAlbaranes || '0';
-                
-                // Cálculo de Ahorro: (Ticket Medio Mes Pasado - Actual) o simplemente 8% del gasto
-                if (savingsEl) {
-                    const savings = (globalStats.sumGastos || 0) * 0.085;
-                    savingsEl.textContent = savings.toFixed(2) + '€';
-                }
-
-                if (insightEl && globalStats.countAlbaranes > 0) {
-                    insightEl.textContent = `Tienes ${globalStats.countAlbaranes} albaranes pendientes de validar. Tu ticket medio actual es de ${(globalStats.sumGastos / (globalStats.countFacturas || 1)).toFixed(2)}€.`;
-                }
-
-                // Generar gráfico basado en el gasto total
-                if (globalStats.sumGastos > 0) {
-                    const base = globalStats.sumGastos / 7;
-                    dataGastos = [
-                        base * 0.8, base * 1.1, base * 0.9, base * 1.3, base * 1.0, base * 1.5, base * 1.4
-                    ];
-                }
-            }
-            renderMiniChart('miniChartGastos', dataGastos, colorGastos, '€');
-            // Mostrar contenedor de gráficos
-            const dualCharts = document.getElementById('dashChartsDual');
-            if (dualCharts) dualCharts.style.display = 'flex';
-
-            // Render Gráfico 2: Volumen de Actividad
-            let dataVolumen = [5, 12, 8, 15, 10, 22, 18];
-            if (globalStats && globalStats.countAlbaranes > 0) {
-                const b = Math.max(2, globalStats.countAlbaranes / 7);
-                dataVolumen = [b*0.8, b*1.2, b, b*0.6, b*1.5, b*1.8, b*1.1];
-            }
-            renderMiniChart('miniChartVolumen', dataVolumen, '#10b981', 'u');
-
-            // Re-escaneo de iconos Lucide
-            setTimeout(() => {
-                if (window.lucide) lucide.createIcons();
-            }, 100);
-        }
-
-        // --- Pedidos Dinámicos ---
-        function renderRutaDinamicos(items) {
-            var section = document.getElementById('ruta-dinamicos-section');
-            if (!section) return;
-            if (items.length === 0) { section.innerHTML = ''; return; }
-
-            var html = '<div class="ruta-section-header" style="display: flex; justify-content: space-between; align-items: center;">' +
-                '<span style="display: flex; align-items: center; gap: 8px;">' +
-                    '<i data-lucide="inbox" style="width: 18px; color: #C97474;"></i> Pedidos Dinámicos' +
-                '</span>' +
-                '<span style="font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.05); border: 1px solid var(--border); border-radius: 12px; padding: 4px 8px; color: var(--text-muted);">Integración: Activa</span>' +
-                '</div>' +
-                '<div style="display: flex; flex-direction: column; gap: 12px;">';
-
-            items.forEach(function(o) {
-                var isWA = o.source === 'whatsapp';
-                var badgeBg = isWA ? 'rgba(37, 211, 102, 0.15)' : 'rgba(231, 138, 34, 0.15)';
-                var badgeColor = isWA ? '#25D366' : '#e78a22';
-                var badgeIcon = isWA ? 'message-circle' : 'zap';
-                var badgeText = isWA ? 'WHATSAPP' : 'N8N AUTO';
-                var clientIcon = o.client && o.client.includes('Evento') ? 'building' : 'user';
-                var clientLabel = o.client && o.client.includes('Evento') ? 'Empresa' : 'Cliente';
-
-                html += '<div class="dashboard-widget glass-panel ruta-card" data-ruta-id="' + o.id + '" style="padding: 16px; border-radius: 16px; border: 1px solid var(--border); position: relative; overflow: hidden;">' +
-                    '<div style="position: absolute; top: 0; right: 0; background: ' + badgeBg + '; color: ' + badgeColor + '; font-size: 9px; font-weight: 700; padding: 4px 8px; border-radius: 0 16px 0 8px; display: flex; align-items: center; gap: 4px;">' +
-                        '<i data-lucide="' + badgeIcon + '" style="width: 10px;"></i> ' + badgeText +
-                    '</div>' +
-                    '<div style="display: flex; gap: 16px; align-items: flex-start; margin-top: 4px;">' +
-                        '<div style="flex: 1;">' +
-                            '<div class="ruta-product-name" style="font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px;">' + o.product + '</div>' +
-                            '<div style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">' +
-                                '<i data-lucide="' + clientIcon + '" style="width: 12px;"></i> ' + clientLabel + ': ' + (o.client || 'N/A') +
-                            '</div>' +
-                            (o.note ? '<div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;"><strong>Nota:</strong> ' + o.note + '</div>' : '') +
-                        '</div>' +
-                    '</div>' +
-                    '<div style="margin-top: 14px; display: flex; justify-content: flex-end; gap: 8px;">' +
-                        '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
-                            '<i data-lucide="pencil" style="width: 14px;"></i>' +
-                        '</button>' +
-                        (o.clientPhone ? '<button class="ruta-btn ruta-btn-whatsapp" onclick="sendWhatsAppRuta(\'' + o.id + '\')">' +
-                            '<i data-lucide="message-circle" style="width: 14px;"></i> Avisar' +
-                        '</button>' : '') +
-                        '<button class="ruta-btn ruta-btn-complete" onclick="completeRutaOrder(\'' + o.id + '\')">' +
-                            '<i data-lucide="check" style="width: 14px;"></i> Completar' +
-                        '</button>' +
-                    '</div>' +
-                '</div>';
-            });
-
-            html += '</div>';
-            section.innerHTML = html;
-        }
-
-        // --- Tareas Manuales ---
-        function renderRutaManuales(items) {
-            var section = document.getElementById('ruta-manuales-section');
-            if (!section) return;
-            if (items.length === 0) { section.innerHTML = ''; return; }
-
-            var html = '<div class="ruta-section-header">' +
-                '<i data-lucide="clipboard-list" style="width: 18px; color: #D4AF37;"></i> Tareas Manuales' +
-                '</div>' +
-                '<div style="display: flex; flex-direction: column; gap: 12px;">';
-
-            items.forEach(function(o) {
-                var qtyBadge = (o.quantity && o.quantity > 0) ?
-                    '<div style="padding: 5px 10px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-size: 11px; font-weight: 700; white-space: nowrap;">x' + o.quantity + ' ' + (o.unit || 'Uds') + '</div>' : '';
-
-                html += '<div class="dashboard-widget glass-panel ruta-card" data-ruta-id="' + o.id + '" style="padding: 16px; border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; gap: 14px;">' +
-                    '<div style="width: 40px; height: 40px; background: rgba(212, 175, 55, 0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center;">' +
-                        '<i data-lucide="clipboard-check" style="width: 20px; color: #D4AF37;"></i>' +
-                    '</div>' +
-                    '<div style="flex: 1; min-width: 0;">' +
-                        '<div class="ruta-product-name" style="font-size: 14px; font-weight: 600; color: var(--text-primary);">' + o.product + '</div>' +
-                        (o.note ? '<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">' + o.note + '</div>' : '') +
-                    '</div>' +
-                    qtyBadge +
-                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
-                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
-                    '</button>' +
-                    '<button class="ruta-btn ruta-btn-delete" onclick="deleteRutaTask(\'' + o.id + '\')" title="Eliminar">' +
-                        '<i data-lucide="trash-2" style="width: 14px;"></i>' +
-                    '</button>' +
-                    '<button class="ruta-btn ruta-btn-complete" onclick="completeRutaOrder(\'' + o.id + '\')">' +
-                        '<i data-lucide="check" style="width: 14px;"></i>' +
-                    '</button>' +
-                '</div>';
-            });
-
-            html += '</div>';
-            section.innerHTML = html;
-        }
-
-        // --- Tareas Finalizadas ---
-        function renderRutaFinalizadas(items) {
-            var section = document.getElementById('ruta-finalizadas-section');
-            if (!section) return;
-            if (items.length === 0) { section.innerHTML = ''; return; }
-
-            // Ordenar por completedAt (más reciente primero)
-            items.sort(function(a, b) { return (b.completedAt || 0) - (a.completedAt || 0); });
-
-            var html = '<div class="ruta-section-header" style="color: #10b981;">' +
-                '<i data-lucide="check-circle-2" style="width: 18px; color: #10b981;"></i> Finalizadas (' + items.length + ')' +
-                '</div>' +
-                '<div class="ruta-finalizadas-wrap" style="display: flex; flex-direction: column; gap: 8px;">';
-
-            items.forEach(function(o) {
-                html += '<div class="dashboard-widget glass-panel ruta-card ruta-done" data-ruta-id="' + o.id + '" style="padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(16,185,129,0.15); display: flex; align-items: center; gap: 12px;">' +
-                    '<div style="width: 32px; height: 32px; background: rgba(16, 185, 129, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">' +
-                        '<i data-lucide="check" style="width: 16px; color: #10b981;"></i>' +
-                    '</div>' +
-                    '<div style="flex: 1; min-width: 0;">' +
-                        '<div class="ruta-product-name" style="font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: line-through;">' + o.product + '</div>' +
-                    '</div>' +
-                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
-                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
-                    '</button>' +
-                    '<button class="ruta-btn ruta-btn-restore" onclick="restoreRutaOrder(\'' + o.id + '\')" title="Restaurar">' +
-                        '<i data-lucide="undo-2" style="width: 14px;"></i>' +
-                    '</button>' +
-                '</div>';
-            });
-
-            html += '</div>';
-            section.innerHTML = html;
-        }
-
-        // --- Acciones ---
-        window.completeRutaOrder = function(orderId) {
-            var card = document.querySelector('[data-ruta-id="' + orderId + '"]');
-            if (card) {
-                card.classList.add('ruta-completing');
-            }
-            setTimeout(function() {
-                var data = getRutaData();
-                var order = data.orders.find(function(o) { return o.id === orderId; });
-                if (order) {
-                    order.completed = true;
-                    order.completedAt = Date.now();
-                }
-                saveRutaData(data);
-                renderRuta();
-            }, 500);
-        };
-
-        window.deleteRutaTask = function(taskId) {
-            var data = getRutaData();
-            data.orders = data.orders.filter(function(o) { return o.id !== taskId; });
-            saveRutaData(data);
-            renderRuta();
-        };
-
-        window.restoreRutaOrder = function(orderId) {
-            var data = getRutaData();
-            var order = data.orders.find(function(o) { return o.id === orderId; });
-            if (order) { order.completed = false; order.completedAt = null; }
-            saveRutaData(data);
-            renderRuta();
-        };
-
-        // --- Modal Editar Tarea ---
-        window.openEditModal = function(orderId) {
-            var data = getRutaData();
-            var order = data.orders.find(function(o) { return o.id === orderId; });
-            if (!order) return;
-
-            document.getElementById('editTaskId').value = orderId;
-            document.getElementById('editTaskName').value = order.product || '';
-            document.getElementById('editTaskQty').value = order.quantity || '';
-            document.getElementById('editTaskUnit').value = order.unit || '';
-            document.getElementById('editTaskSchedule').value = order.schedule || '';
-            document.getElementById('editTaskClient').value = order.client || '';
-            document.getElementById('editTaskPhone').value = order.clientPhone || '';
-            document.getElementById('editTaskNotes').value = order.note || '';
-
-            // Mostrar/ocultar campos según tipo
-            var scheduleField = document.getElementById('editTaskSchedule');
-            var clientField = document.getElementById('editTaskClient');
-            var phoneField = document.getElementById('editTaskPhone');
-            scheduleField.style.display = (order.type === 'recurrent') ? '' : 'none';
-            clientField.style.display = (order.type === 'dynamic') ? '' : 'none';
-            phoneField.style.display = (order.type === 'dynamic') ? '' : 'none';
-
-            var modal = document.getElementById('editTaskModal');
-            if (modal) modal.classList.add('open');
-            setTimeout(function() {
-                if (typeof lucide !== 'undefined') lucide.createIcons({ attrs: { 'stroke-width': 1.8, 'stroke': 'currentColor' } });
-            }, 50);
-        };
-
-        window.closeEditModal = function() {
-            var modal = document.getElementById('editTaskModal');
-            if (modal) modal.classList.remove('open');
-        };
-
-        window.saveEditTask = function() {
-            var orderId = document.getElementById('editTaskId').value;
-            var data = getRutaData();
-            var order = data.orders.find(function(o) { return o.id === orderId; });
-            if (!order) return;
-
-            var newName = document.getElementById('editTaskName').value.trim();
-            if (!newName) { alert('El nombre no puede estar vacío.'); return; }
-
-            order.product = newName;
-            order.quantity = parseInt(document.getElementById('editTaskQty').value) || order.quantity || 0;
-            order.unit = document.getElementById('editTaskUnit').value.trim() || order.unit || '';
-            order.note = document.getElementById('editTaskNotes').value.trim();
-
-            if (order.type === 'recurrent') {
-                var newSchedule = document.getElementById('editTaskSchedule').value.trim();
-                if (newSchedule && newSchedule !== order.schedule) {
-                    order.schedule = newSchedule;
-                    order.days = parseScheduleDays(newSchedule);
-                }
-            }
-            if (order.type === 'dynamic') {
-                order.client = document.getElementById('editTaskClient').value.trim();
-                order.clientPhone = document.getElementById('editTaskPhone').value.trim();
-            }
-
-            saveRutaData(data);
-            closeEditModal();
-            renderRuta();
-        };
-
-        window.sendWhatsAppRuta = function(orderId) {
-            var data = getRutaData();
-            var order = data.orders.find(function(o) { return o.id === orderId; });
-            if (!order || !order.clientPhone) {
-                alert('Este pedido no tiene teléfono de cliente.');
-                return;
-            }
-            var msg = encodeURIComponent(
-                '\u00a1Hola ' + order.client + '! Tu ' + order.product + ' ya est\u00e1 lista en Dulce y Jaleo. \u00a1Te esperamos!'
-            );
-            var phone = order.clientPhone.replace(/\s+/g, '');
-            window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
-        };
-
-        // --- Modal Nueva Tarea ---
-        window.openTaskModal = function() {
-            var modal = document.getElementById('taskModal');
-            if (modal) {
-                modal.classList.add('open');
-                var nameInput = document.getElementById('taskName');
-                if (nameInput) { nameInput.value = ''; nameInput.focus(); }
-                var notesInput = document.getElementById('taskNotes');
-                if (notesInput) notesInput.value = '';
-                var qtyInput = document.getElementById('taskQty');
-                if (qtyInput) qtyInput.value = '';
-                var unitInput = document.getElementById('taskUnit');
-                if (unitInput) unitInput.value = '';
-                // Reset day chips — mark today as active by default
-                var chips = document.querySelectorAll('#taskDayChips .ruta-day-chip');
-                var todayD = new Date().getDay();
-                chips.forEach(function(c) {
-                    c.classList.toggle('active', parseInt(c.dataset.day) === todayD);
-                });
-            }
-        };
-
-        window.closeTaskModal = function() {
-            var modal = document.getElementById('taskModal');
-            if (modal) modal.classList.remove('open');
-        };
-
-        window.saveNewTask = function() {
-            var nameInput = document.getElementById('taskName');
-            var notesInput = document.getElementById('taskNotes');
-            var qtyInput = document.getElementById('taskQty');
-            var unitInput = document.getElementById('taskUnit');
-            var name = nameInput ? nameInput.value.trim() : '';
-            if (!name) { alert('Escribe un nombre para la tarea.'); return; }
-
-            var qty = qtyInput ? parseInt(qtyInput.value) || 0 : 0;
-            var unit = unitInput ? unitInput.value.trim() : '';
-
-            // Collect selected days
-            var selectedDays = [];
-            document.querySelectorAll('#taskDayChips .ruta-day-chip.active').forEach(function(c) {
-                selectedDays.push(parseInt(c.dataset.day));
-            });
-            // If none selected → all days
-            if (selectedDays.length === 0) selectedDays = [0,1,2,3,4,5,6];
-
-            var data = getRutaData();
-            data.orders.push({
-                id: 'man-' + Date.now(),
-                type: 'manual',
-                product: name,
-                quantity: qty,
-                unit: unit,
-                days: selectedDays,
-                note: notesInput ? notesInput.value.trim() : '',
-                completed: false,
-                completedAt: null
-            });
-            saveRutaData(data);
-            closeTaskModal();
-            renderRuta();
-        };
-
-        // Day chip toggle
-        document.querySelectorAll('#taskDayChips .ruta-day-chip').forEach(function(chip) {
-            chip.addEventListener('click', function() { chip.classList.toggle('active'); });
-        });
-
-        // FAB Tarea -> abrir modal
-        (function() {
-            var fab = document.getElementById('fabAddTask');
-            if (fab) fab.addEventListener('click', function() { openTaskModal(); });
-
-            // Cerrar modal al hacer click en overlay
-            var modal = document.getElementById('taskModal');
-            if (modal) {
-                modal.addEventListener('click', function(e) {
-                    if (e.target === modal) closeTaskModal();
-                });
-            }
-
-            // Cerrar modal editar al hacer click en overlay
-            var editModal = document.getElementById('editTaskModal');
-            if (editModal) {
-                editModal.addEventListener('click', function(e) {
-                    if (e.target === editModal) closeEditModal();
-                });
-            }
-        })();
-
         // ===== THEME TOGGLE LOGIC (INVERSIÓN: CLARO = DEFAULT) =====
         // Ahora `:root` es CLARO. La clase `dark-theme` activa el modo oscuro.
         window.toggleTheme = function () {
@@ -5626,13 +3799,6 @@
                 const s = document.querySelector('.splash-screen');
                 if (s) s.classList.add('hide');
             }, 500);
-
-            // 5. Activar tab inicial
-            try {
-                activateTab('inicio');
-            } catch(e) {
-                console.error('Error durante la activación inicial de pestañas:', e);
-            }
         });
     </script>
 </body>
