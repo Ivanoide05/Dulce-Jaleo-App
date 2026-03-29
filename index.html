@@ -596,9 +596,9 @@
         }
 
         .btn-scan {
-            background: var(--white);
-            border: 1.5px solid var(--border);
-            color: var(--text-secondary);
+            background: var(--bg-card);
+            border: 1.5px solid rgba(0,0,0,0.12);
+            color: var(--text-primary);
             padding: 9px 18px;
             border-radius: 50px;
             font-size: 13px;
@@ -617,6 +617,9 @@
             border-color: var(--rose);
             color: var(--rose);
             background: var(--warm-100);
+        }
+        body.dark-theme .btn-scan {
+            border-color: rgba(255,255,255,0.15);
         }
 
         .preview-img {
@@ -1488,11 +1491,11 @@
         }
 
         .avatar-proveedor {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
+            background: linear-gradient(135deg, #d4af37, #b8942e);
         }
 
         .avatar-cliente {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(135deg, #c9a84c, #a68b3a);
         }
 
         .contact-info {
@@ -1821,15 +1824,16 @@
             right: 20px;
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, var(--rose-light), var(--rose));
+            background: linear-gradient(135deg, #ebae1c, #D4AF37);
             border-radius: 50%;
             border: none;
             display: none;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 22px;
+            color: #fff;
             cursor: pointer;
-            box-shadow: 0 6px 24px rgba(245, 158, 11, 0.45);
+            box-shadow: 0 6px 24px rgba(212, 175, 55, 0.45);
             z-index: 150;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -1938,6 +1942,37 @@
         .modal-input::placeholder {
             color: var(--text-muted);
         }
+
+        /* Placeholder legibility fix for ruta modals */
+        .ruta-modal-overlay .modal-input.glass-panel {
+            background: rgba(255,255,255,0.07) !important;
+        }
+        .ruta-modal-overlay .modal-input.glass-panel::placeholder {
+            color: rgba(180, 175, 165, 0.7) !important;
+        }
+        body:not(.dark-theme) .ruta-modal-overlay .modal-input.glass-panel {
+            background: rgba(0,0,0,0.04) !important;
+        }
+        body:not(.dark-theme) .ruta-modal-overlay .modal-input.glass-panel::placeholder {
+            color: rgba(80, 70, 60, 0.55) !important;
+        }
+
+        /* Day selector chips */
+        .ruta-day-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+        .ruta-day-chip {
+            width: 38px; height: 38px; border-radius: 12px;
+            border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+            color: var(--text-muted); font-size: 13px; font-weight: 600;
+            font-family: inherit; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; transition: all 0.2s;
+        }
+        .ruta-day-chip.active {
+            background: rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.5);
+            color: #D4AF37;
+        }
+        .ruta-day-chip:hover { border-color: rgba(212,175,55,0.3); }
+        body:not(.dark-theme) .ruta-day-chip { background: rgba(0,0,0,0.03); }
+        body:not(.dark-theme) .ruta-day-chip.active { background: rgba(212,175,55,0.12); }
 
         .modal-input:focus {
             outline: none;
@@ -2306,7 +2341,7 @@
         .ruta-modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(40, 30, 15, 0.3);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             z-index: 9000;
@@ -2328,6 +2363,34 @@
             align-items: center;
             gap: 8px;
         }
+
+        /* Hornada editable - botones +/- */
+        .ruta-hornada-qty-wrap { display: inline-flex; align-items: center; gap: 6px; }
+        .ruta-hornada-qty-btn {
+            width: 26px; height: 26px; border-radius: 8px;
+            border: 1px solid rgba(212,175,55,0.25); background: rgba(212,175,55,0.06);
+            color: #D4AF37; font-size: 16px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-family: inherit; padding: 0; transition: all 0.2s;
+        }
+        .ruta-hornada-qty-btn:hover { background: rgba(212,175,55,0.15); }
+        .ruta-hornada-qty-btn:active { transform: scale(0.92); }
+
+        /* Botones restaurar/editar en finalizadas */
+        .ruta-btn-restore {
+            border: 1px solid rgba(16,185,129,0.3); background: rgba(16,185,129,0.06); color: #10b981; padding: 7px 10px;
+        }
+        .ruta-btn-restore:hover { background: rgba(16,185,129,0.15); }
+        .ruta-btn-edit {
+            border: 1px solid rgba(212,175,55,0.25); background: rgba(212,175,55,0.06); color: #D4AF37; padding: 7px 10px;
+        }
+        .ruta-btn-edit:hover { background: rgba(212,175,55,0.12); }
+
+        /* Secciones vacías colapsan */
+        #ruta-hornada-section:empty, #ruta-recurrentes-section:empty,
+        #ruta-dinamicos-section:empty, #ruta-manuales-section:empty,
+        #ruta-finalizadas-section:empty { margin: 0 !important; padding: 0; }
+
         /* 💎 PREMIUM DASHBOARD v2.0 (BENTO & GLASS) 💎 */
         :root {
             --bento-gap: 16px;
@@ -2558,6 +2621,79 @@
             min-width: 60px;
         }
 
+        /* Control Horario Widget */
+        .horario-widget {
+            margin-top: 8px;
+            padding-top: 10px;
+            border-top: 1px dashed rgba(212,175,55,0.1);
+        }
+        .horario-widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .horario-widget-header .hw-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--gold);
+        }
+        .horario-widget-header .hw-link {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--gold);
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .horario-widget-header .hw-link:hover { opacity: 1; }
+        .horario-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .horario-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 8px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.06);
+        }
+        body:not(.dark-theme) .horario-row {
+            background: rgba(0,0,0,0.02);
+            border-color: rgba(0,0,0,0.06);
+        }
+        .horario-row .hw-name {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .horario-row .hw-name .hw-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .hw-status {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .hw-status-puntual { background: rgba(16,185,129,0.12); color: #10b981; }
+        .hw-status-retraso { background: rgba(245,158,11,0.12); color: #f59e0b; }
+        .hw-status-tarde { background: rgba(239,68,68,0.12); color: #ef4444; }
+        .hw-status-falta { background: rgba(107,114,128,0.12); color: #6b7280; }
+
         @media (max-width: 600px) {
             .analytics-integrated-flow {
                 display: flex;
@@ -2602,7 +2738,7 @@
         .scanner-btn-circle {
             width: 48px;
             height: 48px;
-            background: var(--gold);
+            background: #d4af37;
             color: white;
             border-radius: 50%;
             display: flex;
@@ -2825,6 +2961,18 @@
                 </div>
             </div>
 
+            <!-- MINI CHART: Desglose mensual -->
+            <div id="dashMiniChart" class="glass-panel" style="margin: 0 var(--gutter) 16px; padding: 16px 20px; border-radius: 20px; border: 1px solid var(--border); display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gold); display: flex; align-items: center; gap: 6px;">
+                        <i data-lucide="bar-chart-3" style="width: 13px;"></i>
+                        Desglose del Mes
+                    </div>
+                    <div id="dashChartTotal" style="font-size: 11px; color: var(--text-muted); font-weight: 600;">0.00€</div>
+                </div>
+                <div id="dashBarChart" style="display: flex; flex-direction: column; gap: 8px;"></div>
+            </div>
+
             <!-- BENTO GRID PRINCIPAL -->
             <div class="bento-grid">
                 <!-- Widget Gastos (Large - Lateral Analytics v3.0) -->
@@ -2843,40 +2991,43 @@
                             </div>
                         </div>
 
-                        <!-- Gráfico Dual: Gastos | Volumen -->
-                        <div style="display: flex; gap: 15px; margin-top: 15px; margin-bottom: 5px;">
+                        <!-- Gráfico Dual: Gastos | Volumen (oculto si vacío) -->
+                        <div id="dashChartsDual" style="display: none; gap: 15px; margin-top: 12px; margin-bottom: 0;">
                             <div style="flex: 1; min-width: 0;">
-                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 8px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="bar-chart-2" style="width: 10px;"></i>Tendencia</div>
-                                <div id="miniChartGastos" class="bento-chart-mini" style="height: 65px; margin-top: 0;"></div>
+                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="bar-chart-2" style="width: 10px;"></i>Tendencia</div>
+                                <div id="miniChartGastos" class="bento-chart-mini" style="height: 45px; margin-top: 0;"></div>
                             </div>
                             <div style="flex: 1; min-width: 0;">
-                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 8px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="activity" style="width: 10px;"></i>Actividad</div>
-                                <div id="miniChartVolumen" class="bento-chart-mini" style="height: 65px; margin-top: 0;"></div>
+                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="activity" style="width: 10px;"></i>Actividad</div>
+                                <div id="miniChartVolumen" class="bento-chart-mini" style="height: 45px; margin-top: 0;"></div>
                             </div>
                         </div>
 
-                        <!-- Smart Legend IA (Compacta Lateral) -->
-                        <div class="ai-smart-legend" style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed rgba(212,175,55,0.1);">
-                            <div style="display: flex; align-items: flex-start; gap: 10px;">
-                                <div style="min-width: 24px; height: 24px; background: rgba(212, 175, 55, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                                    <i data-lucide="sparkles" style="width: 14px; color: var(--gold);"></i>
+                        <!-- Widget Control Horario -->
+                        <div class="horario-widget">
+                            <div class="horario-widget-header">
+                                <div class="hw-title">
+                                    <i data-lucide="clock" style="width: 12px;"></i>
+                                    Control de Horario
                                 </div>
-                                <div style="flex: 1;">
-                                    <p id="dash-ai-insight" style="font-size: 10.5px; font-weight: 500; color: var(--text-primary); margin: 0; line-height: 1.4;">Pendiente de escaneo para generar insights operativos.</p>
-                                    
-                                    <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center;">
-                                        <div class="small-metric-pill">
-                                            <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase;">Alertas</span>
-                                            <span style="font-size: 10px; font-weight: 800; color: #ef4444;" id="smart-metric-alerts">0</span>
-                                        </div>
-                                        <div class="small-metric-pill">
-                                            <span style="font-size: 8px; color: var(--text-muted); text-transform: uppercase;">Ahorro</span>
-                                            <span style="font-size: 10px; font-weight: 800; color: var(--gold);" id="smart-metric-savings">0.00€</span>
-                                        </div>
-                                        <div class="small-metric-pill" style="margin-left: auto; background: var(--gold); color: #000; border: none; padding: 5px 10px; cursor: pointer;" onclick="event.stopPropagation(); activateTab('margenes');">
-                                            <span style="font-size: 9px; font-weight: 900;">OPTIMIZAR</span>
-                                        </div>
-                                    </div>
+                                <div class="hw-link" onclick="event.stopPropagation();">Ver todo →</div>
+                            </div>
+                            <div class="horario-list">
+                                <div class="horario-row">
+                                    <div class="hw-name"><span class="hw-dot" style="background:#10b981;"></span>María G.</div>
+                                    <span class="hw-status hw-status-puntual">Puntual</span>
+                                </div>
+                                <div class="horario-row">
+                                    <div class="hw-name"><span class="hw-dot" style="background:#f59e0b;"></span>Carlos R.</div>
+                                    <span class="hw-status hw-status-retraso">Retraso 12min</span>
+                                </div>
+                                <div class="horario-row">
+                                    <div class="hw-name"><span class="hw-dot" style="background:#10b981;"></span>Ana P.</div>
+                                    <span class="hw-status hw-status-puntual">Puntual</span>
+                                </div>
+                                <div class="horario-row">
+                                    <div class="hw-name"><span class="hw-dot" style="background:#6b7280;"></span>Pedro L.</div>
+                                    <span class="hw-status hw-status-falta">Falta · Pte. justificar</span>
                                 </div>
                             </div>
                         </div>
@@ -2894,7 +3045,7 @@
                 </div>
 
                 <!-- Widget Ruta (Medium) -->
-                <div class="bento-item" onclick="activateTab('hojaruta')">
+                <div class="bento-item" onclick="activateTab('ruta')">
                     <div class="bento-label">
                         <i data-lucide="map" style="width: 14px; color: var(--gold);"></i>
                         Hoja Ruta
@@ -2971,7 +3122,7 @@
                         </div>
                     </div>
                     <div id="resultGrid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;"></div>
-                    <button onclick="document.getElementById('resultArea').style.display='none';" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Cerrar Resumen</button>
+                    <button onclick="document.getElementById('resultArea').style.display='none'; resetScanner(); hideGlobalScanner();" class="btn btn-secondary" style="margin-top: 16px; width: 100%;">Cerrar y Volver</button>
                 </div>
             </div>
         </div>
@@ -3182,7 +3333,7 @@
             <div id="ruta-manuales-section" style="margin: 24px var(--gutter); width: calc(100% - 48px);"></div>
 
             <!-- Tareas Finalizadas -->
-            <div id="ruta-finalizadas-section" style="margin: 24px var(--gutter) 32px; width: calc(100% - 48px);"></div>
+            <div id="ruta-finalizadas-section" style="margin: 8px var(--gutter) 32px; width: calc(100% - 48px);"></div>
         </div>
 
     </main>
@@ -3196,7 +3347,14 @@
                 Ajustes Técnicos
             </h2>
             <p class="config-modal-desc" style="margin-bottom:20px;color:var(--text-muted);font-size:13px;">
-                Configuración de integraciones — solo para administrador</p>
+                Configuración unificada</p>
+
+            <div class="config-field">
+                <label class="config-label">🔑 Airtable Personal Access Token</label>
+                <input class="config-input" id="cfgAirtableToken" type="password" placeholder="Para pruebas de entorno local (opcional)"
+                    required>
+                <div class="config-help">No compartas este token. El backend lo maneja automáticamente. Úsalo aquí solo para pruebas locales (override).</div>
+            </div>
 
             <div class="config-field">
                 <label class="config-label">🔗 Webhook URL (n8n)</label>
@@ -3245,7 +3403,10 @@
     </div>
 
     <!-- FAB Añadir Contacto -->
-    <button class="fab-add" id="fabAddContact" title="Añadir contacto">➕</button>
+    <button class="fab-add" id="fabAddContact" title="Añadir contacto"
+        style="background: linear-gradient(135deg, #ebae1c, #D4AF37); box-shadow: 0 6px 24px rgba(212,175,55,0.45); color: #fff;">
+        <i data-lucide="plus" style="width: 22px; height: 22px;"></i>
+    </button>
 
     <!-- FAB Añadir Tarea (Hoja de Ruta) -->
     <button class="fab-add" id="fabAddTask" title="Añadir tarea"
@@ -3265,14 +3426,70 @@
             <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
                 <input class="modal-input glass-panel" id="taskName" type="text" placeholder="Nombre de la tarea *"
                     style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <div style="display: flex; gap: 10px;">
+                    <input class="modal-input glass-panel" id="taskQty" type="number" min="1" placeholder="Cantidad"
+                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
+                    <input class="modal-input glass-panel" id="taskUnit" type="text" placeholder="Uds, Kg..."
+                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
+                </div>
                 <input class="modal-input glass-panel" id="taskNotes" type="text" placeholder="Notas (opcional)"
                     style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <div>
+                    <div style="font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px;">¿Para qué día?</div>
+                    <div class="ruta-day-chips" id="taskDayChips">
+                        <button type="button" class="ruta-day-chip" data-day="1">L</button>
+                        <button type="button" class="ruta-day-chip" data-day="2">M</button>
+                        <button type="button" class="ruta-day-chip" data-day="3">X</button>
+                        <button type="button" class="ruta-day-chip" data-day="4">J</button>
+                        <button type="button" class="ruta-day-chip" data-day="5">V</button>
+                        <button type="button" class="ruta-day-chip" data-day="6">S</button>
+                        <button type="button" class="ruta-day-chip" data-day="0">D</button>
+                    </div>
+                    <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">Si no seleccionas ninguno, aparecerá todos los días</div>
+                </div>
             </div>
             <div style="display: flex; gap: 12px;">
                 <button class="btn glass-panel" onclick="closeTaskModal()"
                     style="flex: 1; padding: 16px; border: 1px solid var(--border); font-size: 14px;">Cancelar</button>
                 <button class="btn glass-panel" onclick="saveNewTask()"
                     style="flex: 2; padding: 16px; background: #D4AF37; color: #fff; font-weight: 600; font-size: 14px; border: none;">Guardar Tarea</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Editar Tarea (Hoja de Ruta) -->
+    <div class="ruta-modal-overlay" id="editTaskModal">
+        <div class="modal-sheet glass-panel"
+            style="padding: 32px; border-top: 1px solid var(--border); border-radius: 32px 32px 0 0; width: 100%; max-width: 480px; animation: slideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
+            <div style="width: 36px; height: 4px; background: rgba(128,128,128,0.3); border-radius: 2px; margin: 0 auto 20px;"></div>
+            <div style="font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 24px; display: flex; align-items: center; gap: 10px;">
+                <i data-lucide="pencil" style="width: 20px; color: #D4AF37;"></i>
+                Editar Tarea
+            </div>
+            <input type="hidden" id="editTaskId">
+            <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px;">
+                <input class="modal-input glass-panel" id="editTaskName" type="text" placeholder="Nombre del producto *"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <div style="display: flex; gap: 10px;">
+                    <input class="modal-input glass-panel" id="editTaskQty" type="number" min="1" placeholder="Cantidad"
+                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
+                    <input class="modal-input glass-panel" id="editTaskUnit" type="text" placeholder="Uds, Kg..."
+                        style="flex:1; padding:16px; background:rgba(255,255,255,0.03); border:1px solid var(--border); font-family:'Montserrat',sans-serif; border-radius:14px; font-size:14px; color:var(--text-primary);">
+                </div>
+                <input class="modal-input glass-panel" id="editTaskSchedule" type="text" placeholder="Programación (ej: Lunes a Viernes)"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <input class="modal-input glass-panel" id="editTaskClient" type="text" placeholder="Cliente"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <input class="modal-input glass-panel" id="editTaskPhone" type="tel" placeholder="Teléfono cliente"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+                <input class="modal-input glass-panel" id="editTaskNotes" type="text" placeholder="Notas (opcional)"
+                    style="padding: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); font-family: 'Montserrat', sans-serif; border-radius: 14px; font-size: 14px; color: var(--text-primary);">
+            </div>
+            <div style="display: flex; gap: 12px;">
+                <button class="btn glass-panel" onclick="closeEditModal()"
+                    style="flex: 1; padding: 16px; border: 1px solid var(--border); font-size: 14px;">Cancelar</button>
+                <button class="btn glass-panel" onclick="saveEditTask()"
+                    style="flex: 2; padding: 16px; background: #D4AF37; color: #fff; font-weight: 600; font-size: 14px; border: none;">Guardar Cambios</button>
             </div>
         </div>
     </div>
@@ -3471,6 +3688,71 @@
     </div>
 
     <script>
+    // ===== API CLIENT — DULCE Y JALEO (inlined) =====
+    const API_BASE = 'https://dulce-y-jaleo-backend.xm1sa3.easypanel.host';
+
+    const DulceAPI = {
+        async fetchAllRecords() {
+            const res = await fetch(`${API_BASE}/api/records`);
+            if (!res.ok) throw new Error(`Error del servidor (${res.status})`);
+            return res.json();
+        },
+        async fetchTable(tableName) {
+            const res = await fetch(`${API_BASE}/api/records/${tableName}`);
+            if (!res.ok) throw new Error(`Error cargando ${tableName}: ${res.status}`);
+            return res.json();
+        },
+        async createRecord(tableName, fields) {
+            const res = await fetch(`${API_BASE}/api/records/${tableName}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ fields })
+            });
+            if (!res.ok) throw new Error(`Error guardando en ${tableName}: ${res.status}`);
+            return res.json();
+        },
+        async checkConfig() {
+            const res = await fetch(`${API_BASE}/api/config`);
+            if (!res.ok) return { baseConfigured: false };
+            return res.json();
+        },
+        async scanInvoice(base64Image, mimeType = 'image/jpeg') {
+            const res = await fetch(`${API_BASE}/webhook/scan-invoice`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ image: base64Image, mimeType })
+            });
+            if (!res.ok) {
+                const err = await res.text();
+                throw new Error(`Error escaneando (${res.status}): ${err.substring(0, 250)}`);
+            }
+            return res.json();
+        },
+        async scanInvoiceFormData(file) {
+            const formData = new FormData();
+            formData.append('data', file);
+            const res = await fetch(`${API_BASE}/webhook/lovable-webhook`, {
+                method: 'POST',
+                body: formData
+            });
+            if (!res.ok) {
+                const err = await res.text();
+                throw new Error(`Error servidor (${res.status}): ${err.substring(0, 250)}`);
+            }
+            return res.json();
+        },
+        async health() {
+            try {
+                const res = await fetch(`${API_BASE}/health`);
+                return res.ok;
+            } catch {
+                return false;
+            }
+        }
+    };
+    window.DulceAPI = DulceAPI;
+    </script>
+    <script>
         // RED DE SEGURIDAD ABSOLUTA: Si en 3 segundos no ha entrado, forzamos entrada
         setTimeout(() => {
             const splash = document.querySelector('.splash-screen');
@@ -3534,15 +3816,23 @@
                 // Siempre sobreescribir la URL con la correcta
                 cfg.webhookUrl = FIXED_WEBHOOK;
             } else {
-                cfg = { webhookUrl: FIXED_WEBHOOK };
+                cfg = { webhookUrl: FIXED_WEBHOOK, airtableToken: '' };
             }
             document.getElementById('cfgWebhookUrl').value = cfg.webhookUrl;
+            if(document.getElementById('cfgAirtableToken')) {
+                document.getElementById('cfgAirtableToken').value = cfg.airtableToken || '';
+            }
             return cfg;
         }
 
         function saveConfig() {
+            let aToken = '';
+            if(document.getElementById('cfgAirtableToken')) {
+                aToken = document.getElementById('cfgAirtableToken').value.trim();
+            }
             const cfg = {
-                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim()
+                webhookUrl: document.getElementById('cfgWebhookUrl').value.trim(),
+                airtableToken: aToken
             };
             localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
             config = cfg;
@@ -3640,6 +3930,53 @@
             if (dashAlbaranes) dashAlbaranes.textContent = globalStats.countAlbaranes;
 
             renderDashboardActivity();
+            renderDashMiniChart();
+        }
+
+        function renderDashMiniChart() {
+            const container = document.getElementById('dashMiniChart');
+            const barChart = document.getElementById('dashBarChart');
+            const chartTotal = document.getElementById('dashChartTotal');
+            if (!container || !barChart) return;
+
+            const mes = globalStats.mesActual;
+            const delMes = globalStats.recordsMes || [];
+            if (delMes.length === 0) { container.style.display = 'none'; return; }
+
+            container.style.display = 'block';
+
+            const facturas = delMes.filter(r => r.categoria === 'FACTURA');
+            const albaranes = delMes.filter(r => r.categoria === 'ALBARAN');
+            const gastos = delMes.filter(r => r.categoria === 'GASTOS_VARIOS');
+
+            const sumF = facturas.reduce((s, r) => s + (r.total || 0), 0);
+            const sumA = albaranes.reduce((s, r) => s + (r.total || 0), 0);
+            const sumG = gastos.reduce((s, r) => s + (r.total || 0), 0);
+            const maxVal = Math.max(sumF, sumA, sumG, 1);
+            const total = sumF + sumA + sumG;
+
+            if (chartTotal) chartTotal.textContent = total.toFixed(2) + '€';
+
+            const categories = [
+                { name: 'Facturas', count: facturas.length, sum: sumF, color: '#D4AF37', bg: 'rgba(212,175,55,0.15)' },
+                { name: 'Albaranes', count: albaranes.length, sum: sumA, color: '#10b981', bg: 'rgba(16,185,129,0.15)' },
+                { name: 'Gastos Varios', count: gastos.length, sum: sumG, color: '#f59e0b', bg: 'rgba(245,158,11,0.15)' }
+            ];
+
+            barChart.innerHTML = categories.map(c => {
+                const pct = maxVal > 0 ? Math.max((c.sum / maxVal) * 100, c.sum > 0 ? 8 : 0) : 0;
+                return `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div style="width: 72px; font-size: 10px; font-weight: 600; color: var(--text-muted); white-space: nowrap;">${c.name}</div>
+                        <div style="flex: 1; height: 22px; background: ${c.bg}; border-radius: 8px; overflow: hidden; position: relative;">
+                            <div style="height: 100%; width: ${pct}%; background: ${c.color}; border-radius: 8px; transition: width 0.8s ease;"></div>
+                        </div>
+                        <div style="min-width: 60px; text-align: right; font-size: 11px; font-weight: 800; color: var(--text-primary);">${c.sum.toFixed(0)}€ <span style="font-weight: 400; color: var(--text-muted); font-size: 9px;">(${c.count})</span></div>
+                    </div>
+                `;
+            }).join('');
+
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
         function renderDashboardActivity() {
@@ -3745,8 +4082,11 @@
             }
 
             if (tabId === 'inicio') {
-                console.log('Inicio cargado');
-                // Aquí podrías cargar widgets de dashboard más adelante
+                try { updateDashRuta(); } catch(e) { console.error(e); }
+                // Cargar datos para el dashboard si aún no están cargados
+                if (!globalStats.loaded) {
+                    fetchGlobalData().catch(e => console.error('Dashboard data load error:', e));
+                }
             }
         }
 
@@ -3800,7 +4140,8 @@
             reader.onload = ev => {
                 const img = new Image();
                 img.onload = () => {
-                    const MAX_W = 1024; 
+                    // Imagen pequeña = envío rápido = OCR rápido
+                    const MAX_W = 640;
                     let w = img.width, h = img.height;
                     if (w > MAX_W) { h = Math.round(h * MAX_W / w); w = MAX_W; }
                     const canvas = document.createElement('canvas');
@@ -3810,10 +4151,13 @@
                     ctx.fillRect(0, 0, w, h);
                     ctx.drawImage(img, 0, 0, w, h);
 
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.55);
                     selectedFile = dataURLtoFile(dataUrl, 'ticket_luxury.jpg');
                     showPreviewDirectly(dataUrl);
                     canvas.width = 0; canvas.height = 0;
+
+                    // AUTO-ESCANEO: lanzar procesamiento inmediatamente
+                    sendImage();
                 };
                 img.src = ev.target.result;
             };
@@ -3857,11 +4201,11 @@
 
         async function sendImage() {
             if (!selectedFile) return;
-            
-            // UI Feedback
+
+            // UI Feedback — pasos progresivos rápidos
             sendBtn.disabled = true;
-            sendBtn.innerHTML = '<span class="loading-spin"></span> Analizando documento...';
-            if (scanLine) scanLine.style.animationDuration = '0.8s';
+            sendBtn.innerHTML = '<span class="loading-spin"></span> Comprimiendo...';
+            if (scanLine) scanLine.style.animationDuration = '0.4s';
 
             try {
                 const reader = new FileReader();
@@ -3871,12 +4215,17 @@
                 });
                 const b64Clean = b64.split(',')[1];
 
+                sendBtn.innerHTML = '<span class="loading-spin"></span> Leyendo documento...';
+
                 // Escaneo vía backend seguro (sin tokens en el navegador)
+                const scanStart = performance.now();
                 const finalData = await DulceAPI.scanInvoice(b64Clean, selectedFile.type || 'image/jpeg');
+                const scanMs = Math.round(performance.now() - scanStart);
+
+                sendBtn.innerHTML = `✅ Listo en ${scanMs < 1000 ? scanMs + 'ms' : (scanMs/1000).toFixed(1) + 's'}`;
 
                 showResult(finalData);
-                resetScanner();
-                hideGlobalScanner();
+                // El usuario cierra el resultado manualmente
             } catch (err) {
                 alert('No se pudo procesar la imagen: ' + err.message);
                 sendBtn.disabled = false;
@@ -4005,9 +4354,9 @@
             if(document.getElementById('statGastos')) document.getElementById('statGastos').textContent = globalStats.countGastos;
 
             // ✨ DASHBOARD PREMIUM v2.0 (NUEVOS IDS) ✨
-            const totalEuros = globalStats.sumGastos || 0;
-            const docCount = globalStats.countTotal || 0;
-            
+            const totalEuros = globalStats.totalGastosMes || 0;
+            const docCount = globalStats.countTotalMes || 0;
+
             if (document.getElementById('dash-total-gastos')) {
                 document.getElementById('dash-total-gastos').textContent = totalEuros.toFixed(2) + '€';
             }
@@ -4525,13 +4874,42 @@
 
         // ===== HOJA DE RUTA - GESTOR OPERATIVO =====
 
+        // Helper: parsea texto español de programación → array de días JS (0=Dom, 6=Sáb)
+        function parseScheduleDays(schedule) {
+            if (!schedule) return [0,1,2,3,4,5,6];
+            var dayMap = {lunes:1, martes:2, miercoles:3, miércoles:3, jueves:4, viernes:5, sabado:6, sábado:6, domingo:0};
+            var s = schedule.toLowerCase().trim();
+            // Patrón "X a Y" (rango)
+            var rangeMatch = s.match(/^(\w+)\s+a\s+(\w+)$/);
+            if (rangeMatch) {
+                var start = dayMap[rangeMatch[1]];
+                var end = dayMap[rangeMatch[2]];
+                if (start !== undefined && end !== undefined) {
+                    var result = [];
+                    if (start <= end) {
+                        for (var d = start; d <= end; d++) result.push(d);
+                    } else {
+                        for (var d = start; d <= 6; d++) result.push(d);
+                        for (var d = 0; d <= end; d++) result.push(d);
+                    }
+                    return result;
+                }
+            }
+            // Patrón lista: "X, Y y Z" o "X y Y"
+            var parts = s.replace(/\s*y\s*/g, ',').split(',').map(function(p) { return p.trim(); });
+            var days = [];
+            parts.forEach(function(p) {
+                if (dayMap[p] !== undefined) days.push(dayMap[p]);
+            });
+            return days.length > 0 ? days : [0,1,2,3,4,5,6];
+        }
 
         const RUTA_SEED = {
-            version: 1,
+            version: 2,
             date: new Date().toISOString().slice(0, 10),
             orders: [
-                { id: 'rec-1', type: 'recurrent', product: 'Bollería Fin de Semana', quantity: 150, unit: 'Uds', schedule: 'Viernes, Sábado y Domingo', icon: 'coffee', completed: false, completedAt: null },
-                { id: 'rec-2', type: 'recurrent', product: 'Pan de Masa Madre (Bar)', quantity: 30, unit: 'Hogazas', schedule: 'Lunes a Viernes', icon: 'shopping-bag', completed: false, completedAt: null },
+                { id: 'rec-1', type: 'recurrent', product: 'Bollería Fin de Semana', quantity: 150, unit: 'Uds', schedule: 'Viernes, Sábado y Domingo', days: [5, 6, 0], icon: 'coffee', completed: false, completedAt: null },
+                { id: 'rec-2', type: 'recurrent', product: 'Pan de Masa Madre (Bar)', quantity: 30, unit: 'Hogazas', schedule: 'Lunes a Viernes', days: [1, 2, 3, 4, 5], icon: 'shopping-bag', completed: false, completedAt: null },
                 { id: 'dyn-1', type: 'dynamic', source: 'whatsapp', product: 'Tarta de Zanahoria (8 rac.)', quantity: 8, unit: 'rac.', client: 'María J.', clientPhone: '34612345678', note: 'Sin nueces, recoger el viernes a las 18:00.', completed: false, completedAt: null },
                 { id: 'dyn-2', type: 'dynamic', source: 'n8n', product: 'Caja Surtida (12 Mini Dulces)', quantity: 12, unit: 'Uds', client: 'Eventos XYZ', clientPhone: '', note: 'Hoy, 14:00.', completed: false, completedAt: null }
             ]
@@ -4544,12 +4922,22 @@
                 return JSON.parse(JSON.stringify(RUTA_SEED));
             }
             const data = JSON.parse(raw);
-            // Reset diario para recurrentes
+            // Migración a v2: añadir days a recurrentes existentes
+            if (!data.version || data.version < 2) {
+                data.orders.forEach(function(o) {
+                    if (o.type === 'recurrent' && !o.days) o.days = parseScheduleDays(o.schedule);
+                });
+                data.version = 2;
+                saveRutaData(data);
+            }
+            // Reset diario inteligente para recurrentes
             const today = new Date().toISOString().slice(0, 10);
+            const todayDay = new Date().getDay();
             if (data.date !== today) {
                 data.date = today;
                 data.orders.forEach(function(o) {
                     if (o.type === 'recurrent') {
+                        if (o.days && o.days.indexOf(todayDay) === -1) return; // no toca hoy
                         o.completed = false;
                         o.completedAt = null;
                     }
@@ -4567,10 +4955,19 @@
         function renderRuta() {
             const data = getRutaData();
             const orders = data.orders;
-            const pending = orders.filter(function(o) { return !o.completed; });
-            const done = orders.filter(function(o) { return o.completed; });
+            const todayDay = new Date().getDay();
 
-            renderRutaProgress(orders);
+            // Filtrar recurrentes que no tocan hoy
+            function isTodayTask(o) {
+                if (o.days && o.days.indexOf(todayDay) === -1) return false;
+                return true;
+            }
+
+            const todayOrders = orders.filter(isTodayTask);
+            const pending = todayOrders.filter(function(o) { return !o.completed; });
+            const done = todayOrders.filter(function(o) { return o.completed; });
+
+            renderRutaProgress(todayOrders);
             renderRutaHornada(pending);
             renderRutaRecurrentes(pending.filter(function(o) { return o.type === 'recurrent'; }));
             renderRutaDinamicos(pending.filter(function(o) { return o.type === 'dynamic'; }));
@@ -4594,20 +4991,39 @@
             if (txt) txt.textContent = done + ' de ' + total + ' tareas';
             if (pctEl) pctEl.textContent = pct + '%';
             if (bar) bar.style.width = pct + '%';
+
+            // Also update dashboard widget
+            var dashEl = document.getElementById('dash-ruta-prog');
+            if (dashEl) dashEl.textContent = done + '/' + total;
         }
 
-        // --- Resumen de Hornada (Batching) ---
+        // Update dashboard ruta widget (called from inicio tab)
+        function updateDashRuta() {
+            var data = getRutaData();
+            var todayDay = new Date().getDay();
+            var todayOrders = data.orders.filter(function(o) {
+                if (o.days && o.days.indexOf(todayDay) === -1) return false;
+                return true;
+            });
+            var total = todayOrders.length;
+            var done = todayOrders.filter(function(o) { return o.completed; }).length;
+            var dashEl = document.getElementById('dash-ruta-prog');
+            if (dashEl) dashEl.textContent = done + '/' + total;
+        }
+
+        // --- Resumen de Hornada (Batching) con +/- editables ---
         function renderRutaHornada(pendingOrders) {
             var section = document.getElementById('ruta-hornada-section');
             if (!section) return;
 
-            // Agrupar cantidades por producto
+            // Agrupar cantidades por producto, guardar IDs para editar
             var groups = {};
             pendingOrders.forEach(function(o) {
                 if (o.quantity && o.quantity > 0) {
                     var key = o.product;
-                    if (!groups[key]) groups[key] = { quantity: 0, unit: o.unit || 'Uds' };
+                    if (!groups[key]) groups[key] = { quantity: 0, unit: o.unit || 'Uds', orderIds: [] };
                     groups[key].quantity += o.quantity;
+                    groups[key].orderIds.push(o.id);
                 }
             });
 
@@ -4619,9 +5035,15 @@
 
             var itemsHtml = '';
             keys.forEach(function(k) {
+                var g = groups[k];
+                var firstId = g.orderIds[0];
                 itemsHtml += '<div class="ruta-hornada-item">' +
                     '<span>' + k + '</span>' +
-                    '<span class="ruta-hornada-qty">' + groups[k].quantity + ' ' + groups[k].unit + '</span>' +
+                    '<div class="ruta-hornada-qty-wrap">' +
+                        '<button class="ruta-hornada-qty-btn" onclick="adjustHornadaQty(\'' + firstId + '\', -1)">−</button>' +
+                        '<span class="ruta-hornada-qty">' + g.quantity + ' ' + g.unit + '</span>' +
+                        '<button class="ruta-hornada-qty-btn" onclick="adjustHornadaQty(\'' + firstId + '\', 1)">+</button>' +
+                    '</div>' +
                     '</div>';
             });
 
@@ -4631,6 +5053,17 @@
                 '</div>' +
                 '<div class="ruta-hornada-card">' + itemsHtml + '</div>';
         }
+
+        // Ajustar cantidad en hornada
+        window.adjustHornadaQty = function(orderId, delta) {
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (order) {
+                order.quantity = Math.max(1, (order.quantity || 0) + delta);
+                saveRutaData(data);
+                renderRuta();
+            }
+        };
 
         // --- Pedidos Recurrentes ---
         function renderRutaRecurrentes(items) {
@@ -4655,6 +5088,9 @@
                     '<div style="padding: 5px 10px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-size: 11px; font-weight: 700; white-space: nowrap;">' +
                         'x' + o.quantity + ' ' + o.unit +
                     '</div>' +
+                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
+                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
+                    '</button>' +
                     '<button class="ruta-btn ruta-btn-complete" onclick="completeRutaOrder(\'' + o.id + '\')">' +
                         '<i data-lucide="check" style="width: 14px;"></i>' +
                     '</button>' +
@@ -4806,7 +5242,10 @@
                 }
             }
             renderMiniChart('miniChartGastos', dataGastos, colorGastos, '€');
-            
+            // Mostrar contenedor de gráficos
+            const dualCharts = document.getElementById('dashChartsDual');
+            if (dualCharts) dualCharts.style.display = 'flex';
+
             // Render Gráfico 2: Volumen de Actividad
             let dataVolumen = [5, 12, 8, 15, 10, 22, 18];
             if (globalStats && globalStats.countAlbaranes > 0) {
@@ -4858,6 +5297,9 @@
                         '</div>' +
                     '</div>' +
                     '<div style="margin-top: 14px; display: flex; justify-content: flex-end; gap: 8px;">' +
+                        '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
+                            '<i data-lucide="pencil" style="width: 14px;"></i>' +
+                        '</button>' +
                         (o.clientPhone ? '<button class="ruta-btn ruta-btn-whatsapp" onclick="sendWhatsAppRuta(\'' + o.id + '\')">' +
                             '<i data-lucide="message-circle" style="width: 14px;"></i> Avisar' +
                         '</button>' : '') +
@@ -4884,6 +5326,9 @@
                 '<div style="display: flex; flex-direction: column; gap: 12px;">';
 
             items.forEach(function(o) {
+                var qtyBadge = (o.quantity && o.quantity > 0) ?
+                    '<div style="padding: 5px 10px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: #10b981; font-size: 11px; font-weight: 700; white-space: nowrap;">x' + o.quantity + ' ' + (o.unit || 'Uds') + '</div>' : '';
+
                 html += '<div class="dashboard-widget glass-panel ruta-card" data-ruta-id="' + o.id + '" style="padding: 16px; border-radius: 16px; border: 1px solid var(--border); display: flex; align-items: center; gap: 14px;">' +
                     '<div style="width: 40px; height: 40px; background: rgba(212, 175, 55, 0.08); border-radius: 12px; display: flex; align-items: center; justify-content: center;">' +
                         '<i data-lucide="clipboard-check" style="width: 20px; color: #D4AF37;"></i>' +
@@ -4892,6 +5337,10 @@
                         '<div class="ruta-product-name" style="font-size: 14px; font-weight: 600; color: var(--text-primary);">' + o.product + '</div>' +
                         (o.note ? '<div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">' + o.note + '</div>' : '') +
                     '</div>' +
+                    qtyBadge +
+                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
+                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
+                    '</button>' +
                     '<button class="ruta-btn ruta-btn-delete" onclick="deleteRutaTask(\'' + o.id + '\')" title="Eliminar">' +
                         '<i data-lucide="trash-2" style="width: 14px;"></i>' +
                     '</button>' +
@@ -4927,6 +5376,12 @@
                     '<div style="flex: 1; min-width: 0;">' +
                         '<div class="ruta-product-name" style="font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: line-through;">' + o.product + '</div>' +
                     '</div>' +
+                    '<button class="ruta-btn ruta-btn-edit" onclick="openEditModal(\'' + o.id + '\')" title="Editar">' +
+                        '<i data-lucide="pencil" style="width: 14px;"></i>' +
+                    '</button>' +
+                    '<button class="ruta-btn ruta-btn-restore" onclick="restoreRutaOrder(\'' + o.id + '\')" title="Restaurar">' +
+                        '<i data-lucide="undo-2" style="width: 14px;"></i>' +
+                    '</button>' +
                 '</div>';
             });
 
@@ -4959,6 +5414,80 @@
             renderRuta();
         };
 
+        window.restoreRutaOrder = function(orderId) {
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (order) { order.completed = false; order.completedAt = null; }
+            saveRutaData(data);
+            renderRuta();
+        };
+
+        // --- Modal Editar Tarea ---
+        window.openEditModal = function(orderId) {
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (!order) return;
+
+            document.getElementById('editTaskId').value = orderId;
+            document.getElementById('editTaskName').value = order.product || '';
+            document.getElementById('editTaskQty').value = order.quantity || '';
+            document.getElementById('editTaskUnit').value = order.unit || '';
+            document.getElementById('editTaskSchedule').value = order.schedule || '';
+            document.getElementById('editTaskClient').value = order.client || '';
+            document.getElementById('editTaskPhone').value = order.clientPhone || '';
+            document.getElementById('editTaskNotes').value = order.note || '';
+
+            // Mostrar/ocultar campos según tipo
+            var scheduleField = document.getElementById('editTaskSchedule');
+            var clientField = document.getElementById('editTaskClient');
+            var phoneField = document.getElementById('editTaskPhone');
+            scheduleField.style.display = (order.type === 'recurrent') ? '' : 'none';
+            clientField.style.display = (order.type === 'dynamic') ? '' : 'none';
+            phoneField.style.display = (order.type === 'dynamic') ? '' : 'none';
+
+            var modal = document.getElementById('editTaskModal');
+            if (modal) modal.classList.add('open');
+            setTimeout(function() {
+                if (typeof lucide !== 'undefined') lucide.createIcons({ attrs: { 'stroke-width': 1.8, 'stroke': 'currentColor' } });
+            }, 50);
+        };
+
+        window.closeEditModal = function() {
+            var modal = document.getElementById('editTaskModal');
+            if (modal) modal.classList.remove('open');
+        };
+
+        window.saveEditTask = function() {
+            var orderId = document.getElementById('editTaskId').value;
+            var data = getRutaData();
+            var order = data.orders.find(function(o) { return o.id === orderId; });
+            if (!order) return;
+
+            var newName = document.getElementById('editTaskName').value.trim();
+            if (!newName) { alert('El nombre no puede estar vacío.'); return; }
+
+            order.product = newName;
+            order.quantity = parseInt(document.getElementById('editTaskQty').value) || order.quantity || 0;
+            order.unit = document.getElementById('editTaskUnit').value.trim() || order.unit || '';
+            order.note = document.getElementById('editTaskNotes').value.trim();
+
+            if (order.type === 'recurrent') {
+                var newSchedule = document.getElementById('editTaskSchedule').value.trim();
+                if (newSchedule && newSchedule !== order.schedule) {
+                    order.schedule = newSchedule;
+                    order.days = parseScheduleDays(newSchedule);
+                }
+            }
+            if (order.type === 'dynamic') {
+                order.client = document.getElementById('editTaskClient').value.trim();
+                order.clientPhone = document.getElementById('editTaskPhone').value.trim();
+            }
+
+            saveRutaData(data);
+            closeEditModal();
+            renderRuta();
+        };
+
         window.sendWhatsAppRuta = function(orderId) {
             var data = getRutaData();
             var order = data.orders.find(function(o) { return o.id === orderId; });
@@ -4982,6 +5511,16 @@
                 if (nameInput) { nameInput.value = ''; nameInput.focus(); }
                 var notesInput = document.getElementById('taskNotes');
                 if (notesInput) notesInput.value = '';
+                var qtyInput = document.getElementById('taskQty');
+                if (qtyInput) qtyInput.value = '';
+                var unitInput = document.getElementById('taskUnit');
+                if (unitInput) unitInput.value = '';
+                // Reset day chips — mark today as active by default
+                var chips = document.querySelectorAll('#taskDayChips .ruta-day-chip');
+                var todayD = new Date().getDay();
+                chips.forEach(function(c) {
+                    c.classList.toggle('active', parseInt(c.dataset.day) === todayD);
+                });
             }
         };
 
@@ -4993,14 +5532,30 @@
         window.saveNewTask = function() {
             var nameInput = document.getElementById('taskName');
             var notesInput = document.getElementById('taskNotes');
+            var qtyInput = document.getElementById('taskQty');
+            var unitInput = document.getElementById('taskUnit');
             var name = nameInput ? nameInput.value.trim() : '';
             if (!name) { alert('Escribe un nombre para la tarea.'); return; }
+
+            var qty = qtyInput ? parseInt(qtyInput.value) || 0 : 0;
+            var unit = unitInput ? unitInput.value.trim() : '';
+
+            // Collect selected days
+            var selectedDays = [];
+            document.querySelectorAll('#taskDayChips .ruta-day-chip.active').forEach(function(c) {
+                selectedDays.push(parseInt(c.dataset.day));
+            });
+            // If none selected → all days
+            if (selectedDays.length === 0) selectedDays = [0,1,2,3,4,5,6];
 
             var data = getRutaData();
             data.orders.push({
                 id: 'man-' + Date.now(),
                 type: 'manual',
                 product: name,
+                quantity: qty,
+                unit: unit,
+                days: selectedDays,
                 note: notesInput ? notesInput.value.trim() : '',
                 completed: false,
                 completedAt: null
@@ -5009,6 +5564,11 @@
             closeTaskModal();
             renderRuta();
         };
+
+        // Day chip toggle
+        document.querySelectorAll('#taskDayChips .ruta-day-chip').forEach(function(chip) {
+            chip.addEventListener('click', function() { chip.classList.toggle('active'); });
+        });
 
         // FAB Tarea -> abrir modal
         (function() {
@@ -5020,6 +5580,14 @@
             if (modal) {
                 modal.addEventListener('click', function(e) {
                     if (e.target === modal) closeTaskModal();
+                });
+            }
+
+            // Cerrar modal editar al hacer click en overlay
+            var editModal = document.getElementById('editTaskModal');
+            if (editModal) {
+                editModal.addEventListener('click', function(e) {
+                    if (e.target === editModal) closeEditModal();
                 });
             }
         })();
@@ -5043,7 +5611,6 @@
             }
         }
     </script>
-    <script src="/js/api.js"></script>
     <script src="agenda.js"></script>
     <script>
         // ===== PUNTO ÚNICO DE INICIALIZACIÓN =====
