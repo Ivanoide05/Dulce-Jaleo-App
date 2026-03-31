@@ -1979,6 +1979,68 @@
             border-color: var(--rose);
         }
 
+        /* [NUEVO] Carrusel de Diagramas Responsivo v3.0 */
+        .carousel-charts-wrapper {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            gap: 12px;
+            padding: 4px 0 10px 0;
+            scrollbar-width: none; /* Firefox */
+        }
+        .carousel-charts-wrapper::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        .carousel-chart-item {
+            flex: 0 0 calc(100% - 20px);
+            min-width: calc(100% - 20px);
+            scroll-snap-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.3s ease;
+        }
+        body:not(.dark-theme) .carousel-chart-item {
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .carousel-chart-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .carousel-chart-header i {
+            width: 16px;
+            height: 16px;
+            color: var(--gold);
+        }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: all 0.3s ease;
+        }
+        .dot.active {
+            width: 18px;
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
         /* ===== BOTTOM NAVIGATION (DOCK PREMIUM APPLE PILL) ===== */
         .bottom-nav {
             position: fixed;
@@ -2403,6 +2465,67 @@
             --glass-bg: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.1);
         }
+
+        /* --- [NUEVO] Carousel Charts Style v3.0 --- */
+    .carousel-charts-wrapper {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 12px;
+        padding: 4px 0 12px;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE 10+ */
+    }
+    .carousel-charts-wrapper::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+    .carousel-chart-item {
+        flex: 0 0 100%;
+        scroll-snap-align: center;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 18px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        min-height: 110px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .carousel-chart-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+    .carousel-chart-header i {
+        width: 14px;
+        color: var(--gold);
+    }
+    .carousel-chart-header span {
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-muted);
+    }
+    .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 4px;
+    }
+    .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.15);
+        transition: all 0.3s ease;
+    }
+    .dot.active {
+        width: 18px;
+        background: var(--gold);
+    }
+    /* --- [FIN] Carousel Style --- */
 
         .bento-grid {
             display: grid;
@@ -3402,15 +3525,48 @@
                             </div>
                         </div>
 
-                        <!-- Gráfico Dual: Gastos | Volumen (oculto si vacío) -->
-                        <div id="dashChartsDual" style="display: none; gap: 15px; margin-top: 12px; margin-bottom: 0;">
-                            <div style="flex: 1; min-width: 0;">
-                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="bar-chart-2" style="width: 10px;"></i>Tendencia</div>
-                                <div id="miniChartGastos" class="bento-chart-mini" style="height: 45px; margin-top: 0;"></div>
+                        <!-- [NUEVO] Carrusel de Diagramas Responsivo v3.0 -->
+                        <div class="carousel-charts-container" style="margin-top: 20px; margin-bottom: 10px; position: relative;">
+                            <div class="carousel-charts-wrapper" id="carouselWrapper">
+                                <!-- Tarjeta 1: Tendencia (Línea) -->
+                                <div class="carousel-chart-item">
+                                    <div class="carousel-chart-header">
+                                        <i data-lucide="trending-up"></i>
+                                        <span>Tendencia Mensual</span>
+                                    </div>
+                                    <div id="miniChartTrend" class="bento-chart-mini" style="height: 88px;"></div>
+                                </div>
+                                <!-- Tarjeta 2: Actividad (Barras) -->
+                                <div class="carousel-chart-item">
+                                    <div class="carousel-chart-header">
+                                        <i data-lucide="activity"></i>
+                                        <span>Actividad Semanal</span>
+                                    </div>
+                                    <div id="miniChartActivity" class="bento-chart-mini" style="height: 88px;"></div>
+                                </div>
+                                <!-- Tarjeta 3: Distribución (Pie) -->
+                                <div class="carousel-chart-item">
+                                    <div class="carousel-chart-header">
+                                        <i data-lucide="pie-chart"></i>
+                                        <span>Distribución Gastos</span>
+                                    </div>
+                                    <div id="miniChartDistribution" class="bento-chart-mini" style="height: 88px;"></div>
+                                </div>
+                                <!-- Tarjeta 4: Balance (Barras Comparativo) -->
+                                <div class="carousel-chart-item">
+                                    <div class="carousel-chart-header">
+                                        <i data-lucide="bar-chart-2"></i>
+                                        <span>Balance vs Anterior</span>
+                                    </div>
+                                    <div id="miniChartBalance" class="bento-chart-mini" style="height: 88px;"></div>
+                                </div>
                             </div>
-                            <div style="flex: 1; min-width: 0;">
-                                <div style="font-size: 8.5px; color: var(--gold); text-transform: uppercase; font-weight: 800; margin-bottom: 6px; opacity: 0.9; letter-spacing: 0.05em; display:flex; align-items:center; gap:4px;"><i data-lucide="activity" style="width: 10px;"></i>Actividad</div>
-                                <div id="miniChartVolumen" class="bento-chart-mini" style="height: 45px; margin-top: 0;"></div>
+                            <!-- Indicadores de Navegación (Dots) -->
+                            <div class="carousel-dots" id="carouselDots">
+                                <div class="dot active"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
+                                <div class="dot"></div>
                             </div>
                         </div>
 
@@ -6306,155 +6462,153 @@
          * @param {string} color - Color del trazado (hex)
          */
         /**
-         * Renderiza un gráfico SVG profesional estilo Fintech v2.2
-         * @param {string} elementId - ID del contenedor
-         * @param {number[]} data - Serie de datos numéricos
-         * @param {string} color - Color principal del gráfico
+         * Motor de procesamiento en tiempo real de los 4 datasets del carrusel.
+         * Opera sobre globalStats.allRecords en un único ciclo de iteración.
+         * @returns {{ trend, activity, distribution, topProveedores }}
          */
-        function renderMiniChart(elementId, data, color = '#D4AF37', unit = '€') {
-            const container = document.getElementById(elementId);
-            if (!container) return;
+        function getDetailedAnalytics() {
+            const CACHE_KEY = 'dulce_jaleo_analytics';
+            const all = (globalStats && globalStats.allRecords) ? globalStats.allRecords : [];
 
-            const width = container.offsetWidth || 200;
-            // Altura adaptativa: más presencia en móvil
-            // Altura adaptativa leyendo el contenedor dictado por CSS
-            let height = container.offsetHeight;
-            if (height === 0 || isNaN(height)) {
-                height = isMobile ? 90 : 55;
+            if (all.length === 0) {
+                try {
+                    const cached = localStorage.getItem(CACHE_KEY);
+                    if (cached) return JSON.parse(cached);
+                } catch(e) {}
+                return { trend: [0,0,0,0,0,0,0], activity: [0,0,0,0,0,0,0], distribution: [0,0,0], topProveedores: [], dayLabels: [] };
             }
-            const padding = 12;
-            const sidePadding = 0; // Eliminamos padding lateral para ir al borde
-            const labelsArea = 15;
-            const chartHeight = height - labelsArea;
-            
-            // Fallback con 7 días (L a D) para asegurar consistencia visual
-            if (!data || data.length < 2) data = [12, 28, 18, 42, 22, 55, 45];
-            const days = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
-            const max = Math.max(...data);
-            const min = Math.min(...data);
-            const range = max - min || 1;
-            
-            // Línea de referencia (Grid) al 50% de la escala
-            const midVal = (max + min) / 2;
-            const midY = chartHeight - ((midVal - min) / range * (chartHeight - padding * 2) + padding);
+            const now    = new Date();
+            // Mes actual en formato YYYY-MM, derivado de la fecha de hoy (no de globalStats)
+            const mesStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
 
-            let pathData = `M 0 ${chartHeight - ((data[0] - min) / range * (chartHeight - padding * 2) + padding)}`;
-            let labelsSVG = '';
+            const trendCube    = [0, 0, 0, 0, 0, 0, 0];
+            const activityCube = [0, 0, 0, 0, 0, 0, 0];
+            const distMap      = { FACTURA: 0, ALBARAN: 0, GASTOS_VARIOS: 0 };
+            const provMap      = {};
 
-            data.forEach((val, i) => {
-                const x = (i / (data.length - 1)) * (width - sidePadding * 2) + sidePadding;
-                const y = chartHeight - ((val - min) / range * (chartHeight - padding * 2) + padding);
-                if (i > 0) pathData += ` L ${x} ${y}`;
-                
-                // Etiquetas Eje X (Días) - Con margen interno mini para legibilidad
-                if (days[i]) {
-                    let labelX = x;
-                    if (i === 0) labelX += 15;
-                    if (i === data.length - 1) labelX -= 15;
-                    labelsSVG += `<text x="${labelX}" y="${height - 2}" font-size="9" fill="var(--text-muted)" text-anchor="middle" font-weight="600" style="opacity:0.6">${days[i]}</text>`;
+            // Etiquetas de día para el eje X (L M X J V S D)
+            const DIAS = ['D','L','M','X','J','V','S'];
+            const dayLabels = [];
+            for (let d = 6; d >= 0; d--) {
+                const dd = new Date(now); dd.setDate(dd.getDate() - d);
+                dayLabels.push(d === 0 ? 'Hoy' : DIAS[dd.getDay()]);
+            }
+
+            for (let i = 0; i < all.length; i++) {
+                const rec = all[i];
+                // Siempre usar createdAt (fecha de escaneo) para filtros temporales
+                // Es consistente: refleja cuándo se procesó el documento, no la fecha del papel
+                const scanDate = rec.createdAt || '';
+                if (!scanDate) continue;
+
+                const recDate = new Date(scanDate);
+                if (isNaN(recDate.getTime())) continue;
+
+                // ── Últimos 7 días: tendencia + actividad ──────────────
+                const diffDays = Math.floor((now - recDate) / 86400000);
+                if (diffDays >= 0 && diffDays <= 6) {
+                    const idx = 6 - diffDays;
+                    trendCube[idx]    += (rec.total || 0);
+                    activityCube[idx] += 1;
                 }
-            });
 
-            const avg = data.reduce((a, b) => a + b, 0) / data.length;
-            const avgY = chartHeight - ((avg - min) / range * (chartHeight - padding * 2) + padding);
-            const lastVal = data[data.length - 1];
-            const lastX = width;
-            const lastY = chartHeight - ((lastVal - min) / range * (chartHeight - padding * 2) + padding);
+                // ── Mes actual: distribución + top proveedores ─────────
+                if (scanDate.startsWith(mesStr)) {
+                    // Usar origen (tabla de procedencia) para el pie chart — no la cat reclasificada
+                    const origenNorm = (rec.origen || '').toUpperCase();
+                    if (origenNorm === 'FACTURA' || origenNorm === 'FACTURAS')         distMap.FACTURA       += (rec.total || 0);
+                    else if (origenNorm === 'ALBARAN' || origenNorm === 'ALBARANES')   distMap.ALBARAN       += (rec.total || 0);
+                    else if (origenNorm.includes('GASTO'))                             distMap.GASTOS_VARIOS += (rec.total || 0);
+                    const prov = rec.proveedor || 'Sin nombre';
+                    if (prov !== 'Desconocido') {
+                        provMap[prov] = (provMap[prov] || 0) + (rec.total || 0);
+                    }
+                }
+            }
 
-            const svg = `
-                <svg width="100%" height="${height}" preserveAspectRatio="none" style="overflow: visible; filter: drop-shadow(0 4px 12px rgba(212,175,55,0.08)); font-family: 'Outfit', sans-serif;">
-                    <defs>
-                        <linearGradient id="gradient-${elementId}" x1="0%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" style="stop-color:${color};stop-opacity:0.3" />
-                            <stop offset="100%" style="stop-color:${color};stop-opacity:0" />
-                        </linearGradient>
-                    </defs>
-                    
-                    <!-- Línea de Promedio (Funcional) -->
-                    <line x1="0" y1="${avgY}" x2="${width}" y2="${avgY}" stroke="rgba(212,175,55,0.2)" stroke-width="1" stroke-dasharray="2,2" />
-                    <text x="5" y="${avgY - 4}" font-size="7" fill="var(--gold)" style="opacity:0.5; font-weight:700;">PROMEDIO</text>
-                    
-                    <!-- Relleno de Área Degradado -->
-                    <path d="${pathData} L ${width} ${chartHeight} L 0 ${chartHeight} Z" fill="url(#gradient-${elementId})" />
-                    
-                    <!-- Línea de Tendencia Principal (Luxury Stroke) -->
-                    <path d="${pathData}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-                    
-                    <!-- Puntos Destacados -->
-                    ${data.map((val, i) => {
-                        const x = (i / (data.length - 1)) * width;
-                        const y = chartHeight - ((val - min) / range * (chartHeight - padding * 2) + padding);
-                        return `<circle cx="${x}" cy="${y}" r="2" fill="${color}" style="opacity:0.8" />`;
-                    }).join('')}
+            // Porcentajes distribución (pie)
+            const distTotal = distMap.FACTURA + distMap.ALBARAN + distMap.GASTOS_VARIOS || 1;
+            const distribution = [
+                Math.round((distMap.FACTURA      / distTotal) * 100),
+                Math.round((distMap.ALBARAN       / distTotal) * 100),
+                Math.round((distMap.GASTOS_VARIOS / distTotal) * 100)
+            ];
+            // Importes brutos para la leyenda del pie
+            const distRaw = [distMap.FACTURA, distMap.ALBARAN, distMap.GASTOS_VARIOS];
 
-                    <!-- Tooltip del último valor -->
-                    <g transform="translate(${lastX - 35}, ${lastY - 22})">
-                        <rect width="35" height="14" rx="4" fill="${color}" />
-                        <text x="17.5" y="10" font-size="8" fill="#000" text-anchor="middle" font-weight="900">${lastVal.toFixed(0)}${unit}</text>
-                    </g>
-                    
-                    <!-- Etiquetas Temporales -->
-                    ${labelsSVG}
-                </svg>
-            `;
-            
-            container.innerHTML = svg;
-            container.style.height = height + 'px';
+            // Top 5 proveedores ordenados por importe
+            const topProveedores = Object.entries(provMap)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 5)
+                .map(([nombre, valor]) => ({
+                    nombre: nombre.length > 11 ? nombre.substring(0, 9) + '…' : nombre,
+                    valor: Math.round(valor)
+                }));
+
+            const result = { trend: trendCube, activity: activityCube, distribution, distRaw, topProveedores, dayLabels };
+            try { localStorage.setItem(CACHE_KEY, JSON.stringify(result)); } catch(e) {}
+            return result;
         }
 
+
         /**
-         * Actualiza las tendencias y charts del Dashboard
+         * Actualiza las tendencias y charts del Dashboard v3.0
+         * Consume getDetailedAnalytics() para datos reales desde globalStats.allRecords
          */
         function updateDashboardPremium() {
-            // Datos de Gastos: Prioriza reales, si no, usa Demo Luxury
-            let dataGastos = [150, 180, 240, 210, 350, 480, 420]; // Demo 7 días
-            let colorGastos = '#D4AF37';
-
+            // Sincronizar indicadores básicos
             if (globalStats) {
-                // Métricas Reales para el Centro de Control IA
-                const alertsEl = document.getElementById('smart-metric-alerts');
-                const savingsEl = document.getElementById('smart-metric-savings');
-                const insightEl = document.getElementById('dash-ai-insight');
+                const albaranesEl = document.getElementById('dash-count-albaranes');
+                if (albaranesEl) albaranesEl.textContent = globalStats.countAlbaranes || '0';
 
-                if (alertsEl) alertsEl.textContent = globalStats.countAlbaranes || '0';
-                
-                // Cálculo de Ahorro: (Ticket Medio Mes Pasado - Actual) o simplemente 8% del gasto
+                const savingsEl = document.getElementById('smart-metric-savings');
                 if (savingsEl) {
                     const savings = (globalStats.sumGastos || 0) * 0.085;
                     savingsEl.textContent = savings.toFixed(2) + '€';
                 }
 
+                const insightEl = document.getElementById('dash-ai-insight');
                 if (insightEl && globalStats.countAlbaranes > 0) {
-                    insightEl.textContent = `Tienes ${globalStats.countAlbaranes} albaranes pendientes de validar. Tu ticket medio actual es de ${(globalStats.sumGastos / (globalStats.countFacturas || 1)).toFixed(2)}€.`;
-                }
-
-                // Generar gráfico basado en el gasto total
-                if (globalStats.sumGastos > 0) {
-                    const base = globalStats.sumGastos / 7;
-                    dataGastos = [
-                        base * 0.8, base * 1.1, base * 0.9, base * 1.3, base * 1.0, base * 1.5, base * 1.4
-                    ];
+                    insightEl.textContent = `Tienes ${globalStats.countAlbaranes} albaranes pendientes de validar. Ticket medio: ${(globalStats.sumGastos / (globalStats.countFacturas || 1)).toFixed(2)}€.`;
                 }
             }
-            renderMiniChart('miniChartGastos', dataGastos, colorGastos, '€');
-            // Mostrar contenedor de gráficos
-            const dualCharts = document.getElementById('dashChartsDual');
-            if (dualCharts) dualCharts.style.display = 'flex';
 
-            // Render Gráfico 2: Volumen de Actividad
-            let dataVolumen = [5, 12, 8, 15, 10, 22, 18];
-            if (globalStats && globalStats.countAlbaranes > 0) {
-                const b = Math.max(2, globalStats.countAlbaranes / 7);
-                dataVolumen = [b*0.8, b*1.2, b, b*0.6, b*1.5, b*1.8, b*1.1];
-            }
-            renderMiniChart('miniChartVolumen', dataVolumen, '#10b981', 'u');
+            const analytics = getDetailedAnalytics();
+            const topVals = analytics.topProveedores.length > 0
+                ? analytics.topProveedores.map(p => p.valor)
+                : [0, 0, 0, 0, 0];
 
-            // Re-escaneo de iconos Lucide
+            renderMiniChart('miniChartTrend',        analytics.trend,        '#D4AF37', '€', 'line',    { labels: analytics.dayLabels });
+            renderMiniChart('miniChartActivity',     analytics.activity,     '#10b981', 'u', 'bar',     { labels: analytics.dayLabels });
+            renderMiniChart('miniChartDistribution', analytics.distribution, '#3b82f6', '%', 'pie',     { legend: ['Facturas','Albaranes','Gastos'] });
+            renderMiniChart('miniChartBalance',      topVals,                '#D4AF37', '€', 'bar',     { labels: analytics.topProveedores.map(p=>p.nombre), subtype: 'providers' });
+
+            initCarouselDots();
+
             setTimeout(() => {
                 if (window.lucide) lucide.createIcons();
             }, 100);
         }
+
+        /**
+         * Sincroniza el scroll del carrusel con los puntos indicadores (dots)
+         */
+        function initCarouselDots() {
+            const wrapper = document.getElementById('carouselWrapper');
+            const dots = document.querySelectorAll('#carouselDots .dot');
+            if (!wrapper || dots.length === 0) return;
+
+            wrapper.addEventListener('scroll', () => {
+                const index = Math.round(wrapper.scrollLeft / wrapper.offsetWidth);
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === index);
+                });
+            });
+        }
+
+        // --- Pedidos Dinámicos ---
+
 
         // --- Pedidos Dinámicos ---
         function renderRutaDinamicos(items) {
