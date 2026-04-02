@@ -5950,9 +5950,14 @@
             }
 
             // REGLA CLAVE: Fuerza Bruta con onclick en línea + CSS anticapas invisibles
+            const allDocs = (globalStats && globalStats.allRecords) ? globalStats.allRecords : [];
             list.innerHTML = filtered.map((c, i) => {
                 const initials = c.nombre.split(' ').slice(0, 2).map(w => w[0] || '').join('').toUpperCase();
                 const avatarClass = c.tipo === 'proveedor' ? 'avatar-proveedor' : 'avatar-cliente';
+                const cDocs = allDocs.filter(d => (d.proveedor||'').toLowerCase() === (c.nombre||'').toLowerCase());
+                const health = getClientHealth(cDocs);
+                const healthColors = { green: '#10b981', yellow: '#f59e0b', red: '#ef4444' };
+                const hColor = healthColors[health.stateClass] || '#ef4444';
                 return `
                 <div class="contact-card" onclick="window.forzarAperturaCliente('${c.id}')" style="cursor: pointer; position: relative; z-index: 50; pointer-events: auto;">
                     <div class="contact-avatar ${avatarClass}">${initials}</div>
@@ -5963,7 +5968,13 @@
                             ${c.categoria ? ' · ' + c.categoria : ''}
                         </div>
                     </div>
-                    <span class="contact-arrow">›</span>
+                    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;">
+                        <div style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:50px;background:rgba(255,255,255,0.03);border:1px solid ${hColor}33;">
+                            <div style="width:7px;height:7px;border-radius:50%;background:${hColor};box-shadow:0 0 6px ${hColor};flex-shrink:0;"></div>
+                            <span style="font-size:10px;font-weight:700;color:${hColor};text-transform:uppercase;">${health.label}</span>
+                        </div>
+                        <span class="contact-arrow">›</span>
+                    </div>
                 </div>`;
             }).join('');
         }
