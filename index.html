@@ -2041,6 +2041,33 @@
             border-radius: 10px;
         }
 
+
+        /* ===== [FASE 13] HEALTH BADGES & SPARKLINES ===== */
+        .client-health-badge { display:inline-flex; align-items:center; gap:8px; padding:6px 14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:50px; margin-bottom:16px; }
+        .health-dot { width:10px; height:10px; border-radius:50%; position:relative; }
+        .health-dot::after { content:''; position:absolute; inset:-4px; border-radius:50%; opacity:0.4; animation:pulse-health 2s infinite; }
+        @keyframes pulse-health { 0%{transform:scale(1);opacity:0.6} 50%{transform:scale(1.6);opacity:0} 100%{transform:scale(1);opacity:0} }
+        .health-green  { background:#10b981; box-shadow:0 0 10px #10b981; }
+        .health-green::after { background:#10b981; }
+        .health-yellow { background:#f59e0b; box-shadow:0 0 10px #f59e0b; }
+        .health-yellow::after { background:#f59e0b; }
+        .health-red { background:#ef4444; box-shadow:0 0 10px #ef4444; }
+        .health-red::after { background:#ef4444; }
+        .client-stats-mini-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:16px 0; }
+        .mini-stat-card { background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:12px; border-radius:16px; }
+        .mini-stat-label { font-size:10px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+        .mini-stat-value { font-size:16px; font-weight:700; color:var(--text-primary); }
+        .sparkline-container { width:100%; height:40px; margin-top:10px; overflow:hidden; }
+        .sparkline-svg { width:100%; height:100%; stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; fill:none; }
+        .premium-calendar-scroll { display:flex; overflow-x:auto; gap:12px; padding:10px var(--gutter); scroll-snap-type:x mandatory; scrollbar-width:none; scroll-behavior:smooth; }
+        .premium-calendar-scroll::-webkit-scrollbar { display:none; }
+        .premium-day-btn { min-width:60px; height:85px; border-radius:20px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; scroll-snap-align:center; cursor:pointer; transition:all 0.3s; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); }
+        body:not(.dark-theme) .premium-day-btn { background:rgba(0,0,0,0.03); border:1px solid rgba(0,0,0,0.05); }
+        body:not(.dark-theme) .day-number-txt { color:var(--text-primary) !important; }
+        .premium-day-btn:active { transform:scale(0.95); }
+        .premium-day-btn.active { background:var(--gold); border-color:var(--gold); box-shadow:0 4px 20px rgba(212,175,55,0.35); }
+        .premium-day-btn.active .day-number-txt { color:#000 !important; }
+        /* ===== [FASE 13] FIN CSS ===== */
         /* ===== BOTTOM NAVIGATION (DOCK PREMIUM APPLE PILL) ===== */
         .bottom-nav {
             position: fixed;
@@ -3832,6 +3859,26 @@
                     <div class="stat-value" id="mFacturas" style="font-size: 22px; font-weight: 500;">—</div>
                     <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">Docs mes</div>
                 </div>
+            </div>
+
+
+            <!-- ===== [FASE 13] Análisis de Rentabilidad por Cliente ===== -->
+            <div style="padding: 0 var(--gutter); margin-bottom: 24px;">
+                <div class="config-section-title" style="margin-bottom: 12px;">🔍 Análisis por Cliente / Proveedor</div>
+                <div style="position: relative;">
+                    <div class="glass-panel" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--border);border-radius:16px;">
+                        <i data-lucide="search" style="width:16px;opacity:0.5;flex-shrink:0;"></i>
+                        <input
+                            id="margenClientSearch"
+                            type="text"
+                            placeholder="Buscar cliente o proveedor..."
+                            oninput="searchMargenClient()"
+                            style="background:none;border:none;outline:none;width:100%;font-family:'Outfit',sans-serif;font-size:14px;color:var(--text-primary);"
+                        />
+                    </div>
+                    <div id="margenClientResults" style="display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;z-index:100;background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 12px 32px rgba(0,0,0,0.2);max-height:220px;overflow-y:auto;"></div>
+                </div>
+                <div id="selectedClientDash" style="display:none;margin-top:16px;"></div>
             </div>
 
             <!-- Config ingresos -->
@@ -6299,6 +6346,215 @@
             return data;
         }
 
+        // ===== [FASE 13] CACHÉ DE DATOS =====
+        var DATA_CACHE_KEY = 'dulce_jaleo_data_v2';
+        var DATA_CACHE_TTL = 86400000;
+        function saveDataCache() {
+            try { localStorage.setItem(DATA_CACHE_KEY, JSON.stringify({ records: globalStats.allRecords, ts: Date.now() })); } catch(e) {}
+        }
+        function loadDataCache() {
+            try {
+                var raw = localStorage.getItem(DATA_CACHE_KEY);
+                if (!raw) return false;
+                var d = JSON.parse(raw);
+                if (Date.now() - d.ts > DATA_CACHE_TTL) return false;
+                globalStats.allRecords = d.records;
+                globalStats.loaded = true;
+                calculateGlobalStats();
+                return true;
+            } catch(e) { return false; }
+        }
+
+        // ===== [FASE 13] ESTADO DE PEDIDOS =====
+        function getOrderStatus(orderId) {
+            if (!orderId) return 'Pendiente';
+            var s = JSON.parse(localStorage.getItem('dulce_jaleo_orders_status') || '{}');
+            return s[orderId] || 'Pendiente';
+        }
+        function setOrderStatus(orderId, status) {
+            if (!orderId) return;
+            var s = JSON.parse(localStorage.getItem('dulce_jaleo_orders_status') || '{}');
+            s[orderId] = status;
+            localStorage.setItem('dulce_jaleo_orders_status', JSON.stringify(s));
+        }
+        window.toggleOrderStatus = function(orderId) {
+            setOrderStatus(orderId, getOrderStatus(orderId) === 'Completado' ? 'Pendiente' : 'Completado');
+            if (typeof renderClientCalendar === 'function') renderClientCalendar();
+            if (typeof renderRuta === 'function') renderRuta();
+        };
+
+        // ===== [FASE 13] SALUD DEL CLIENTE =====
+        function getClientHealth(docs) {
+            if (!docs || !docs.length) return { color:'red', stateClass:'red', label:'Sin Actividad' };
+            var now = new Date();
+            var last = docs.reduce(function(p,c) { return new Date(c.processedAt||c.fecha) > new Date(p.processedAt||p.fecha) ? c : p; });
+            var diff = Math.floor((now - new Date(last.processedAt || last.fecha)) / 86400000);
+            if (diff <= 3 && docs.length >= 4) return { color:'green', stateClass:'green', label:'Óptimo' };
+            if (diff <= 7) return { color:'yellow', stateClass:'yellow', label:'En Riesgo' };
+            return { color:'red', stateClass:'red', label:'Crítico' };
+        }
+
+        // ===== [FASE 13] SPARKLINE SVG =====
+        function generateSparklineSVG(docs) {
+            if (!docs || docs.length < 2) return '<div style="color:var(--text-muted);font-size:10px;padding:10px 0;">Datos insuficientes</div>';
+            var vals = docs.filter(function(d) { return parseFloat(d.total) > 0; }).slice(0,7).reverse().map(function(d) { return parseFloat(d.total); });
+            if (vals.length < 2) return '<div style="color:var(--text-muted);font-size:10px;padding:10px 0;">Datos insuficientes</div>';
+            var mx = Math.max.apply(null,vals)||1, mn = Math.min.apply(null,vals), rng = mx-mn||1, w=100, h=40;
+            var pts = vals.map(function(v,i) { return (i/(vals.length-1))*w + ',' + (h - ((v-mn)/rng)*(h-10) - 5); }).join(' ');
+            var lastCY = h - ((vals[vals.length-1]-mn)/rng)*(h-10) - 5;
+            return '<svg viewBox="0 0 '+w+' '+h+'" class="sparkline-svg" style="width:100%;height:40px;display:block;"><polyline points="'+pts+'" stroke="var(--gold)" fill="none" stroke-width="2" stroke-linecap="round"/><circle cx="'+w+'" cy="'+lastCY.toFixed(1)+'" r="3" fill="var(--gold)"/></svg>';
+        }
+
+        // ===== [FASE 13] RENTABILIDAD DEL CLIENTE =====
+        function renderClientRentabilidad(client, docs) {
+            var c = document.getElementById('selectedClientDash');
+            if (!c) return;
+            var now = new Date();
+            var mes = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+            var docsMes = docs.filter(function(d) { return (d.processedAt||d.fecha||'').startsWith(mes); });
+            var health = getClientHealth(docs);
+            var totalMes = docsMes.reduce(function(s,d) { return s + (parseFloat(d.total)||0); }, 0);
+            var recencia = 'Sin datos';
+            if (docs.length > 0) {
+                var diff = Math.floor((now - new Date(docs[0].processedAt||docs[0].fecha)) / 86400000);
+                recencia = diff === 0 ? 'Hoy' : diff === 1 ? 'Ayer' : 'Hace ' + diff + ' días';
+            }
+            c.innerHTML =
+                '<div class="glass-panel" style="padding:24px;border-radius:28px;border:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);margin-bottom:20px;">' +
+                  '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;">' +
+                    '<div style="flex:1;">' +
+                      '<div class="client-health-badge"><div class="health-dot ' + health.stateClass + '"></div>' +
+                      '<span style="font-size:11px;font-weight:800;color:var(--text-primary);text-transform:uppercase;">ESTADO: ' + health.label + '</span></div>' +
+                      '<h2 style="font-family:Outfit,sans-serif;font-size:24px;font-weight:800;color:var(--text-primary);margin:0;">' + client.nombre + '</h2>' +
+                      '<p style="font-size:13px;color:var(--text-muted);margin:4px 0 0;">' + (client.tipo==='cliente'?'Cliente VIP':'Proveedor Premium') + '</p>' +
+                    '</div>' +
+                    '<div style="text-align:right;margin-left:16px;background:rgba(212,175,55,0.1);padding:12px;border-radius:16px;border:1px solid rgba(212,175,55,0.2);">' +
+                      '<div style="font-size:10px;color:#D4AF37;text-transform:uppercase;margin-bottom:4px;font-weight:800;">Gasto Mes</div>' +
+                      '<div style="font-size:22px;font-weight:900;color:var(--text-primary);">' + totalMes.toLocaleString('de-DE',{minimumFractionDigits:2}) + '<span style="font-size:13px;color:#D4AF37;"> €</span></div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<div class="client-stats-mini-grid">' +
+                    '<div class="mini-stat-card"><div class="mini-stat-label">Último Pedido</div><div class="mini-stat-value">🕒 ' + recencia + '</div></div>' +
+                    '<div class="mini-stat-card"><div class="mini-stat-label">Pedidos / Mes</div><div class="mini-stat-value">📦 ' + docsMes.length + '</div></div>' +
+                  '</div>' +
+                  '<div style="margin-top:10px;padding:16px;background:rgba(255,255,255,0.03);border-radius:20px;border:1px solid rgba(255,255,255,0.05);">' +
+                    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">' +
+                      '<span style="font-size:11px;color:var(--text-muted);font-weight:600;text-transform:uppercase;">Tendencia de Gasto</span>' +
+                      '<span style="font-size:10px;color:var(--gold);font-weight:800;background:rgba(212,175,55,0.1);padding:2px 6px;border-radius:4px;">PRO</span>' +
+                    '</div>' +
+                    '<div class="sparkline-container">' + generateSparklineSVG(docs) + '</div>' +
+                  '</div>' +
+                '</div>' +
+                '<div class="premium-calendar-container" id="clientCalendarContainer"></div>' +
+                '<h3 style="font-size:14px;font-weight:700;margin:24px 0 12px;color:var(--text-primary);text-transform:uppercase;letter-spacing:1px;">Historial de Actividad</h3>' +
+                '<div id="clientActivityList"></div>';
+        }
+
+        // ===== [FASE 13] BÚSQUEDA EN MÁRGENES =====
+        window.searchMargenClient = function() {
+            var q = (document.getElementById('margenClientSearch') ? document.getElementById('margenClientSearch').value : '').toLowerCase().trim();
+            var r = document.getElementById('margenClientResults');
+            if (!r) return;
+            if (q.length < 2) { r.style.display = 'none'; return; }
+            var matches = getContacts().filter(function(c) {
+                return (c.nombre||'').toLowerCase().includes(q) || (c.categoria||'').toLowerCase().includes(q);
+            }).slice(0,5);
+            if (!matches.length) {
+                r.innerHTML = '<div style="padding:12px;color:var(--text-muted);font-size:12px;text-align:center;">No se encontraron contactos</div>';
+            } else {
+                r.innerHTML = matches.map(function(c) {
+                    return '<div class="glass-panel" onclick="selectMargenClient('' + c.id + '')" style="padding:12px;margin-bottom:4px;cursor:pointer;border:1px solid rgba(255,255,255,0.05);display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.02);">' +
+                        '<div style="width:32px;height:32px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:12px;color:#000;">' + (c.nombre||'?')[0].toUpperCase() + '</div>' +
+                        '<div><div style="font-size:14px;font-weight:600;color:var(--text-primary);">' + (c.nombre||'Sin nombre') + '</div>' +
+                        '<div style="font-size:11px;color:var(--text-muted);">' + (c.tipo==='cliente'?'Cliente':'Proveedor') + '</div></div></div>';
+                }).join('');
+            }
+            r.style.display = 'block';
+        };
+
+        window.selectMargenClient = function(contactId) {
+            var client = getContacts().find(function(c) { return String(c.id) === String(contactId); });
+            if (!client) return;
+            document.getElementById('margenClientSearch').value = client.nombre;
+            document.getElementById('margenClientResults').style.display = 'none';
+            var allDocs = globalStats.allRecords.filter(function(r) {
+                return r.proveedor && (r.proveedor.toLowerCase().includes(client.nombre.toLowerCase()) || client.nombre.toLowerCase().includes(r.proveedor.toLowerCase()));
+            });
+            renderClientRentabilidad(client, allDocs);
+            window.currentClientDocs = allDocs;
+            window.selectedPremiumDate = new Date().toISOString().split('T')[0];
+            renderClientCalendar();
+            document.getElementById('selectedClientDash').style.display = 'block';
+        };
+
+        // ===== [FASE 13] CALENDARIO PREMIUM =====
+        function renderClientCalendar() {
+            var c = document.getElementById('clientCalendarContainer');
+            if (!c) return;
+            var docs = window.currentClientDocs || [];
+            var days = [];
+            for (var i = 15; i >= -15; i--) {
+                var d = new Date();
+                d.setDate(d.getDate() - i);
+                days.push(d);
+            }
+            var html = '<div class="premium-calendar-scroll" id="premiumCalendarScroll">';
+            html += days.map(function(d) {
+                var ds = d.toISOString().split('T')[0];
+                var isSel = ds === window.selectedPremiumDate;
+                var hasDocs = docs.some(function(doc) { return (doc.processedAt||doc.fecha||'').startsWith(ds); });
+                return '<div class="premium-day-btn' + (isSel?' active':'') + '" onclick="selectPremiumDate('' + ds + '')" id="cal-day-' + ds + '">' +
+                    '<div style="font-size:11px;text-transform:uppercase;opacity:0.6;margin-bottom:4px;">' + d.toLocaleDateString('es-ES',{weekday:'short'}) + '</div>' +
+                    '<div class="day-number-txt" style="font-size:20px;font-weight:800;color:' + (hasDocs?'var(--gold)':'var(--text-primary)') + ';">' + d.getDate() + '</div>' +
+                    (hasDocs ? '<div style="width:5px;height:5px;border-radius:50%;background:var(--gold);margin-top:6px;box-shadow:0 0 8px var(--gold);"></div>' : '<div style="height:11px;"></div>') +
+                    '</div>';
+            }).join('');
+            html += '</div>';
+            c.innerHTML = html;
+            setTimeout(function() {
+                var el = document.getElementById('cal-day-' + window.selectedPremiumDate);
+                var sc = document.getElementById('premiumCalendarScroll');
+                if (el && sc) sc.scrollTo({ left: el.offsetLeft - sc.offsetWidth/2 + el.offsetWidth/2, behavior: 'smooth' });
+            }, 50);
+            renderOrdersForDate(window.selectedPremiumDate);
+        }
+
+        window.selectPremiumDate = function(dateStr) {
+            window.selectedPremiumDate = dateStr;
+            renderClientCalendar();
+        };
+
+        // ===== [FASE 13] PEDIDOS POR FECHA =====
+        function renderOrdersForDate(dateStr) {
+            var ld = document.getElementById('clientActivityList');
+            if (!ld) return;
+            var docs = (window.currentClientDocs || []).filter(function(d) {
+                return (d.processedAt || d.fecha || '').startsWith(dateStr);
+            });
+            if (!docs.length) {
+                ld.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);">No hay pedidos en esta fecha</div>';
+            } else {
+                ld.innerHTML = docs.map(function(doc) {
+                    var done = getOrderStatus(doc.id) === 'Completado';
+                    var col = done ? '#10b981' : 'var(--gold)';
+                    var sid = doc.id ? doc.id.substring(0,8).toUpperCase() : 'PENDIENTE';
+                    return '<div class="glass-panel" style="margin-bottom:16px;padding:20px;display:flex;flex-direction:column;gap:16px;border:1px solid rgba(255,255,255,0.05);border-radius:24px;">' +
+                        '<div style="display:flex;justify-content:space-between;align-items:flex-start;">' +
+                          '<div>' +
+                            '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><div style="width:8px;height:8px;border-radius:50%;background:' + col + ';"></div><span style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:' + col + ';">' + (done?'Completado':'Pendiente') + '</span></div>' +
+                            '<div style="font-weight:800;font-size:18px;font-family:Outfit,sans-serif;">' + (doc.categoria==='FACTURA'?'Factura de Cliente':'Albarán / Pedido') + '</div>' +
+                            '<div style="font-size:12px;opacity:0.5;margin-top:4px;">ID: #' + sid + ' · ' + (doc.proveedor||'Cliente') + '</div>' +
+                          '</div>' +
+                          '<div style="font-weight:800;font-size:22px;">' + parseFloat(doc.total||0).toFixed(2) + '€</div>' +
+                        '</div>' +
+                        '<button onclick="toggleOrderStatus('' + doc.id + '')" style="width:100%;padding:14px;border-radius:16px;border:none;' + (done?'background:rgba(255,255,255,0.05);color:var(--text-primary);border:1px solid rgba(255,255,255,0.1);':'background:var(--gold);color:#000;box-shadow:0 4px 14px rgba(212,175,55,0.3);') + ' font-family:Outfit,sans-serif;font-weight:700;font-size:15px;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;">' +
+                          (done ? '↩ Deshacer' : '✓ Marcar como Completado') + '</button>' +
+                        '</div>';
+                }).join('');
+            }
+        }
+
+
         function saveRutaData(data) {
             localStorage.setItem(RUTA_KEY, JSON.stringify(data));
         }
@@ -6556,6 +6812,67 @@
          * Actualiza las tendencias y charts del Dashboard v3.0
          * Consume getDetailedAnalytics() para datos reales desde globalStats.allRecords
          */
+        function renderMiniChart(elementId, data, color, unit, type, opts) {
+            color = color || '#D4AF37'; unit = unit || '€'; type = type || 'line'; opts = opts || {};
+            var container = document.getElementById(elementId);
+            if (!container) return;
+            var width = container.offsetWidth || 200;
+            var height = container.offsetHeight || 88;
+            var padding = 12;
+            var chartHeight = height - 15;
+            if (!data || data.length < 2) data = [0,0,0,0,0,0,0];
+            var days = opts.labels || ['L','M','X','J','V','S','D'];
+            var max = Math.max.apply(null, data) || 1;
+            var min = Math.min.apply(null, data);
+            var range = max - min || 1;
+            var avg = data.reduce(function(a,b){return a+b},0) / data.length;
+            var avgY = chartHeight - ((avg-min)/range*(chartHeight-padding*2)+padding);
+
+            if (type === 'pie') {
+                var total = data.reduce(function(a,b){return a+b},0) || 1;
+                var pColors = [color,'#10b981','#3b82f6','#f59e0b','#8b5cf6'];
+                var legend = opts.legend || [];
+                var cx = width/2, cy = (height-15)/2, r = Math.min(cx,cy)-8;
+                var startA = -Math.PI/2, slices = '', legSVG = '';
+                data.forEach(function(val,i) {
+                    var sl = (val/total)*2*Math.PI;
+                    var x1=cx+r*Math.cos(startA), y1=cy+r*Math.sin(startA);
+                    var x2=cx+r*Math.cos(startA+sl), y2=cy+r*Math.sin(startA+sl);
+                    var lg = sl > Math.PI ? 1 : 0;
+                    slices += '<path d="M'+cx+','+cy+' L'+x1.toFixed(1)+','+y1.toFixed(1)+' A'+r+','+r+' 0 '+lg+' 1 '+x2.toFixed(1)+','+y2.toFixed(1)+' Z" fill="'+pColors[i%pColors.length]+'" style="opacity:0.85"/>';
+                    if (legend[i]) {
+                        var lx=(i%3)*(width/3)+4, ly=height-10+Math.floor(i/3)*12;
+                        legSVG += '<circle cx="'+(lx+4)+'" cy="'+(ly-3)+'" r="3" fill="'+pColors[i%pColors.length]+'"/>';
+                        legSVG += '<text x="'+(lx+10)+'" y="'+ly+'" font-size="8" fill="var(--text-muted)" font-weight="600">'+legend[i]+' '+val+'%</text>';
+                    }
+                    startA += sl;
+                });
+                container.innerHTML = '<svg width="100%" height="'+height+'" preserveAspectRatio="none" style="overflow:visible;">'+slices+legSVG+'</svg>';
+                return;
+            }
+            if (type === 'bar') {
+                var barsSVG = '', labSVG = '';
+                var barW = (width/data.length)*0.65;
+                data.forEach(function(val,i) {
+                    var x = (data.length>1) ? (i/(data.length-1))*(width-barW)+barW/2 : width/2;
+                    var y = chartHeight - ((val-min)/range*(chartHeight-padding*2)+padding);
+                    barsSVG += '<rect x="'+(x-barW/2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+barW.toFixed(1)+'" height="'+(chartHeight-y).toFixed(1)+'" fill="'+color+'" rx="4" style="opacity:0.85"/>';
+                    if (days[i]) labSVG += '<text x="'+x.toFixed(1)+'" y="'+(height-2)+'" font-size="9" fill="var(--text-muted)" text-anchor="middle" font-weight="600">'+days[i]+'</text>';
+                });
+                container.innerHTML = '<svg width="100%" height="'+height+'" preserveAspectRatio="none" style="overflow:visible;"><line x1="0" y1="'+avgY.toFixed(1)+'" x2="'+width+'" y2="'+avgY.toFixed(1)+'" stroke="'+color+'" stroke-opacity="0.2" stroke-dasharray="2,2"/>'+barsSVG+labSVG+'</svg>';
+                return;
+            }
+            // line (default)
+            var pathD = '', labSVGl = '';
+            data.forEach(function(val,i) {
+                var x = (data.length>1) ? (i/(data.length-1))*width : 0;
+                var y = chartHeight - ((val-min)/range*(chartHeight-padding*2)+padding);
+                if (i===0) pathD = 'M 0 '+y.toFixed(1); else pathD += ' L '+x.toFixed(1)+' '+y.toFixed(1);
+                if (days[i]) labSVGl += '<text x="'+x.toFixed(1)+'" y="'+(height-2)+'" font-size="9" fill="var(--text-muted)" text-anchor="middle" font-weight="600">'+days[i]+'</text>';
+            });
+            container.innerHTML = '<svg width="100%" height="'+height+'" preserveAspectRatio="none" style="overflow:visible;"><defs><linearGradient id="grad-'+elementId+'" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:'+color+';stop-opacity:0.3"/><stop offset="100%" style="stop-color:'+color+';stop-opacity:0"/></linearGradient></defs><line x1="0" y1="'+avgY.toFixed(1)+'" x2="'+width+'" y2="'+avgY.toFixed(1)+'" stroke="'+color+'" stroke-opacity="0.2" stroke-dasharray="2,2"/><path d="'+pathD+' L '+width+' '+chartHeight+' L 0 '+chartHeight+' Z" fill="url(#grad-'+elementId+')"/><path d="'+pathD+'" fill="none" stroke="'+color+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+labSVGl+'</svg>';
+        }
+
         function updateDashboardPremium() {
             // Sincronizar indicadores básicos
             if (globalStats) {
