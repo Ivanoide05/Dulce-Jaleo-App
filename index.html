@@ -34,6 +34,7 @@
             --bg-page: #f8f9fb;
             --bg-card: #ffffff;
             --premium-red: #e40000;
+            --gold: #D4AF37;
             --text-primary: #1a1c1d;
             --text-secondary: #5f6368;
             --text-muted: #8e8e93;
@@ -3714,68 +3715,74 @@
         <!-- ===== TAB: PRODUCTOS (Base: Facturas) ===== -->
         <div id="tab-facturas" class="tab-content">
             <div class="section-title">Documentos</div>
-            <div class="section-subtitle" style="text-align: center;">Gestión de facturas y albaranes</div>
+            <div class="section-subtitle" style="text-align:center;">Gestión de facturas y albaranes</div>
 
-            <div class="stats-row stats-4" style="margin-bottom: 32px; gap: 12px;">
-                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
-                    <div class="stat-value" id="statTotal" style="font-size: 18px; font-weight: 500;">-</div>
-                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">TOTAL</div>
+            <!-- STATS 2x2 con iconos dorados -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 var(--gutter);margin-bottom:20px;">
+                <div class="glass-panel" style="padding:20px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;gap:8px;">
+                    <i data-lucide="layers" style="width:28px;height:28px;color:var(--gold);"></i>
+                    <div id="statTotal" style="font-size:36px;font-weight:900;color:var(--text-primary);line-height:1;">-</div>
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.4;">Total</div>
                 </div>
-                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
-                    <div class="stat-value" id="statFacturas" style="font-size: 18px; font-weight: 500;">-</div>
-                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">FACTURAS</div>
+                <div class="glass-panel" style="padding:20px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;gap:8px;">
+                    <i data-lucide="file-check" style="width:28px;height:28px;color:var(--gold);"></i>
+                    <div id="statFacturas" style="font-size:36px;font-weight:900;color:var(--text-primary);line-height:1;">-</div>
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.4;">Facturas</div>
                 </div>
-                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
-                    <div class="stat-value" id="statAlbaranes" style="font-size: 18px; font-weight: 500;">-</div>
-                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">ALBARANES</div>
+                <div class="glass-panel" style="padding:20px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;gap:8px;">
+                    <i data-lucide="package" style="width:28px;height:28px;color:var(--gold);"></i>
+                    <div id="statAlbaranes" style="font-size:36px;font-weight:900;color:var(--text-primary);line-height:1;">-</div>
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.4;">Albaranes</div>
                 </div>
-                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
-                    <div class="stat-value" id="statGastos" style="font-size: 18px; font-weight: 500;">-</div>
-                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">GASTOS</div>
+                <div class="glass-panel" style="padding:20px 16px;border-radius:20px;border:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;gap:8px;">
+                    <i data-lucide="credit-card" style="width:28px;height:28px;color:var(--gold);"></i>
+                    <div id="statGastos" style="font-size:36px;font-weight:900;color:var(--text-primary);line-height:1;">-</div>
+                    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.4;">Gastos</div>
                 </div>
             </div>
 
-            <!-- Centered Filters -->
-            <div style="text-align: center; width: 100%;">
+            <!-- FILTROS DE CATEGORÍA -->
+            <div style="padding:0 var(--gutter);margin-bottom:12px;overflow-x:auto;">
                 <div class="sub-tabs glass-panel" id="filterContainer"
-                    style="padding: 6px; display: inline-flex; margin-bottom: 24px;">
-                    <button class="sub-tab-btn active" data-filter="all"
-                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="layers" style="width: 14px;"></i>
-                        Todos
+                    style="padding:6px;display:inline-flex;gap:4px;border-radius:50px;white-space:nowrap;">
+                    <button class="sub-tab-btn active" data-filter="all" style="padding:10px 18px;border-radius:50px;display:flex;align-items:center;gap:6px;font-size:13px;">
+                        <i data-lucide="layers" style="width:14px;"></i>Todos
                     </button>
-                    <button class="sub-tab-btn" data-filter="FACTURA"
-                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="file-check" style="width: 14px;"></i>
-                        Facturas
+                    <button class="sub-tab-btn" data-filter="FACTURA" style="padding:10px 18px;border-radius:50px;display:flex;align-items:center;gap:6px;font-size:13px;">
+                        <i data-lucide="file-check" style="width:14px;"></i>Facturas
                     </button>
-                    <button class="sub-tab-btn" data-filter="ALBARAN"
-                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="package" style="width: 14px;"></i>
-                        Albaranes
+                    <button class="sub-tab-btn" data-filter="ALBARAN" style="padding:10px 18px;border-radius:50px;display:flex;align-items:center;gap:6px;font-size:13px;">
+                        <i data-lucide="package" style="width:14px;"></i>Albaranes
                     </button>
-                    <button class="sub-tab-btn" data-filter="GASTOS_VARIOS"
-                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="credit-card" style="width: 14px;"></i>
-                        Gastos
+                    <button class="sub-tab-btn" data-filter="GASTOS_VARIOS" style="padding:10px 18px;border-radius:50px;display:flex;align-items:center;gap:6px;font-size:13px;">
+                        <i data-lucide="credit-card" style="width:14px;"></i>Gastos
                     </button>
                 </div>
             </div>
 
-            <div class="refresh-bar">
-                <div style="font-size:14px;font-weight:700;color:var(--text-secondary);">Documentos</div>
-                <button class="refresh-btn" id="refreshBtn">🔄 Actualizar</button>
+            <!-- ORDENACIÓN: Recientes / Mayor precio / Menor precio -->
+            <div style="padding:0 var(--gutter);margin-bottom:16px;display:flex;gap:8px;overflow-x:auto;">
+                <button id="sortBtn-recientes" onclick="setSortFacturas('recientes')"
+                    style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:50px;border:none;background:var(--gold);color:#000;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+                    <i data-lucide="clock" style="width:14px;"></i>Recientes
+                </button>
+                <button id="sortBtn-mayor" onclick="setSortFacturas('mayor')"
+                    style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:50px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+                    <i data-lucide="trending-up" style="width:14px;"></i>Mayor precio
+                </button>
+                <button id="sortBtn-menor" onclick="setSortFacturas('menor')"
+                    style="display:flex;align-items:center;gap:6px;padding:10px 18px;border-radius:50px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;cursor:pointer;white-space:nowrap;flex-shrink:0;">
+                    <i data-lucide="trending-down" style="width:14px;"></i>Menor precio
+                </button>
+                <button class="refresh-btn" id="refreshBtn" style="margin-left:auto;padding:10px 16px;border-radius:50px;flex-shrink:0;">🔄</button>
             </div>
 
-
-            <div class="total-periodo-banner glass-panel"
-                style="margin: 0 var(--gutter) 24px; padding: 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2);">
-                <span class="total-periodo-label"
-                    style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; opacity: 0.6;">Total
-                    periodo</span>
-                <span class="total-periodo-value" id="totalPeriodoBanner"
-                    style="font-size: 28px; font-weight: 500; color: var(--rose);">0.00 €</span>
+            <!-- TOTAL PERIODO -->
+            <div class="glass-panel" style="margin:0 var(--gutter) 16px;padding:16px 20px;border-radius:20px;border:1px solid rgba(212,175,55,0.15);background:rgba(212,175,55,0.03);display:flex;align-items:center;justify-content:space-between;">
+                <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.5;">Total Periodo</span>
+                <span id="totalPeriodoBanner" style="font-size:24px;font-weight:900;color:var(--gold);font-family:'Syne',sans-serif;">0.00 €</span>
             </div>
+
             <div id="facturasList"></div>
         </div>
 
@@ -5675,6 +5682,26 @@
         // ===== FACTURAS (usa estado global) =====
         let allFacturas = [];
         let currentFilter = 'all';
+        let currentSort = 'recientes';
+
+        window.setSortFacturas = function(type) {
+            currentSort = type;
+            // Update button styles
+            ['recientes','mayor','menor'].forEach(t => {
+                const btn = document.getElementById('sortBtn-' + t);
+                if (!btn) return;
+                if (t === type) {
+                    btn.style.background = 'var(--gold)';
+                    btn.style.color = '#000';
+                    btn.style.border = 'none';
+                } else {
+                    btn.style.background = 'rgba(255,255,255,0.04)';
+                    btn.style.color = 'var(--text-muted)';
+                    btn.style.border = '1px solid rgba(255,255,255,0.1)';
+                }
+            });
+            renderFacturas();
+        };
 
         document.getElementById('refreshBtn').addEventListener('click', loadFacturas);
 
@@ -5806,7 +5833,21 @@
 
         function renderFacturas() {
             const list = document.getElementById('facturasList');
-            const filtered = currentFilter === 'all' ? allFacturas : allFacturas.filter(f => f.categoria === currentFilter);
+            let filtered = currentFilter === 'all' ? allFacturas : allFacturas.filter(f => f.categoria === currentFilter);
+
+            // Aplicar ordenación
+            filtered = [...filtered];
+            if (currentSort === 'recientes') {
+                filtered.sort((a, b) => {
+                    const da = a.fecha ? new Date(a.fecha.split('/').reverse().join('-')) : new Date(0);
+                    const db = b.fecha ? new Date(b.fecha.split('/').reverse().join('-')) : new Date(0);
+                    return db - da;
+                });
+            } else if (currentSort === 'mayor') {
+                filtered.sort((a, b) => (parseFloat(b.total) || 0) - (parseFloat(a.total) || 0));
+            } else if (currentSort === 'menor') {
+                filtered.sort((a, b) => (parseFloat(a.total) || 0) - (parseFloat(b.total) || 0));
+            }
 
             if (filtered.length === 0) {
                 const labels = {
@@ -5823,42 +5864,48 @@
                         <div class="empty-title">${labels[currentFilter] || 'Sin documentos'}</div>
                         <div class="empty-desc">Escanea tu primer documento<br>con el botón central de Escanear</div>
                     </div>`;
-                document.getElementById('totalPeriodoBanner').textContent = '0.00 €';
+                const banner = document.getElementById('totalPeriodoBanner');
+                if (banner) banner.textContent = '0.00 €';
                 return;
             }
 
             list.innerHTML = filtered.map(f => {
-                const badgeClass = f.categoria === 'FACTURA' ? 'badge-factura' :
-                    f.categoria === 'ALBARAN' ? 'badge-albaran' : 'badge-gastos';
+                const badgeColor = f.categoria === 'FACTURA'
+                    ? 'background:rgba(99,179,237,0.15);color:#63b3ed;'
+                    : f.categoria === 'ALBARAN'
+                        ? 'background:rgba(72,187,120,0.15);color:#48bb78;'
+                        : 'background:rgba(246,173,85,0.15);color:#f6ad55;';
                 const badgeText = f.categoria === 'GASTOS_VARIOS' ? 'GASTOS' : f.categoria;
-                const total = typeof f.total === 'number' ? f.total.toFixed(2) : (f.total || '0');
+                const totalNum = parseFloat(f.total) || 0;
+                const totalStr = totalNum.toFixed(2);
+                const proveedorCaps = (f.proveedor || 'DESCONOCIDO').toUpperCase();
 
                 return `
-                    <div class="factura-card">
-                        <div class="factura-top">
-                            <div class="factura-info">
-                                <div class="factura-proveedor">${f.proveedor}</div>
-                                <span class="factura-badge ${badgeClass}">${badgeText}</span>
+                    <div class="factura-card" style="margin-bottom:12px;padding:20px;border-radius:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);position:relative;">
+                        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
+                            <div style="flex:1;min-width:0;padding-right:12px;">
+                                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.04em;color:var(--text-primary);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${proveedorCaps}</div>
+                                <span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:50px;font-size:10px;font-weight:700;letter-spacing:0.06em;${badgeColor}">${badgeText}</span>
                             </div>
-                            <div class="factura-total">${total}€</div>
+                            <div style="font-family:'Syne',sans-serif;font-weight:900;font-size:22px;color:var(--gold);white-space:nowrap;line-height:1;">${totalStr}€</div>
                         </div>
-                        <div class="factura-meta">
-                            <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="calendar" style="width: 12px; height: 12px;"></i> ${f.fecha || 'Sin fecha'}</span>
-                            <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="file-text" style="width: 12px; height: 12px;"></i> ${f.numero_doc || 'S/N'}</span>
-                            ${f.cif ? `<span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="building" style="width: 12px; height: 12px;"></i> ${f.cif}</span>` : ''}
+                        <div style="display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap;">
+                            <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);"><i data-lucide="calendar" style="width:11px;height:11px;"></i>${f.fecha || 'Sin fecha'}</span>
+                            <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);"><i data-lucide="file-text" style="width:11px;height:11px;"></i>${f.numero_doc || 'S/N'}</span>
+                            ${f.cif ? `<span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);"><i data-lucide="building" style="width:11px;height:11px;"></i>${f.cif}</span>` : ''}
                         </div>
-                        <div class="factura-actions">
-                            <button class="factura-btn-view" onclick='openFacturaModal(${JSON.stringify(f).replace(/'/g, "&#39;")})' style="display: flex; align-items: center; gap: 6px;">
-                                <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
-                                Ver Detalles
-                            </button>
-                        </div>
+                        <button onclick='openFacturaModal(${JSON.stringify(f).replace(/'/g, "&#39;")})' style="width:100%;padding:11px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:var(--text-primary);font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+                            <i data-lucide="eye" style="width:14px;height:14px;"></i>Ver Detalles
+                        </button>
                     </div>`;
             }).join('');
 
             // Actualizar banner TOTAL PERIODO con la suma de los filtrados
             const sumaFiltrada = filtered.reduce((acc, f) => acc + (parseFloat(f.total) || 0), 0);
-            document.getElementById('totalPeriodoBanner').textContent = sumaFiltrada.toFixed(2) + ' €';
+            const banner = document.getElementById('totalPeriodoBanner');
+            if (banner) banner.textContent = sumaFiltrada.toFixed(2) + ' €';
+
+            setTimeout(() => { if (typeof lucide !== 'undefined') lucide.createIcons(); }, 80);
         }
 
         // Funciones del Modal de Factura
@@ -7298,7 +7345,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Restaurar el tema guardado ANTES de renderizar iconos
             const savedTheme = localStorage.getItem('dulce_jaleo_theme');
-            const isDark = savedTheme === 'dark';
+            const isDark = savedTheme !== 'light'; // Dark por defecto
             if (isDark) {
                 document.body.classList.add('dark-theme');
             } else {
