@@ -961,27 +961,35 @@
 
         /* CARDS DE FACTURA */
         .factura-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
             padding: 16px;
-            margin-bottom: 10px;
-            transition: all 0.25s;
-            box-shadow: var(--shadow-sm);
+            margin: 0 var(--gutter) 10px;
+            transition: all 0.2s;
             cursor: pointer;
         }
 
-        .factura-card:hover {
-            border-color: var(--rose-light);
-            box-shadow: 0 6px 24px rgba(201, 116, 116, 0.12);
-            transform: translateY(-2px);
+        .factura-card:active {
+            transform: scale(0.98);
+            border-color: rgba(212,175,55,0.3);
         }
 
         .factura-top {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .factura-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
         .factura-info {
@@ -991,29 +999,32 @@
 
         .factura-proveedor {
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px;
             color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .factura-total {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--rose);
-            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            color: var(--text-primary);
             flex-shrink: 0;
-            margin-left: 10px;
+            font-family: 'Syne', sans-serif;
         }
 
         .factura-meta {
             display: flex;
-            gap: 10px;
-            font-size: 11px;
+            gap: 8px;
+            font-size: 10px;
             color: var(--text-muted);
             flex-wrap: wrap;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+            align-items: center;
         }
 
         .factura-meta span {
@@ -1023,31 +1034,32 @@
         }
 
         .factura-badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             padding: 3px 10px;
             border-radius: 50px;
-            font-size: 10px;
-            font-weight: 700;
+            font-size: 9px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.6px;
+            letter-spacing: 0.8px;
         }
 
         .badge-factura {
-            background: rgba(91, 130, 180, 0.12);
-            color: var(--info);
-            border: 1px solid rgba(91, 130, 180, 0.2);
+            background: rgba(91,130,180,0.15);
+            color: #7aaeff;
+            border: 1px solid rgba(91,130,180,0.25);
         }
 
         .badge-albaran {
-            background: rgba(139, 92, 246, 0.1);
-            color: #7c5cbf;
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            background: rgba(139,92,246,0.12);
+            color: #a78bfa;
+            border: 1px solid rgba(139,92,246,0.25);
         }
 
         .badge-gastos {
-            background: rgba(200, 151, 58, 0.12);
+            background: rgba(212,175,55,0.12);
             color: var(--gold);
-            border: 1px solid rgba(200, 151, 58, 0.2);
+            border: 1px solid rgba(212,175,55,0.25);
         }
 
         /* EMPTY STATES */
@@ -1520,32 +1532,7 @@
             gap: 4px;
         }
 
-        .factura-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px solid var(--border);
-        }
-
-        .factura-btn-view {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--amber-dark);
-            border: none;
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .factura-btn-view:hover {
-            background: rgba(245, 158, 11, 0.2);
-        }
+        .factura-actions { display: none; }
 
         .contact-meta {
             font-size: 12px;
@@ -5905,31 +5892,37 @@
                 return;
             }
 
+            const iconMap = { FACTURA: 'file-text', ALBARAN: 'package', GASTOS_VARIOS: 'credit-card' };
+            const iconColorMap = { FACTURA: '#7aaeff', ALBARAN: '#a78bfa', GASTOS_VARIOS: '#D4AF37' };
+            const iconBgMap = { FACTURA: 'rgba(91,130,180,0.12)', ALBARAN: 'rgba(139,92,246,0.1)', GASTOS_VARIOS: 'rgba(212,175,55,0.1)' };
+
             list.innerHTML = filtered.map(f => {
                 const badgeClass = f.categoria === 'FACTURA' ? 'badge-factura' :
                     f.categoria === 'ALBARAN' ? 'badge-albaran' : 'badge-gastos';
                 const badgeText = f.categoria === 'GASTOS_VARIOS' ? 'GASTOS' : f.categoria;
-                const total = typeof f.total === 'number' ? f.total.toFixed(2) : (f.total || '0');
+                const total = (typeof f.total === 'number' ? f.total : parseFloat(f.total) || 0).toFixed(2);
+                const icon = iconMap[f.categoria] || 'file';
+                const iconColor = iconColorMap[f.categoria] || '#888';
+                const iconBg = iconBgMap[f.categoria] || 'rgba(255,255,255,0.05)';
+                const initials = (f.proveedor || '?').substring(0, 2).toUpperCase();
 
                 return `
-                    <div class="factura-card">
+                    <div class="factura-card" onclick='openFacturaModal(${JSON.stringify(f).replace(/'/g, "&#39;")})'>
                         <div class="factura-top">
+                            <div class="factura-icon" style="background:${iconBg};border:1px solid ${iconColor}22;">
+                                <span style="font-size:13px;font-weight:800;color:${iconColor};">${initials}</span>
+                            </div>
                             <div class="factura-info">
-                                <div class="factura-proveedor">${f.proveedor}</div>
+                                <div class="factura-proveedor">${f.proveedor || 'Sin proveedor'}</div>
                                 <span class="factura-badge ${badgeClass}">${badgeText}</span>
                             </div>
-                            <div class="factura-total">${total}€</div>
+                            <div class="factura-total" style="color:${iconColor};">${total}€</div>
                         </div>
                         <div class="factura-meta">
-                            <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="calendar" style="width: 12px; height: 12px;"></i> ${f.fecha || 'Sin fecha'}</span>
-                            <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="file-text" style="width: 12px; height: 12px;"></i> ${f.numero_doc || 'S/N'}</span>
-                            ${f.cif ? `<span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="building" style="width: 12px; height: 12px;"></i> ${f.cif}</span>` : ''}
-                        </div>
-                        <div class="factura-actions">
-                            <button class="factura-btn-view" onclick='openFacturaModal(${JSON.stringify(f).replace(/'/g, "&#39;")})' style="display: flex; align-items: center; gap: 6px;">
-                                <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
-                                Ver Detalles
-                            </button>
+                            <span><i data-lucide="calendar" style="width:11px;height:11px;"></i> ${f.fecha || 'Sin fecha'}</span>
+                            <span><i data-lucide="hash" style="width:11px;height:11px;"></i> ${f.numero_doc || 'S/N'}</span>
+                            ${f.cif ? `<span><i data-lucide="building" style="width:11px;height:11px;"></i> ${f.cif}</span>` : ''}
+                            <span style="margin-left:auto;font-size:10px;color:rgba(255,255,255,0.2);">Ver detalles →</span>
                         </div>
                     </div>`;
             }).join('');
