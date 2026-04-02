@@ -3536,11 +3536,11 @@
                                     </div>
                                     <div id="miniChartTrend" class="bento-chart-mini" style="height: 88px;"></div>
                                 </div>
-                                <!-- Tarjeta 2: Actividad (Barras) -->
+                                <!-- Tarjeta 2: Actividad Diaria (Línea) -->
                                 <div class="carousel-chart-item">
                                     <div class="carousel-chart-header">
                                         <i data-lucide="activity"></i>
-                                        <span>Actividad Semanal</span>
+                                        <span>Actividad Diaria</span>
                                     </div>
                                     <div id="miniChartActivity" class="bento-chart-mini" style="height: 88px;"></div>
                                 </div>
@@ -6580,7 +6580,7 @@
                 : [0, 0, 0, 0, 0];
 
             renderMiniChart('miniChartTrend',        analytics.trend,        '#D4AF37', '€', 'line',    { labels: analytics.dayLabels });
-            renderMiniChart('miniChartActivity',     analytics.activity,     '#10b981', 'u', 'bar',     { labels: analytics.dayLabels });
+            renderMiniChart('miniChartActivity',     analytics.activity,     '#10b981', 'u', 'line',    { labels: analytics.dayLabels });
             renderMiniChart('miniChartDistribution', analytics.distribution, '#3b82f6', '%', 'pie',     { legend: ['Facturas','Albaranes','Gastos'] });
             renderMiniChart('miniChartBalance',      topVals,                '#D4AF37', '€', 'bar',     { labels: analytics.topProveedores.map(p=>p.nombre), subtype: 'providers' });
 
