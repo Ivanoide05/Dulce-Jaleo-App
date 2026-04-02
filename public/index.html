@@ -3639,6 +3639,33 @@
                 </div>
             </div>
 
+            <!-- ===== BLOQUE INTELIGENCIA IA ===== -->
+            <div class="glass-panel ai-recommendation" style="margin: 0 var(--gutter) 20px;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                    <i data-lucide="brain-circuit" style="width:18px;color:var(--gold);filter:drop-shadow(0 0 5px var(--gold));"></i>
+                    <span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--gold);">Inteligencia Operativa</span>
+                </div>
+                <p id="dash-ai-insight" style="font-size:12px;line-height:1.5;color:var(--text-primary);font-weight:500;margin:0;">Sincronizando datos con Airtable para generar insights...</p>
+                <div class="ai-smart-metrics" style="margin-top:12px;">
+                    <div class="smart-metric-pill">
+                        <span class="smart-metric-label">Proyección Mes</span>
+                        <span class="smart-metric-value" id="dash-proyeccion">—</span>
+                    </div>
+                    <div class="smart-metric-pill">
+                        <span class="smart-metric-label">Ticket Medio</span>
+                        <span class="smart-metric-value" id="dash-ticket-medio">—</span>
+                    </div>
+                    <div class="smart-metric-pill">
+                        <span class="smart-metric-label">Ahorro Estimado</span>
+                        <span class="smart-metric-value" id="smart-metric-savings">—</span>
+                    </div>
+                    <div class="smart-metric-pill">
+                        <span class="smart-metric-label">Albaranes</span>
+                        <span class="smart-metric-value" id="dash-count-albaranes-sm" style="color:#10b981;">—</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="recent-activity" style="padding: 0 var(--gutter);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <div style="font-size: 15px; font-weight: 700; letter-spacing: -0.2px;">Actividad Reciente</div>
@@ -3715,6 +3742,23 @@
         <div id="tab-facturas" class="tab-content">
             <div class="section-title">Documentos</div>
             <div class="section-subtitle" style="text-align: center;">Gestión de facturas y albaranes</div>
+
+            <!-- Buscador de documentos -->
+            <div class="glass-panel" style="margin: 0 var(--gutter) 16px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: 16px;">
+                <i data-lucide="search" style="width:16px;opacity:0.5;flex-shrink:0;"></i>
+                <input id="facturasSearch" type="text" placeholder="Buscar por proveedor..."
+                    oninput="filtrarFacturasSearch()"
+                    style="background:none;border:none;outline:none;width:100%;font-family:'Outfit',sans-serif;font-size:14px;color:var(--text-primary);" />
+            </div>
+
+            <!-- Filtro de período -->
+            <div style="text-align:center;margin-bottom:16px;">
+                <div class="glass-panel" style="display:inline-flex;padding:4px;border-radius:14px;gap:4px;border:1px solid var(--border);">
+                    <button class="periodo-btn active" data-periodo="mes" onclick="setPeriodoFacturas(this,'mes')" style="padding:8px 16px;border-radius:10px;border:none;background:var(--gold);color:#000;font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;cursor:pointer;">Mes</button>
+                    <button class="periodo-btn" data-periodo="semana" onclick="setPeriodoFacturas(this,'semana')" style="padding:8px 16px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:12px;cursor:pointer;">Semana</button>
+                    <button class="periodo-btn" data-periodo="all" onclick="setPeriodoFacturas(this,'all')" style="padding:8px 16px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:12px;cursor:pointer;">Todo</button>
+                </div>
+            </div>
 
             <div class="stats-row stats-4" style="margin-bottom: 32px; gap: 12px;">
                 <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
@@ -5675,6 +5719,24 @@
         // ===== FACTURAS (usa estado global) =====
         let allFacturas = [];
         let currentFilter = 'all';
+        let currentPeriodo = 'mes';
+        let currentSearch = '';
+
+        window.setPeriodoFacturas = function(btn, periodo) {
+            currentPeriodo = periodo;
+            document.querySelectorAll('.periodo-btn').forEach(b => {
+                b.style.background = 'transparent';
+                b.style.color = 'var(--text-muted)';
+            });
+            btn.style.background = 'var(--gold)';
+            btn.style.color = '#000';
+            renderFacturas();
+        };
+
+        window.filtrarFacturasSearch = function() {
+            currentSearch = (document.getElementById('facturasSearch')?.value || '').toLowerCase().trim();
+            renderFacturas();
+        };
 
         document.getElementById('refreshBtn').addEventListener('click', loadFacturas);
 
@@ -5806,7 +5868,23 @@
 
         function renderFacturas() {
             const list = document.getElementById('facturasList');
-            const filtered = currentFilter === 'all' ? allFacturas : allFacturas.filter(f => f.categoria === currentFilter);
+            const now = new Date();
+            const mesStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+            const weekAgo = new Date(now); weekAgo.setDate(weekAgo.getDate() - 7);
+
+            let filtered = allFacturas.filter(f => {
+                if (currentFilter !== 'all' && f.categoria !== currentFilter) return false;
+                if (currentSearch && !(f.proveedor||'').toLowerCase().includes(currentSearch)) return false;
+                if (currentPeriodo === 'mes') {
+                    const d = f.fecha || f.createdAt || '';
+                    return d.startsWith(mesStr);
+                }
+                if (currentPeriodo === 'semana') {
+                    const d = new Date(f.fecha || f.createdAt || '');
+                    return !isNaN(d) && d >= weekAgo;
+                }
+                return true;
+            });
 
             if (filtered.length === 0) {
                 const labels = {
