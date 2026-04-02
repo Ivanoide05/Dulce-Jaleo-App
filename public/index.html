@@ -5839,9 +5839,13 @@
             filtered = [...filtered];
             if (currentSort === 'recientes') {
                 filtered.sort((a, b) => {
-                    const da = a.fecha ? new Date(a.fecha.split('/').reverse().join('-')) : new Date(0);
-                    const db = b.fecha ? new Date(b.fecha.split('/').reverse().join('-')) : new Date(0);
-                    return db - da;
+                    // Soporta DD/MM/YYYY y YYYY-MM-DD
+                    function parseFecha(f) {
+                        if (!f) return new Date(0);
+                        if (/^\d{2}\/\d{2}\/\d{4}$/.test(f)) return new Date(f.split('/').reverse().join('-'));
+                        return new Date(f);
+                    }
+                    return parseFecha(b.fecha || b.createdAt) - parseFecha(a.fecha || a.createdAt);
                 });
             } else if (currentSort === 'mayor') {
                 filtered.sort((a, b) => (parseFloat(b.total) || 0) - (parseFloat(a.total) || 0));
@@ -5878,19 +5882,45 @@
                 const badgeText = f.categoria === 'GASTOS_VARIOS' ? 'GASTOS' : f.categoria;
                 const totalNum = parseFloat(f.total) || 0;
                 const totalStr = totalNum.toFixed(2);
-                const proveedorCaps = (f.proveedor || 'DESCONOCIDO').toUpperCase();
+
+                // Entidad: usa nombre si existe, si no detecta tipo por CIF
+                let entidad;
+                const nombreRaw = f.proveedor && f.proveedor !== 'Desconocido' ? f.proveedor.trim() : '';
+                if (nombreRaw) {
+                    entidad = nombreRaw.toUpperCase();
+                } else if (f.cif) {
+                    const cifUp = f.cif.trim().toUpperCase();
+                    if (/^[ABCDEFGHJNPQRSUVW]/i.test(cifUp)) {
+                        entidad = 'ESTABLECIMIENTO';
+                    } else if (/^\d{8}[A-Z]$/i.test(cifUp)) {
+                        entidad = 'PERSONA FÍSICA';
+                    } else if (/^[XYZ]/i.test(cifUp)) {
+                        entidad = 'PERSONA EXTRANJERA';
+                    } else {
+                        entidad = cifUp; // muestra el CIF directamente como nombre
+                    }
+                } else {
+                    entidad = f.categoria === 'GASTOS_VARIOS' ? 'GASTO VARIOS' : f.categoria === 'ALBARAN' ? 'DISTRIBUIDOR' : 'PROVEEDOR';
+                }
+
+                // Fecha: normaliza YYYY-MM-DD → DD/MM/YYYY; deja otros formatos como están
+                let fechaDisplay = f.fecha || f.createdAt || '';
+                if (/^\d{4}-\d{2}-\d{2}$/.test(fechaDisplay)) {
+                    const [y, m, d] = fechaDisplay.split('-');
+                    fechaDisplay = d + '/' + m + '/' + y;
+                }
 
                 return `
                     <div class="factura-card" style="margin-bottom:12px;padding:20px;border-radius:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);position:relative;">
                         <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
                             <div style="flex:1;min-width:0;padding-right:12px;">
-                                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.04em;color:var(--text-primary);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${proveedorCaps}</div>
+                                <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:0.04em;color:var(--text-primary);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${entidad}</div>
                                 <span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:50px;font-size:10px;font-weight:700;letter-spacing:0.06em;${badgeColor}">${badgeText}</span>
                             </div>
                             <div style="font-family:'Syne',sans-serif;font-weight:900;font-size:22px;color:var(--gold);white-space:nowrap;line-height:1;">${totalStr}€</div>
                         </div>
                         <div style="display:flex;gap:14px;margin-bottom:14px;flex-wrap:wrap;">
-                            <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);"><i data-lucide="calendar" style="width:11px;height:11px;"></i>${f.fecha || 'Sin fecha'}</span>
+                            <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);"><i data-lucide="calendar" style="width:11px;height:11px;"></i>${fechaDisplay || 'Sin fecha'}</span>
                             <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);"><i data-lucide="file-text" style="width:11px;height:11px;"></i>${f.numero_doc || 'S/N'}</span>
                             ${f.cif ? `<span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);"><i data-lucide="building" style="width:11px;height:11px;"></i>${f.cif}</span>` : ''}
                         </div>
