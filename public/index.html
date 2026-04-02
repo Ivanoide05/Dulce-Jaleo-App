@@ -3730,83 +3730,58 @@
             <div class="section-title">Documentos</div>
             <div class="section-subtitle" style="text-align: center;">Gestión de facturas y albaranes</div>
 
-            <!-- Buscador de documentos -->
-            <div class="glass-panel" style="margin: 0 var(--gutter) 16px; padding: 12px 16px; display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: 16px;">
-                <i data-lucide="search" style="width:16px;opacity:0.5;flex-shrink:0;"></i>
-                <input id="facturasSearch" type="text" placeholder="Buscar por proveedor..."
-                    oninput="filtrarFacturasSearch()"
-                    style="background:none;border:none;outline:none;width:100%;font-family:'Outfit',sans-serif;font-size:14px;color:var(--text-primary);" />
-            </div>
-
-            <!-- Filtro de período -->
-            <div style="text-align:center;margin-bottom:16px;">
-                <div class="glass-panel" style="display:inline-flex;padding:4px;border-radius:14px;gap:4px;border:1px solid var(--border);">
-                    <button class="periodo-btn active" data-periodo="mes" onclick="setPeriodoFacturas(this,'mes')" style="padding:8px 16px;border-radius:10px;border:none;background:var(--gold);color:#000;font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;cursor:pointer;">Mes</button>
-                    <button class="periodo-btn" data-periodo="semana" onclick="setPeriodoFacturas(this,'semana')" style="padding:8px 16px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:12px;cursor:pointer;">Semana</button>
-                    <button class="periodo-btn" data-periodo="all" onclick="setPeriodoFacturas(this,'all')" style="padding:8px 16px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:12px;cursor:pointer;">Todo</button>
+            <!-- CABECERA COMPACTA PREMIUM -->
+            <div style="margin: 0 var(--gutter) 16px;">
+                <!-- Fila 1: Total grande + botón actualizar -->
+                <div class="glass-panel" style="padding:16px 20px;border-radius:20px;border:1px solid rgba(212,175,55,0.15);background:rgba(212,175,55,0.04);display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                    <div>
+                        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.5;margin-bottom:4px;">Total período</div>
+                        <div id="totalPeriodoBanner" style="font-size:28px;font-weight:900;color:var(--gold);font-family:'Syne',sans-serif;">0.00€</div>
+                    </div>
+                    <button class="refresh-btn" id="refreshBtn" style="padding:10px 16px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:var(--text-primary);font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🔄 Actualizar</button>
+                </div>
+                <!-- Fila 2: 4 stats compactos -->
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+                    <div class="glass-panel" style="padding:10px 8px;border-radius:14px;border:1px solid rgba(255,255,255,0.05);text-align:center;">
+                        <div id="statTotal" style="font-size:16px;font-weight:800;color:var(--text-primary);">-</div>
+                        <div style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:0.4;margin-top:2px;">Total</div>
+                    </div>
+                    <div class="glass-panel" style="padding:10px 8px;border-radius:14px;border:1px solid rgba(122,174,255,0.15);text-align:center;">
+                        <div id="statFacturas" style="font-size:16px;font-weight:800;color:#7aaeff;">-</div>
+                        <div style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:0.4;margin-top:2px;">Fact.</div>
+                    </div>
+                    <div class="glass-panel" style="padding:10px 8px;border-radius:14px;border:1px solid rgba(167,139,250,0.15);text-align:center;">
+                        <div id="statAlbaranes" style="font-size:16px;font-weight:800;color:#a78bfa;">-</div>
+                        <div style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:0.4;margin-top:2px;">Alb.</div>
+                    </div>
+                    <div class="glass-panel" style="padding:10px 8px;border-radius:14px;border:1px solid rgba(212,175,55,0.15);text-align:center;">
+                        <div id="statGastos" style="font-size:16px;font-weight:800;color:var(--gold);">-</div>
+                        <div style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:0.4;margin-top:2px;">Gastos</div>
+                    </div>
+                </div>
+                <!-- Fila 3: Filtros tipo + período + buscador -->
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <div class="glass-panel" id="filterContainer" style="display:flex;padding:4px;border-radius:14px;gap:2px;border:1px solid rgba(255,255,255,0.06);flex:1;">
+                        <button class="sub-tab-btn active" data-filter="all" style="flex:1;padding:8px 4px;border-radius:10px;font-size:11px;text-align:center;">Todos</button>
+                        <button class="sub-tab-btn" data-filter="FACTURA" style="flex:1;padding:8px 4px;border-radius:10px;font-size:11px;text-align:center;">Fact.</button>
+                        <button class="sub-tab-btn" data-filter="ALBARAN" style="flex:1;padding:8px 4px;border-radius:10px;font-size:11px;text-align:center;">Alb.</button>
+                        <button class="sub-tab-btn" data-filter="GASTOS_VARIOS" style="flex:1;padding:8px 4px;border-radius:10px;font-size:11px;text-align:center;">Gasto</button>
+                    </div>
+                    <div class="glass-panel" style="display:flex;padding:4px;border-radius:14px;gap:2px;border:1px solid rgba(255,255,255,0.06);">
+                        <button class="periodo-btn" data-periodo="mes" onclick="setPeriodoFacturas(this,'mes')" style="padding:8px 10px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:11px;cursor:pointer;">Mes</button>
+                        <button class="periodo-btn" data-periodo="semana" onclick="setPeriodoFacturas(this,'semana')" style="padding:8px 10px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:11px;cursor:pointer;">7d</button>
+                        <button class="periodo-btn active" data-periodo="all" onclick="setPeriodoFacturas(this,'all')" style="padding:8px 10px;border-radius:10px;border:none;background:var(--gold);color:#000;font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;cursor:pointer;">Todo</button>
+                    </div>
+                </div>
+                <!-- Buscador -->
+                <div class="glass-panel" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;border:1px solid rgba(255,255,255,0.06);margin-top:8px;">
+                    <i data-lucide="search" style="width:14px;opacity:0.4;flex-shrink:0;"></i>
+                    <input id="facturasSearch" type="text" placeholder="Buscar proveedor..."
+                        oninput="filtrarFacturasSearch()"
+                        style="background:none;border:none;outline:none;width:100%;font-family:'Outfit',sans-serif;font-size:13px;color:var(--text-primary);" />
                 </div>
             </div>
 
-            <div class="stats-row stats-4" style="margin-bottom: 32px; gap: 12px;">
-                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
-                    <div class="stat-value" id="statTotal" style="font-size: 18px; font-weight: 500;">-</div>
-                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">TOTAL</div>
-                </div>
-                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
-                    <div class="stat-value" id="statFacturas" style="font-size: 18px; font-weight: 500;">-</div>
-                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">FACTURAS</div>
-                </div>
-                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
-                    <div class="stat-value" id="statAlbaranes" style="font-size: 18px; font-weight: 500;">-</div>
-                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">ALBARANES</div>
-                </div>
-                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
-                    <div class="stat-value" id="statGastos" style="font-size: 18px; font-weight: 500;">-</div>
-                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">GASTOS</div>
-                </div>
-            </div>
-
-            <!-- Centered Filters -->
-            <div style="text-align: center; width: 100%;">
-                <div class="sub-tabs glass-panel" id="filterContainer"
-                    style="padding: 6px; display: inline-flex; margin-bottom: 24px;">
-                    <button class="sub-tab-btn active" data-filter="all"
-                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="layers" style="width: 14px;"></i>
-                        Todos
-                    </button>
-                    <button class="sub-tab-btn" data-filter="FACTURA"
-                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="file-check" style="width: 14px;"></i>
-                        Facturas
-                    </button>
-                    <button class="sub-tab-btn" data-filter="ALBARAN"
-                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="package" style="width: 14px;"></i>
-                        Albaranes
-                    </button>
-                    <button class="sub-tab-btn" data-filter="GASTOS_VARIOS"
-                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
-                        <i data-lucide="credit-card" style="width: 14px;"></i>
-                        Gastos
-                    </button>
-                </div>
-            </div>
-
-            <div class="refresh-bar">
-                <div style="font-size:14px;font-weight:700;color:var(--text-secondary);">Documentos</div>
-                <button class="refresh-btn" id="refreshBtn">🔄 Actualizar</button>
-            </div>
-
-
-            <div class="total-periodo-banner glass-panel"
-                style="margin: 0 var(--gutter) 24px; padding: 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2);">
-                <span class="total-periodo-label"
-                    style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; opacity: 0.6;">Total
-                    periodo</span>
-                <span class="total-periodo-value" id="totalPeriodoBanner"
-                    style="font-size: 28px; font-weight: 500; color: var(--rose);">0.00 €</span>
-            </div>
             <div id="facturasList"></div>
         </div>
 
@@ -5706,7 +5681,7 @@
         // ===== FACTURAS (usa estado global) =====
         let allFacturas = [];
         let currentFilter = 'all';
-        let currentPeriodo = 'mes';
+        let currentPeriodo = 'all';
         let currentSearch = '';
 
         window.setPeriodoFacturas = function(btn, periodo) {
@@ -7369,7 +7344,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Restaurar el tema guardado ANTES de renderizar iconos
             const savedTheme = localStorage.getItem('dulce_jaleo_theme');
-            const isDark = savedTheme === 'dark';
+            // Por defecto: oscuro (premium). Solo cambia si el usuario eligió explícitamente claro.
+            const isDark = savedTheme !== 'light';
             if (isDark) {
                 document.body.classList.add('dark-theme');
             } else {
