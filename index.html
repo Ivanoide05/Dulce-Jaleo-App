@@ -961,35 +961,27 @@
 
         /* CARDS DE FACTURA */
         .factura-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 20px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             padding: 16px;
-            margin: 0 var(--gutter) 10px;
-            transition: all 0.2s;
+            margin-bottom: 10px;
+            transition: all 0.25s;
+            box-shadow: var(--shadow-sm);
             cursor: pointer;
         }
 
-        .factura-card:active {
-            transform: scale(0.98);
-            border-color: rgba(212,175,55,0.3);
+        .factura-card:hover {
+            border-color: var(--rose-light);
+            box-shadow: 0 6px 24px rgba(201, 116, 116, 0.12);
+            transform: translateY(-2px);
         }
 
         .factura-top {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .factura-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
+            align-items: flex-start;
+            margin-bottom: 10px;
         }
 
         .factura-info {
@@ -999,32 +991,29 @@
 
         .factura-proveedor {
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-primary);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
         .factura-total {
-            font-size: 18px;
-            font-weight: 900;
-            color: var(--text-primary);
-            flex-shrink: 0;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--rose);
             font-family: 'Syne', sans-serif;
+            flex-shrink: 0;
+            margin-left: 10px;
         }
 
         .factura-meta {
             display: flex;
-            gap: 8px;
-            font-size: 10px;
+            gap: 10px;
+            font-size: 11px;
             color: var(--text-muted);
             flex-wrap: wrap;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.04);
-            align-items: center;
         }
 
         .factura-meta span {
@@ -1034,32 +1023,31 @@
         }
 
         .factura-badge {
-            display: inline-flex;
-            align-items: center;
+            display: inline-block;
             padding: 3px 10px;
             border-radius: 50px;
-            font-size: 9px;
-            font-weight: 800;
+            font-size: 10px;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
         }
 
         .badge-factura {
-            background: rgba(91,130,180,0.15);
-            color: #7aaeff;
-            border: 1px solid rgba(91,130,180,0.25);
+            background: rgba(91, 130, 180, 0.12);
+            color: var(--info);
+            border: 1px solid rgba(91, 130, 180, 0.2);
         }
 
         .badge-albaran {
-            background: rgba(139,92,246,0.12);
-            color: #a78bfa;
-            border: 1px solid rgba(139,92,246,0.25);
+            background: rgba(139, 92, 246, 0.1);
+            color: #7c5cbf;
+            border: 1px solid rgba(139, 92, 246, 0.2);
         }
 
         .badge-gastos {
-            background: rgba(212,175,55,0.12);
+            background: rgba(200, 151, 58, 0.12);
             color: var(--gold);
-            border: 1px solid rgba(212,175,55,0.25);
+            border: 1px solid rgba(200, 151, 58, 0.2);
         }
 
         /* EMPTY STATES */
@@ -1532,7 +1520,32 @@
             gap: 4px;
         }
 
-        .factura-actions { display: none; }
+        .factura-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .factura-btn-view {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--amber-dark);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .factura-btn-view:hover {
+            background: rgba(245, 158, 11, 0.2);
+        }
 
         .contact-meta {
             font-size: 12px;
@@ -3626,33 +3639,6 @@
                 </div>
             </div>
 
-            <!-- ===== BLOQUE INTELIGENCIA IA ===== -->
-            <div class="glass-panel ai-recommendation" style="margin: 0 var(--gutter) 20px;">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-                    <i data-lucide="brain-circuit" style="width:18px;color:var(--gold);filter:drop-shadow(0 0 5px var(--gold));"></i>
-                    <span style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.05em;color:var(--gold);">Inteligencia Operativa</span>
-                </div>
-                <p id="dash-ai-insight" style="font-size:12px;line-height:1.5;color:var(--text-primary);font-weight:500;margin:0;">Sincronizando datos con Airtable para generar insights...</p>
-                <div class="ai-smart-metrics" style="margin-top:12px;">
-                    <div class="smart-metric-pill">
-                        <span class="smart-metric-label">Proyección Mes</span>
-                        <span class="smart-metric-value" id="dash-proyeccion">—</span>
-                    </div>
-                    <div class="smart-metric-pill">
-                        <span class="smart-metric-label">Ticket Medio</span>
-                        <span class="smart-metric-value" id="dash-ticket-medio">—</span>
-                    </div>
-                    <div class="smart-metric-pill">
-                        <span class="smart-metric-label">Ahorro Estimado</span>
-                        <span class="smart-metric-value" id="smart-metric-savings">—</span>
-                    </div>
-                    <div class="smart-metric-pill">
-                        <span class="smart-metric-label">Albaranes</span>
-                        <span class="smart-metric-value" id="dash-count-albaranes-sm" style="color:#10b981;">—</span>
-                    </div>
-                </div>
-            </div>
-
             <div class="recent-activity" style="padding: 0 var(--gutter);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
                     <div style="font-size: 15px; font-weight: 700; letter-spacing: -0.2px;">Actividad Reciente</div>
@@ -3730,58 +3716,66 @@
             <div class="section-title">Documentos</div>
             <div class="section-subtitle" style="text-align: center;">Gestión de facturas y albaranes</div>
 
-            <!-- CABECERA COMPACTA PREMIUM -->
-            <div style="margin: 0 var(--gutter) 16px;">
-                <!-- Fila 1: Total grande + botón actualizar -->
-                <div class="glass-panel" style="padding:16px 20px;border-radius:20px;border:1px solid rgba(212,175,55,0.15);background:rgba(212,175,55,0.04);display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-                    <div>
-                        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.5;margin-bottom:4px;">Total período</div>
-                        <div id="totalPeriodoBanner" style="font-size:28px;font-weight:900;color:var(--gold);font-family:'Syne',sans-serif;">0.00€</div>
-                    </div>
-                    <button class="refresh-btn" id="refreshBtn" style="padding:10px 16px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:var(--text-primary);font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🔄 Actualizar</button>
+            <div class="stats-row stats-4" style="margin-bottom: 32px; gap: 12px;">
+                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
+                    <div class="stat-value" id="statTotal" style="font-size: 18px; font-weight: 500;">-</div>
+                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">TOTAL</div>
                 </div>
-                <!-- Fila 2: 4 stats compactos -->
-                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
-                    <div class="glass-panel" style="padding:10px 8px;border-radius:14px;border:1px solid rgba(255,255,255,0.05);text-align:center;">
-                        <div id="statTotal" style="font-size:16px;font-weight:800;color:var(--text-primary);">-</div>
-                        <div style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:0.4;margin-top:2px;">Total</div>
-                    </div>
-                    <div class="glass-panel" style="padding:10px 8px;border-radius:14px;border:1px solid rgba(122,174,255,0.15);text-align:center;">
-                        <div id="statFacturas" style="font-size:16px;font-weight:800;color:#7aaeff;">-</div>
-                        <div style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:0.4;margin-top:2px;">Fact.</div>
-                    </div>
-                    <div class="glass-panel" style="padding:10px 8px;border-radius:14px;border:1px solid rgba(167,139,250,0.15);text-align:center;">
-                        <div id="statAlbaranes" style="font-size:16px;font-weight:800;color:#a78bfa;">-</div>
-                        <div style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:0.4;margin-top:2px;">Alb.</div>
-                    </div>
-                    <div class="glass-panel" style="padding:10px 8px;border-radius:14px;border:1px solid rgba(212,175,55,0.15);text-align:center;">
-                        <div id="statGastos" style="font-size:16px;font-weight:800;color:var(--gold);">-</div>
-                        <div style="font-size:9px;font-weight:700;text-transform:uppercase;opacity:0.4;margin-top:2px;">Gastos</div>
-                    </div>
+                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
+                    <div class="stat-value" id="statFacturas" style="font-size: 18px; font-weight: 500;">-</div>
+                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">FACTURAS</div>
                 </div>
-                <!-- Fila 3: Filtros tipo + período + buscador -->
-                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                    <div class="glass-panel" id="filterContainer" style="display:flex;padding:4px;border-radius:14px;gap:2px;border:1px solid rgba(255,255,255,0.06);flex:1;">
-                        <button class="sub-tab-btn active" data-filter="all" style="flex:1;padding:8px 4px;border-radius:10px;font-size:11px;text-align:center;">Todos</button>
-                        <button class="sub-tab-btn" data-filter="FACTURA" style="flex:1;padding:8px 4px;border-radius:10px;font-size:11px;text-align:center;">Fact.</button>
-                        <button class="sub-tab-btn" data-filter="ALBARAN" style="flex:1;padding:8px 4px;border-radius:10px;font-size:11px;text-align:center;">Alb.</button>
-                        <button class="sub-tab-btn" data-filter="GASTOS_VARIOS" style="flex:1;padding:8px 4px;border-radius:10px;font-size:11px;text-align:center;">Gasto</button>
-                    </div>
-                    <div class="glass-panel" style="display:flex;padding:4px;border-radius:14px;gap:2px;border:1px solid rgba(255,255,255,0.06);">
-                        <button class="periodo-btn" data-periodo="mes" onclick="setPeriodoFacturas(this,'mes')" style="padding:8px 10px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:11px;cursor:pointer;">Mes</button>
-                        <button class="periodo-btn" data-periodo="semana" onclick="setPeriodoFacturas(this,'semana')" style="padding:8px 10px;border-radius:10px;border:none;background:transparent;color:var(--text-muted);font-family:'Outfit',sans-serif;font-weight:600;font-size:11px;cursor:pointer;">7d</button>
-                        <button class="periodo-btn active" data-periodo="all" onclick="setPeriodoFacturas(this,'all')" style="padding:8px 10px;border-radius:10px;border:none;background:var(--gold);color:#000;font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;cursor:pointer;">Todo</button>
-                    </div>
+                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
+                    <div class="stat-value" id="statAlbaranes" style="font-size: 18px; font-weight: 500;">-</div>
+                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">ALBARANES</div>
                 </div>
-                <!-- Buscador -->
-                <div class="glass-panel" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;border:1px solid rgba(255,255,255,0.06);margin-top:8px;">
-                    <i data-lucide="search" style="width:14px;opacity:0.4;flex-shrink:0;"></i>
-                    <input id="facturasSearch" type="text" placeholder="Buscar proveedor..."
-                        oninput="filtrarFacturasSearch()"
-                        style="background:none;border:none;outline:none;width:100%;font-family:'Outfit',sans-serif;font-size:13px;color:var(--text-primary);" />
+                <div class="stat-card glass-panel" style="padding: 16px; border: 1px solid var(--border);">
+                    <div class="stat-value" id="statGastos" style="font-size: 18px; font-weight: 500;">-</div>
+                    <div class="stat-label" style="font-size: 10px; opacity: 0.5; margin-top: 4px;">GASTOS</div>
                 </div>
             </div>
 
+            <!-- Centered Filters -->
+            <div style="text-align: center; width: 100%;">
+                <div class="sub-tabs glass-panel" id="filterContainer"
+                    style="padding: 6px; display: inline-flex; margin-bottom: 24px;">
+                    <button class="sub-tab-btn active" data-filter="all"
+                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="layers" style="width: 14px;"></i>
+                        Todos
+                    </button>
+                    <button class="sub-tab-btn" data-filter="FACTURA"
+                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="file-check" style="width: 14px;"></i>
+                        Facturas
+                    </button>
+                    <button class="sub-tab-btn" data-filter="ALBARAN"
+                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="package" style="width: 14px;"></i>
+                        Albaranes
+                    </button>
+                    <button class="sub-tab-btn" data-filter="GASTOS_VARIOS"
+                        style="padding: 10px 20px; border-radius: 16px; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="credit-card" style="width: 14px;"></i>
+                        Gastos
+                    </button>
+                </div>
+            </div>
+
+            <div class="refresh-bar">
+                <div style="font-size:14px;font-weight:700;color:var(--text-secondary);">Documentos</div>
+                <button class="refresh-btn" id="refreshBtn">🔄 Actualizar</button>
+            </div>
+
+
+            <div class="total-periodo-banner glass-panel"
+                style="margin: 0 var(--gutter) 24px; padding: 24px; display: flex; justify-content: space-between; align-items: center; background: rgba(245, 158, 11, 0.05); border: 1px solid rgba(245, 158, 11, 0.2);">
+                <span class="total-periodo-label"
+                    style="text-transform: uppercase; font-size: 11px; letter-spacing: 1px; opacity: 0.6;">Total
+                    periodo</span>
+                <span class="total-periodo-value" id="totalPeriodoBanner"
+                    style="font-size: 28px; font-weight: 500; color: var(--rose);">0.00 €</span>
+            </div>
             <div id="facturasList"></div>
         </div>
 
@@ -5681,24 +5675,6 @@
         // ===== FACTURAS (usa estado global) =====
         let allFacturas = [];
         let currentFilter = 'all';
-        let currentPeriodo = 'all';
-        let currentSearch = '';
-
-        window.setPeriodoFacturas = function(btn, periodo) {
-            currentPeriodo = periodo;
-            document.querySelectorAll('.periodo-btn').forEach(b => {
-                b.style.background = 'transparent';
-                b.style.color = 'var(--text-muted)';
-            });
-            btn.style.background = 'var(--gold)';
-            btn.style.color = '#000';
-            renderFacturas();
-        };
-
-        window.filtrarFacturasSearch = function() {
-            currentSearch = (document.getElementById('facturasSearch')?.value || '').toLowerCase().trim();
-            renderFacturas();
-        };
 
         document.getElementById('refreshBtn').addEventListener('click', loadFacturas);
 
@@ -5830,23 +5806,7 @@
 
         function renderFacturas() {
             const list = document.getElementById('facturasList');
-            const now = new Date();
-            const mesStr = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
-            const weekAgo = new Date(now); weekAgo.setDate(weekAgo.getDate() - 7);
-
-            let filtered = allFacturas.filter(f => {
-                if (currentFilter !== 'all' && f.categoria !== currentFilter) return false;
-                if (currentSearch && !(f.proveedor||'').toLowerCase().includes(currentSearch)) return false;
-                if (currentPeriodo === 'mes') {
-                    const d = f.fecha || f.createdAt || '';
-                    return d.startsWith(mesStr);
-                }
-                if (currentPeriodo === 'semana') {
-                    const d = new Date(f.fecha || f.createdAt || '');
-                    return !isNaN(d) && d >= weekAgo;
-                }
-                return true;
-            });
+            const filtered = currentFilter === 'all' ? allFacturas : allFacturas.filter(f => f.categoria === currentFilter);
 
             if (filtered.length === 0) {
                 const labels = {
@@ -5867,37 +5827,31 @@
                 return;
             }
 
-            const iconMap = { FACTURA: 'file-text', ALBARAN: 'package', GASTOS_VARIOS: 'credit-card' };
-            const iconColorMap = { FACTURA: '#7aaeff', ALBARAN: '#a78bfa', GASTOS_VARIOS: '#D4AF37' };
-            const iconBgMap = { FACTURA: 'rgba(91,130,180,0.12)', ALBARAN: 'rgba(139,92,246,0.1)', GASTOS_VARIOS: 'rgba(212,175,55,0.1)' };
-
             list.innerHTML = filtered.map(f => {
                 const badgeClass = f.categoria === 'FACTURA' ? 'badge-factura' :
                     f.categoria === 'ALBARAN' ? 'badge-albaran' : 'badge-gastos';
                 const badgeText = f.categoria === 'GASTOS_VARIOS' ? 'GASTOS' : f.categoria;
-                const total = (typeof f.total === 'number' ? f.total : parseFloat(f.total) || 0).toFixed(2);
-                const icon = iconMap[f.categoria] || 'file';
-                const iconColor = iconColorMap[f.categoria] || '#888';
-                const iconBg = iconBgMap[f.categoria] || 'rgba(255,255,255,0.05)';
-                const initials = (f.proveedor || '?').substring(0, 2).toUpperCase();
+                const total = typeof f.total === 'number' ? f.total.toFixed(2) : (f.total || '0');
 
                 return `
-                    <div class="factura-card" onclick='openFacturaModal(${JSON.stringify(f).replace(/'/g, "&#39;")})'>
+                    <div class="factura-card">
                         <div class="factura-top">
-                            <div class="factura-icon" style="background:${iconBg};border:1px solid ${iconColor}22;">
-                                <span style="font-size:13px;font-weight:800;color:${iconColor};">${initials}</span>
-                            </div>
                             <div class="factura-info">
-                                <div class="factura-proveedor">${f.proveedor || 'Sin proveedor'}</div>
+                                <div class="factura-proveedor">${f.proveedor}</div>
                                 <span class="factura-badge ${badgeClass}">${badgeText}</span>
                             </div>
-                            <div class="factura-total" style="color:${iconColor};">${total}€</div>
+                            <div class="factura-total">${total}€</div>
                         </div>
                         <div class="factura-meta">
-                            <span><i data-lucide="calendar" style="width:11px;height:11px;"></i> ${f.fecha || 'Sin fecha'}</span>
-                            <span><i data-lucide="hash" style="width:11px;height:11px;"></i> ${f.numero_doc || 'S/N'}</span>
-                            ${f.cif ? `<span><i data-lucide="building" style="width:11px;height:11px;"></i> ${f.cif}</span>` : ''}
-                            <span style="margin-left:auto;font-size:10px;color:rgba(255,255,255,0.2);">Ver detalles →</span>
+                            <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="calendar" style="width: 12px; height: 12px;"></i> ${f.fecha || 'Sin fecha'}</span>
+                            <span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="file-text" style="width: 12px; height: 12px;"></i> ${f.numero_doc || 'S/N'}</span>
+                            ${f.cif ? `<span style="display: flex; align-items: center; gap: 4px;"><i data-lucide="building" style="width: 12px; height: 12px;"></i> ${f.cif}</span>` : ''}
+                        </div>
+                        <div class="factura-actions">
+                            <button class="factura-btn-view" onclick='openFacturaModal(${JSON.stringify(f).replace(/'/g, "&#39;")})' style="display: flex; align-items: center; gap: 6px;">
+                                <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                                Ver Detalles
+                            </button>
                         </div>
                     </div>`;
             }).join('');
@@ -7344,8 +7298,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Restaurar el tema guardado ANTES de renderizar iconos
             const savedTheme = localStorage.getItem('dulce_jaleo_theme');
-            // Por defecto: oscuro (premium). Solo cambia si el usuario eligió explícitamente claro.
-            const isDark = savedTheme !== 'light';
+            const isDark = savedTheme === 'dark';
             if (isDark) {
                 document.body.classList.add('dark-theme');
             } else {
